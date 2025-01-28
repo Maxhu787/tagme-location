@@ -116,6 +116,10 @@ and anytime during weekdays.
 
 ## Links
 
+https://www.youtube.com/watch?v=UAQogFwyna0
+https://openfreemap.org/
+https://maplibre.org/maplibre-react-native/docs/setup/expo/
+
 https://supabase.com/pricing
 https://docs.expo.dev/guides/using-supabase/
 https://supabase.com/docs/guides/auth/social-login/auth-google
@@ -124,6 +128,13 @@ https://docs.expo.dev/versions/latest/sdk/stripe/
 https://docs.expo.dev/versions/latest/sdk/location/
 
 https://www.tenorshare.tw/change-location/why-zenly-was-shut-down.html
+https://www.reddit.com/r/Supabase/comments/u8dzc5/how_scalable_is_supabase/
+https://www.reddit.com/r/reactnative/comments/1d80of4/backend_option_for_my_expo_app/
 
 https://play.google.com/store/apps/details?id=com.mixerbox.tomodoko&hl=zh_TW
 https://play.google.com/store/apps/details?id=com.locket.Locket&hl=en_US
+https://github.com/supabase/benchmarks
+
+https://www.youtube.com/watch?v=BVcoxor_t88
+https://www.youtube.com/watch?v=NhDt7LsgfLk
+https://www.youtube.com/watch?v=U5qSNhUXASE
