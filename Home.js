@@ -64,7 +64,7 @@ export default function Home() {
       setLocation(location);
 
       setDefault();
-      console.log("ee");
+      // console.log("ee");
     }
 
     getCurrentLocation();
@@ -72,10 +72,10 @@ export default function Home() {
 
   const moveToLocation = () => {
     if (location) {
-      console.log("move to");
+      // console.log("move to");
       cameraRef.current?.setCamera({
-        // centerCoordinate: [location.coords.longitude, location.coords.latitude],
-        centerCoordinate: [120.49113661544325, 22.773879696935218],
+        centerCoordinate: [location.coords.longitude, location.coords.latitude],
+        // centerCoordinate: [120.49113661544325, 22.773879696935218],
         zoomLevel: 15,
         animationDuration: 2000,
       });
