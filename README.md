@@ -139,3 +139,5 @@ https://github.com/supabase/benchmarks
 https://www.youtube.com/watch?v=BVcoxor_t88
 https://www.youtube.com/watch?v=NhDt7LsgfLk
 https://www.youtube.com/watch?v=U5qSNhUXASE
+
+https://medium.com/@julienmartin_/designing-zenly-part-i-ec7dc0a1e3ad

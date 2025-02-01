@@ -1,6 +1,9 @@
 # map-test
 
-add zoom in out scroll bar
+- add login auth supabase
+- add themes
+- add zoom in out scroll bar
+- cache map for offline viewing
 
 https://maplibre.org/maplibre-react-native/docs/setup/expo/
 https://openfreemap.org/
@@ -10,3 +13,6 @@ https://www.maptiler.com/cloud/pricing/
 - location updated every 30~60s upgrade to get more accurate data
 - have buttons on the side to lock zoom and rotate
 - poke or send some sort of signal system limited amount every time frame upgrade gets more etc
+
+https://github.com/rnmapbox/maps/issues/943
+https://icons.expo.fyi/Index
