@@ -4,6 +4,7 @@
 - add themes
 - add zoom in out scroll bar
 - cache map for offline viewing
+  https://github.com/react-native-maps/react-native-maps/issues/3258
 
 https://maplibre.org/maplibre-react-native/docs/setup/expo/
 https://openfreemap.org/
@@ -16,3 +17,8 @@ https://www.maptiler.com/cloud/pricing/
 
 https://github.com/rnmapbox/maps/issues/943
 https://icons.expo.fyi/Index
+
+https://www.flexclip.com/editor/my-favorite
+https://appscreens.com/user/projects
+https://docs.expo.dev/guides/store-assets/
+https://online-video-cutter.com/remove-logo
