@@ -117,8 +117,8 @@ and anytime during weekdays.
 ## Links
 
 https://www.youtube.com/watch?v=UAQogFwyna0
-https://openfreemap.org/
 https://maplibre.org/maplibre-react-native/docs/setup/expo/
+https://openfreemap.org/
 https://www.maptiler.com/
 
 https://supabase.com/pricing
