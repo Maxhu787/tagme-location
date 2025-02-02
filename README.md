@@ -152,3 +152,7 @@ https://www.youtube.com/watch?v=AE7dKIKMJy4
 
 supabase start
 supabase stop
+
+https://github.com/thorwebdev/google-signin/tree/docs/update-readme-and-guides
+https://developers.google.com/identity/sign-in/android/legacy-start-integrating
+https://console.cloud.google.com/apis/credentials
