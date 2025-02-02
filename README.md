@@ -141,3 +141,14 @@ https://www.youtube.com/watch?v=NhDt7LsgfLk
 https://www.youtube.com/watch?v=U5qSNhUXASE
 
 https://medium.com/@julienmartin_/designing-zenly-part-i-ec7dc0a1e3ad
+
+adb reverse tcp:54321 tcp:54321
+https://jwt.io/
+
+## auth
+
+https://www.youtube.com/watch?v=vojHmGUGUGc
+https://www.youtube.com/watch?v=AE7dKIKMJy4
+
+supabase start
+supabase stop
