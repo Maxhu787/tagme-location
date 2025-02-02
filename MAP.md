@@ -4,6 +4,13 @@
 - add zoom in out scroll bar
 - cache map for offline viewing
   https://github.com/react-native-maps/react-native-maps/issues/3258
+- expo router
+- top navbar with profile
+- handle the acess locations settings
+- add locations and group them
+- set safe areas where you wont be tracked
+- ~~login auth~~
+- ~~map~~
 
 - free accounts can place specific amount of markers with a specified radius and when user is in that area they wont be tracked upgrade to get more
 - location updated every 30~60s upgrade to get more accurate data
