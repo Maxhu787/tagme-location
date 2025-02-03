@@ -25,7 +25,7 @@ Logger.setLogCallback((log) => {
   return false;
 });
 
-export default function Home() {
+export default Home = () => {
   const cameraRef = useRef(null);
   const insets = useSafeAreaInsets();
   const [location, setLocation] = useState(null);
@@ -59,9 +59,10 @@ export default function Home() {
     getCurrentLocation();
   }, []);
 
-  const moveToLocation = () => {
+  // maybe call moveToCurrentLocation(location) and pass in location state
+  // more reusable
+  const moveToCurrentLocation = () => {
     if (location) {
-      // console.log("move to");
       cameraRef.current?.setCamera({
         centerCoordinate: [location.coords.longitude, location.coords.latitude],
         // centerCoordinate: [120.49113661544325, 22.773879696935218],
@@ -98,15 +99,14 @@ export default function Home() {
       </MapView>
       <View
         style={{
-          // backgroundColor: "red",
-          // display: "flex",
+          display: "flex",
           position: "absolute",
           bottom: 0,
           width: "100%",
           justifyContent: "center",
           alignItems: "center",
           flexDirection: "row",
-          padding: 18,
+          padding: 32,
         }}
       >
         <Animated.View
@@ -133,7 +133,7 @@ export default function Home() {
             onPressOut={() =>
               (scale.value = withSpring(1, { stiffness: 150, damping: 10 }))
             }
-            onPress={moveToLocation}
+            onPress={moveToCurrentLocation}
           >
             <FontAwesome6 name="location-crosshairs" size={32} color="black" />
           </TouchableOpacity>
@@ -142,6 +142,6 @@ export default function Home() {
       <StatusBar style="auto" />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({});

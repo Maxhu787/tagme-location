@@ -2,7 +2,7 @@ import { Stack, Redirect } from "expo-router";
 import { useState, useEffect } from "react";
 // import { getAuthState } from "../auth";
 
-export default function Layout() {
+export default Layout = () => {
   // const [isAuthenticated, setIsAuthenticated] = useState(null);
 
   // useEffect(() => {
@@ -22,4 +22,4 @@ export default function Layout() {
       <Stack.Screen name="settings" />
     </Stack>
   );
-}
+};

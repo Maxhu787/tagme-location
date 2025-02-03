@@ -14,9 +14,9 @@ export default function Auth() {
   });
 
   return (
-    <TouchableOpacity
-      // size={GoogleSigninButton.Size.Wide}
-      // color={GoogleSigninButton.Color.Dark}
+    <GoogleSigninButton
+      size={GoogleSigninButton.Size.Wide}
+      color={GoogleSigninButton.Color.Dark}
       onPress={async () => {
         try {
           await GoogleSignin.hasPlayServices();
@@ -46,8 +46,6 @@ export default function Auth() {
         }
       }}
       // disabled={this.state.isSigninInProgress}
-    >
-      <Text>Sign in with Google</Text>
-    </TouchableOpacity>
+    />
   );
 }

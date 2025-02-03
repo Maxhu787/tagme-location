@@ -1,16 +1,18 @@
 # map-test
 
 - top navbar with profile
-- add themes
-- profile route
-- in-app auth
-- setup db
+- in-app usable auth
+- set get location interval and location marker
+- add themes context
+- setup db schema design tables
 - add zoom in out scroll bar
 - cache map for offline viewing
   https://github.com/react-native-maps/react-native-maps/issues/3258
-- handle the access in-phone location settings
+- handle access in-phone location settings
 - group locations
-- set safe areas where you wont be tracked
+- set safe areas where you wont be tracked (place marker set radius)
+- Use expo-build-properties
+- ~~profile route~~
 - ~~expo router~~
 - ~~login auth~~
 - ~~map~~

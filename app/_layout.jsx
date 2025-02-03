@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 
-export default function Layout() {
+export default Layout = () => {
   return (
     <Stack
       screenOptions={{
@@ -11,4 +11,4 @@ export default function Layout() {
       <Stack.Screen name="(app)" />
     </Stack>
   );
-}
+};
