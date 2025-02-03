@@ -1,14 +1,17 @@
 # map-test
 
+- top navbar with profile
 - add themes
+- profile route
+- in-app auth
+- setup db
 - add zoom in out scroll bar
 - cache map for offline viewing
   https://github.com/react-native-maps/react-native-maps/issues/3258
-- expo router
-- top navbar with profile
-- handle the acess locations settings
-- add locations and group them
+- handle the access in-phone location settings
+- group locations
 - set safe areas where you wont be tracked
+- ~~expo router~~
 - ~~login auth~~
 - ~~map~~
 
@@ -24,3 +27,6 @@ https://www.flexclip.com/editor/my-favorite
 https://appscreens.com/user/projects
 https://docs.expo.dev/guides/store-assets/
 https://online-video-cutter.com/remove-logo
+
+https://docs.expo.dev/versions/latest/sdk/gesture-handler/
+https://docs.swmansion.com/react-native-reanimated/

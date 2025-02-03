@@ -7,8 +7,8 @@ export default function Layout() {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="signin" options={{ headerShown: false }} />
-      <Stack.Screen name="(app)" options={{ headerShown: false }} />
+      <Stack.Screen name="signin" />
+      <Stack.Screen name="(app)" />
     </Stack>
   );
 }

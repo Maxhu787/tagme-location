@@ -156,3 +156,6 @@ supabase stop
 https://github.com/thorwebdev/google-signin/tree/docs/update-readme-and-guides
 https://developers.google.com/identity/sign-in/android/legacy-start-integrating
 https://console.cloud.google.com/apis/credentials
+
+router.dimissall
+https://github.com/expo/router/discussions/495

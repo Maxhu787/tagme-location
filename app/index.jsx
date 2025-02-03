@@ -1,6 +1,6 @@
 import { Link } from "expo-router";
 import { View, Text, StyleSheet, Pressable } from "react-native";
-
+import { StatusBar } from "expo-status-bar";
 export default function Bording() {
   return (
     <View style={styles.container}>
@@ -22,6 +22,7 @@ export default function Bording() {
           </Text>
         </Pressable>
       </Link>
+      <StatusBar style="auto" />
     </View>
   );
 }

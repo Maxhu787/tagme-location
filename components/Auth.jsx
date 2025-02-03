@@ -4,6 +4,7 @@ import {
   statusCodes,
 } from "@react-native-google-signin/google-signin";
 import { supabase } from "../utils/supabase";
+import { TouchableOpacity, Text } from "react-native";
 
 export default function Auth() {
   GoogleSignin.configure({
@@ -13,9 +14,9 @@ export default function Auth() {
   });
 
   return (
-    <GoogleSigninButton
-      size={GoogleSigninButton.Size.Wide}
-      color={GoogleSigninButton.Color.Dark}
+    <TouchableOpacity
+      // size={GoogleSigninButton.Size.Wide}
+      // color={GoogleSigninButton.Color.Dark}
       onPress={async () => {
         try {
           await GoogleSignin.hasPlayServices();
@@ -45,6 +46,8 @@ export default function Auth() {
         }
       }}
       // disabled={this.state.isSigninInProgress}
-    />
+    >
+      <Text>Sign in with Google</Text>
+    </TouchableOpacity>
   );
 }

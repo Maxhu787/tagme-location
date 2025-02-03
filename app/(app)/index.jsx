@@ -1,11 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  Text,
-} from "react-native";
+import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -19,8 +13,6 @@ import * as Location from "expo-location";
 
 Logger.setLogCallback((log) => {
   const { message } = log;
-
-  // expected warnings - see https://github.com/mapbox/mapbox-gl-native/issues/15341#issuecomment-522889062
   if (
     message.match("Request failed due to a permanent error: Canceled") ||
     message.match("Request failed due to a permanent error: Socket Closed") ||
@@ -60,13 +52,10 @@ export default function Home() {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-
+      let location_data = await Location.getCurrentPositionAsync({});
+      setLocation(location_data);
       setDefault();
-      // console.log("ee");
     }
-
     getCurrentLocation();
   }, []);
 

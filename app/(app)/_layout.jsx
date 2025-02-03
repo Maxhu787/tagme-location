@@ -1,4 +1,4 @@
-import { Tabs, Redirect } from "expo-router";
+import { Stack, Redirect } from "expo-router";
 import { useState, useEffect } from "react";
 // import { getAuthState } from "../auth";
 
@@ -13,14 +13,13 @@ export default function Layout() {
   // if (!isAuthenticated) return <Redirect href="/signin" />;
 
   return (
-    <Tabs
+    <Stack
       screenOptions={{
-        // Hide the header for all other routes.
         headerShown: false,
       }}
     >
-      <Tabs.Screen name="index" options={{ title: "Home" }} />
-      <Tabs.Screen name="settings" options={{ title: "Settings" }} />
-    </Tabs>
+      <Stack.Screen name="index" />
+      <Stack.Screen name="settings" />
+    </Stack>
   );
 }

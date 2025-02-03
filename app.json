@@ -4,6 +4,7 @@
     "slug": "tagme",
     "version": "1.0.0",
     "orientation": "portrait",
+    "scheme": "com.g4o2.tagme",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
