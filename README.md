@@ -96,3 +96,10 @@ https://play.google.com/store/apps/details?id=com.locket.Locket&hl=en_US
 https://www.youtube.com/watch?v=BVcoxor_t88
 https://www.youtube.com/watch?v=NhDt7LsgfLk
 https://www.youtube.com/watch?v=U5qSNhUXASE
+
+## tomorrow
+
+https://supabase.com/docs/guides/getting-started/tutorials/with-expo-react-native
+https://supabase.com/docs/guides/database/postgres/row-level-security
+setup supabase auth and navbar
+auth->video2
