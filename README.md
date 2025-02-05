@@ -103,3 +103,6 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-expo-react-nativ
 https://supabase.com/docs/guides/database/postgres/row-level-security
 setup supabase auth and navbar
 auth->video2
+https://www.youtube.com/watch?v=GrLCS5ww030
+https://www.youtube.com/watch?v=noTeDJypcqY
+https://www.youtube.com/watch?v=tsleLxbvxe0
