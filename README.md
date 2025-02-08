@@ -52,6 +52,11 @@ https://docs.swmansion.com/react-native-reanimated/
 
 https://www.youtube.com/watch?v=r2NJJye0XnM
 
+### payment
+
+https://www.youtube.com/watch?v=noTeDJypcqY
+https://www.revenuecat.com/
+
 ### media
 
 https://www.flexclip.com/editor/my-favorite
