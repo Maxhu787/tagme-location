@@ -1,17 +1,6 @@
-import { Stack, Redirect } from "expo-router";
-import { useState, useEffect } from "react";
-// import { getAuthState } from "../auth";
+import { Stack } from "expo-router";
 
 export default Layout = () => {
-  // const [isAuthenticated, setIsAuthenticated] = useState(null);
-
-  // useEffect(() => {
-  // getAuthState().then(setIsAuthenticated);
-  // }, []);
-
-  // if (isAuthenticated === null) return null;
-  // if (!isAuthenticated) return <Redirect href="/signin" />;
-
   return (
     <Stack
       screenOptions={{

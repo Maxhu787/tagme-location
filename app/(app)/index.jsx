@@ -10,6 +10,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import * as Location from "expo-location";
+import { router } from "expo-router";
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -109,6 +110,13 @@ export default Home = () => {
           padding: 32,
         }}
       >
+        <TouchableOpacity
+          onPress={() => {
+            router.push("/(auth)/signout");
+          }}
+        >
+          <Text>Signout</Text>
+        </TouchableOpacity>
         <Animated.View
           style={[
             {

@@ -4,7 +4,7 @@ import {
   statusCodes,
 } from "@react-native-google-signin/google-signin";
 import { supabase } from "../utils/supabase";
-import { TouchableOpacity, Text } from "react-native";
+import { router } from "expo-router";
 
 export default function Auth() {
   GoogleSignin.configure({
@@ -27,7 +27,13 @@ export default function Auth() {
               provider: "google",
               token: userInfo.data.idToken,
             });
-            console.log(error, data);
+            console.log(
+              error,
+              data.user.identities[0]["identity_data"]["name"]
+            );
+            router.dismissAll();
+            router.replace("/");
+            if (error) Alert.alert(error.message);
           } else {
             throw new Error("No ID token found");
           }

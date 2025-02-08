@@ -7,8 +7,9 @@ export default Layout = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="signin" />
       <Stack.Screen name="(app)" />
+      <Stack.Screen name="(auth)/signin" />
+      <Stack.Screen name="(auth)/signout" />
     </Stack>
   );
 };
