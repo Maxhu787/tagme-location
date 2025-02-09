@@ -2,19 +2,19 @@
 
 ## add
 
-- top navbar with profile
-- in-app usable auth
 - set get location interval and location marker
+- top navbar with profile
 - add themes context
 - setup db schema design tables
-- add zoom in out scroll bar
 - cache map for offline viewing
   https://github.com/react-native-maps/react-native-maps/issues/3258
 - handle access in-phone location settings
+- add zoom in out scroll bar
 - group locations
 - set safe areas where you wont be tracked (place marker set radius)
 - setup google auth properties on ios
 - Use expo-build-properties
+- ~~in-app usable auth~~
 - ~~profile route~~
 - ~~expo router~~
 - ~~login auth~~
@@ -47,6 +47,7 @@ https://supabase.com/docs/guides/auth/social-login/auth-google
 
 https://docs.expo.dev/versions/latest/sdk/gesture-handler/
 https://docs.swmansion.com/react-native-reanimated/
+https://www.youtube.com/watch?v=tsleLxbvxe0
 
 ### onbording screen & page indicator
 
@@ -56,6 +57,7 @@ https://www.youtube.com/watch?v=r2NJJye0XnM
 
 https://www.youtube.com/watch?v=noTeDJypcqY
 https://www.revenuecat.com/
+https://docs.expo.dev/versions/latest/sdk/stripe/
 
 ### media
 
@@ -79,13 +81,11 @@ router.dimissall
 ### useful
 
 https://github.com/rnmapbox/maps/issues/943
+https://github.com/expo/router/discussions/495
 https://icons.expo.fyi/Index
 https://jwt.io/
-https://github.com/expo/router/discussions/495
-https://supabase.com/pricing
-https://docs.expo.dev/versions/latest/sdk/stripe/
+https://supabase.com/docs/reference/javascript/explain
 https://docs.expo.dev/versions/latest/sdk/location/
-https://github.com/supabase/benchmarks
 
 ### research
 
@@ -104,7 +104,4 @@ https://www.youtube.com/watch?v=U5qSNhUXASE
 
 ## tomorrow
 
-https://supabase.com/docs/guides/getting-started/tutorials/with-expo-react-native
-https://supabase.com/docs/guides/database/postgres/row-level-security
-https://www.youtube.com/watch?v=noTeDJypcqY
-https://www.youtube.com/watch?v=tsleLxbvxe0
+https://dev.to/vrinch/optimizing-performance-in-react-native-apps-expo-354k
