@@ -47,15 +47,6 @@ export default Home = () => {
     transform: [{ scale: scaleLocation.value }],
   }));
 
-  const animatedButtonStyle = {
-    height: 50,
-    width: 100,
-    borderRadius: 10,
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
-  };
-
   useEffect(() => {
     const setDefault = () => {
       cameraRef.current?.fitBounds(
@@ -122,8 +113,16 @@ export default Home = () => {
           gap: 24,
         }}
       >
-        <Animated.View style={[animatedButtonStyle, animatedStyleSignout]}>
+        <Animated.View style={animatedStyleSignout}>
           <TouchableOpacity
+            style={{
+              height: 50,
+              width: 100,
+              borderRadius: 10,
+              backgroundColor: "#fff",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
             activeOpacity={1}
             onPressIn={() =>
               (scaleSignout.value = withSpring(0.75, {
@@ -138,14 +137,22 @@ export default Home = () => {
               }))
             }
             onPress={() => {
-              // router.push("/(auth)/signout");
+              router.push("/(app)/settings");
             }}
           >
-            <Text>Signout</Text>
+            <Text>Settings</Text>
           </TouchableOpacity>
         </Animated.View>
-        <Animated.View style={[animatedButtonStyle, animatedStyleProfile]}>
+        <Animated.View style={animatedStyleProfile}>
           <TouchableOpacity
+            style={{
+              height: 50,
+              width: 100,
+              borderRadius: 10,
+              backgroundColor: "#fff",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
             activeOpacity={1}
             onPressIn={() =>
               (scaleProfile.value = withSpring(0.75, {
@@ -160,10 +167,10 @@ export default Home = () => {
               }))
             }
             onPress={() => {
-              // router.push("/(auth)/signout");
+              router.push("/(auth)/signout");
             }}
           >
-            <Text>Profile</Text>
+            <Text>Signout</Text>
           </TouchableOpacity>
         </Animated.View>
       </View>
@@ -188,20 +195,16 @@ export default Home = () => {
           padding: 32,
         }}
       >
-        <Animated.View
-          style={[
-            {
+        <Animated.View style={animatedStyleLocation}>
+          <TouchableOpacity
+            style={{
               width: 75,
               backgroundColor: "#fff",
               padding: 22,
               borderRadius: 18,
               shadowColor: "#000",
               elevation: 15,
-            },
-            animatedStyleLocation,
-          ]}
-        >
-          <TouchableOpacity
+            }}
             activeOpacity={1}
             onPressIn={() =>
               (scaleLocation.value = withSpring(0.75, {
