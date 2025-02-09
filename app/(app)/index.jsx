@@ -31,11 +31,30 @@ export default Home = () => {
   const insets = useSafeAreaInsets();
   const [location, setLocation] = useState(null);
 
-  const scale = useSharedValue(1);
+  const scaleSignout = useSharedValue(1);
+  const scaleProfile = useSharedValue(1);
+  const scaleLocation = useSharedValue(1);
 
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
+  const animatedStyleSignout = useAnimatedStyle(() => ({
+    transform: [{ scale: scaleSignout.value }],
   }));
+
+  const animatedStyleProfile = useAnimatedStyle(() => ({
+    transform: [{ scale: scaleProfile.value }],
+  }));
+
+  const animatedStyleLocation = useAnimatedStyle(() => ({
+    transform: [{ scale: scaleLocation.value }],
+  }));
+
+  const animatedButtonStyle = {
+    height: 50,
+    width: 100,
+    borderRadius: 10,
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+  };
 
   useEffect(() => {
     const setDefault = () => {
@@ -103,38 +122,50 @@ export default Home = () => {
           gap: 24,
         }}
       >
-        <TouchableOpacity
-          style={{
-            height: 50,
-            width: 100,
-            borderRadius: 10,
-            backgroundColor: "#fff",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          activeOpacity={1}
-          onPress={() => {
-            // router.push("/(auth)/signout");
-          }}
-        >
-          <Text>Signout</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            height: 50,
-            width: 100,
-            borderRadius: 10,
-            backgroundColor: "#fff",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          activeOpacity={1}
-          onPress={() => {
-            // router.push("/(auth)/signout");
-          }}
-        >
-          <Text>Profile</Text>
-        </TouchableOpacity>
+        <Animated.View style={[animatedButtonStyle, animatedStyleSignout]}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPressIn={() =>
+              (scaleSignout.value = withSpring(0.75, {
+                stiffness: 300,
+                damping: 15,
+              }))
+            }
+            onPressOut={() =>
+              (scaleSignout.value = withSpring(1, {
+                stiffness: 150,
+                damping: 10,
+              }))
+            }
+            onPress={() => {
+              // router.push("/(auth)/signout");
+            }}
+          >
+            <Text>Signout</Text>
+          </TouchableOpacity>
+        </Animated.View>
+        <Animated.View style={[animatedButtonStyle, animatedStyleProfile]}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPressIn={() =>
+              (scaleProfile.value = withSpring(0.75, {
+                stiffness: 300,
+                damping: 15,
+              }))
+            }
+            onPressOut={() =>
+              (scaleProfile.value = withSpring(1, {
+                stiffness: 150,
+                damping: 10,
+              }))
+            }
+            onPress={() => {
+              // router.push("/(auth)/signout");
+            }}
+          >
+            <Text>Profile</Text>
+          </TouchableOpacity>
+        </Animated.View>
       </View>
       <MapView
         style={{ flex: 1 }}
@@ -167,19 +198,22 @@ export default Home = () => {
               shadowColor: "#000",
               elevation: 15,
             },
-            animatedStyle,
+            animatedStyleLocation,
           ]}
         >
           <TouchableOpacity
             activeOpacity={1}
             onPressIn={() =>
-              (scale.value = withSpring(0.75, {
+              (scaleLocation.value = withSpring(0.75, {
                 stiffness: 300,
                 damping: 15,
               }))
             }
             onPressOut={() =>
-              (scale.value = withSpring(1, { stiffness: 150, damping: 10 }))
+              (scaleLocation.value = withSpring(1, {
+                stiffness: 150,
+                damping: 10,
+              }))
             }
             onPress={moveToCurrentLocation}
           >
