@@ -5,7 +5,12 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from "react-native-reanimated";
-import { MapView, Camera, Logger } from "@maplibre/maplibre-react-native";
+import {
+  MapView,
+  Camera,
+  UserLocation,
+  Logger,
+} from "@maplibre/maplibre-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
@@ -182,6 +187,7 @@ export default Home = () => {
         logoEnabled={true}
       >
         <Camera ref={cameraRef} />
+        <UserLocation />
       </MapView>
       <View
         style={{

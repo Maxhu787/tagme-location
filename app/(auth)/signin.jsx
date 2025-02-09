@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import Auth from "../../components/Auth";
+// import Auth from "../../components/Auth";
+import { router } from "expo-router";
 
 export default Signin = () => {
   return (
@@ -12,7 +13,22 @@ export default Signin = () => {
       >
         (Sign in)
       </Text>
-      <Auth />
+      {/* <Auth /> */}
+      <Pressable
+        onPress={() => {
+          router.dismissAll();
+          router.replace("/(app)");
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 25,
+            color: "rgb(56, 162, 254)",
+          }}
+        >
+          login test
+        </Text>
+      </Pressable>
       <StatusBar style="auto" />
     </View>
   );
