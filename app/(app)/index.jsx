@@ -110,7 +110,7 @@ export default Home = () => {
           alignItems: "center",
           flexDirection: "row",
           padding: 32,
-          gap: 24,
+          gap: 48,
         }}
       >
         <Animated.View style={animatedStyleSignout}>

@@ -26,7 +26,7 @@ export default function App() {
       setTimeout(() => {
         setSession(data.session);
         setLoading(false);
-      }, 1000);
+      }, 10);
     };
     fetchSession();
 
