@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useRouter } from "expo-router";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
-// import { supabase } from "../../utils/supabase";
+import { supabase } from "../../utils/supabase";
 
 export default function Signout() {
   GoogleSignin.configure({
@@ -11,19 +11,17 @@ export default function Signout() {
   const router = useRouter();
 
   useEffect(() => {
-    // const logout = async () => {
-    //   try {
-    //     await GoogleSignin.signOut();
-    //     await supabase.auth.signOut();
-    //     router.dismissAll();
-    //     router.replace("/");
-    //   } catch (error) {
-    //     console.log("Logout error:", error);
-    //   }
-    // };
-    // logout();
-    router.dismissAll();
-    router.replace("/");
+    const logout = async () => {
+      try {
+        await GoogleSignin.signOut();
+        await supabase.auth.signOut();
+        router.dismissAll();
+        router.replace("/");
+      } catch (error) {
+        console.log("Logout error:", error);
+      }
+    };
+    logout();
   }, []);
 
   return null;

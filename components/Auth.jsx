@@ -20,7 +20,6 @@ export default function Auth() {
         try {
           await GoogleSignin.hasPlayServices();
           const userInfo = await GoogleSignin.signIn();
-          // console.log(JSON.stringify(userInfo, null, 2));
           if (userInfo.data.idToken) {
             const { data, error } = await supabase.auth.signInWithIdToken({
               provider: "google",
@@ -28,7 +27,11 @@ export default function Auth() {
             });
             console.log(
               error,
-              data.user.identities[0]["identity_data"]["name"]
+              JSON.stringify(
+                data.user.identities[0]["identity_data"]["name"],
+                null,
+                2
+              )
             );
             router.dismissAll();
             router.replace("/");
@@ -37,20 +40,21 @@ export default function Auth() {
             throw new Error("No ID token found");
           }
         } catch (error) {
-          console.log(error);
-          /*
           if (error.code === statusCodes.SIGN_IN_CANCELLED) {
             // user cancelled the login flow
+            console.log(error);
           } else if (error.code === statusCodes.IN_PROGRESS) {
             // operation (e.g. sign in) is in progress already
+            console.log(error);
           } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
             // play services not available or outdated
+            console.log(error);
           } else {
             // some other error happened
-          }*/
+            console.log(error);
+          }
         }
       }}
-      // disabled={this.state.isSigninInProgress}
     />
   );
 }
