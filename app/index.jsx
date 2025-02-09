@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Redirect } from "expo-router";
 import { supabase } from "../utils/supabase";
 import { View, ActivityIndicator } from "react-native";
-
 import Bording from "../components/Bording";
 
 export default function App() {
@@ -27,7 +26,7 @@ export default function App() {
       setTimeout(() => {
         setSession(data.session);
         setLoading(false);
-      }, 5000);
+      }, 1000);
     };
     fetchSession();
 

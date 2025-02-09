@@ -89,6 +89,53 @@ export default Home = () => {
         paddingBottom: insets.bottom,
       }}
     >
+      <View
+        style={{
+          display: "flex",
+          position: "absolute",
+          zIndex: 2,
+          top: 10,
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "row",
+          padding: 32,
+          gap: 24,
+        }}
+      >
+        <TouchableOpacity
+          style={{
+            height: 50,
+            width: 100,
+            borderRadius: 10,
+            backgroundColor: "#fff",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          activeOpacity={1}
+          onPress={() => {
+            // router.push("/(auth)/signout");
+          }}
+        >
+          <Text>Signout</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            height: 50,
+            width: 100,
+            borderRadius: 10,
+            backgroundColor: "#fff",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          activeOpacity={1}
+          onPress={() => {
+            // router.push("/(auth)/signout");
+          }}
+        >
+          <Text>Profile</Text>
+        </TouchableOpacity>
+      </View>
       <MapView
         style={{ flex: 1 }}
         // mapStyle="https://tiles.openfreemap.org/styles/bright"
@@ -110,13 +157,6 @@ export default Home = () => {
           padding: 32,
         }}
       >
-        <TouchableOpacity
-          onPress={() => {
-            router.push("/(auth)/signout");
-          }}
-        >
-          <Text>Signout</Text>
-        </TouchableOpacity>
         <Animated.View
           style={[
             {
