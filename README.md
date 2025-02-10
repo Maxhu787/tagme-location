@@ -11,8 +11,9 @@
 - handle access in-phone location settings
 - add zoom in out scroll bar
 - group locations
+- add widgets
 - set safe areas where you wont be tracked (place marker set radius)
-- setup google auth properties on ios
+- setup login with apple
 - Use expo-build-properties
 - ~~in-app usable auth~~
 - ~~profile route~~

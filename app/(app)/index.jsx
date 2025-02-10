@@ -73,6 +73,8 @@ export default Home = () => {
       setDefault();
     }
     getCurrentLocation();
+    // setInterval(() => {
+    // }, 1000);
   }, []);
 
   // maybe call moveToCurrentLocation(location) and pass in location state
@@ -101,7 +103,7 @@ export default Home = () => {
         flexDirection: "column",
         flex: 1,
         paddingTop: insets.top,
-        paddingBottom: insets.bottom,
+        // paddingBottom: insets.bottom,
       }}
     >
       <View
