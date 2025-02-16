@@ -71,6 +71,7 @@ export default Home = () => {
     const getCurrentLocation = async () => {
       let location_data = await Location.getCurrentPositionAsync({});
       setLocation(location_data);
+      // console.log(location_data);
     };
     getCurrentLocation();
     const interval = setInterval(() => {
@@ -236,7 +237,7 @@ export default Home = () => {
             }}
           />
         </PointAnnotation>
-        {/* <UserLocation /> */}
+        <UserLocation minDisplacement={1} />
       </MapView>
       <View
         style={{
