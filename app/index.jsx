@@ -122,7 +122,7 @@ export default Home = () => {
           display: "flex",
           position: "absolute",
           zIndex: 2,
-          top: 10,
+          top: 10, // 40 for ios
           width: "100%",
           justifyContent: "center",
           alignItems: "center",
