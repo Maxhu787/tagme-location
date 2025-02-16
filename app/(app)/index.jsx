@@ -36,6 +36,7 @@ export default Home = () => {
   const cameraRef = useRef(null);
   const insets = useSafeAreaInsets();
   const [location, setLocation] = useState(null);
+  const [hasPermission, setHasPermission] = useState(false);
 
   const scaleSignout = useSharedValue(1);
   const scaleProfile = useSharedValue(1);
@@ -44,33 +45,58 @@ export default Home = () => {
   const animatedStyleSignout = useAnimatedStyle(() => ({
     transform: [{ scale: scaleSignout.value }],
   }));
-
   const animatedStyleProfile = useAnimatedStyle(() => ({
     transform: [{ scale: scaleProfile.value }],
   }));
-
   const animatedStyleLocation = useAnimatedStyle(() => ({
     transform: [{ scale: scaleLocation.value }],
   }));
 
   useEffect(() => {
-    const getCurrentLocation = async () => {
+    const requestPermission = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        console.log("Permission to access location was denied");
-        return;
+      if (status === "granted") {
+        setHasPermission(true);
+      } else {
+        setHasPermission(false);
       }
+    };
+
+    requestPermission();
+  }, []);
+
+  useEffect(() => {
+    if (!hasPermission) return;
+
+    const getCurrentLocation = async () => {
       let location_data = await Location.getCurrentPositionAsync({});
       setLocation(location_data);
     };
-    // getCurrentLocation();
 
-    // const interval = setInterval(() => {
-    //   getCurrentLocation();
-    // }, 5000);
+    const interval = setInterval(() => {
+      getCurrentLocation();
+    }, 5000);
 
-    // return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(interval);
+  }, [hasPermission]);
+
+  if (!hasPermission) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text style={{ fontSize: 24 }}>
+          Permission to access location was denied
+        </Text>
+      </View>
+    );
+  }
+
+  if (!location) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text style={{ fontSize: 24 }}>Loading...</Text>
+      </View>
+    );
+  }
 
   const moveToCurrentLocation = () => {
     if (location) {
@@ -80,31 +106,6 @@ export default Home = () => {
       );
     }
   };
-
-  if (!location) {
-    const requestPermission = async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        return (
-          <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-          >
-            <Text style={{ fontSize: 24 }}>
-              Permission to access location was denied
-            </Text>
-          </View>
-        );
-      }
-    };
-
-    requestPermission();
-
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text style={{ fontSize: 24 }}>Loading...</Text>
-      </View>
-    );
-  }
 
   return (
     <View
@@ -200,7 +201,8 @@ export default Home = () => {
         // mapStyle="https://tiles.openfreemap.org/styles/bright"
         mapStyle="https://tiles.openfreemap.org/styles/positron"
         rotateEnabled={false}
-        // logoEnabled={true}
+        logoEnabled={true}
+        attributionEnabled={false}
       >
         <Camera
           ref={cameraRef}
@@ -209,7 +211,7 @@ export default Home = () => {
               ? [location.coords.longitude, location.coords.latitude]
               : [0, 0]
           }
-          zoomLevel={6}
+          zoomLevel={9}
           animationDuration={0}
         />
         <UserLocation />
