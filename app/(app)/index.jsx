@@ -9,8 +9,8 @@ import {
   MapView,
   Camera,
   UserLocation,
+  PointAnnotation,
   Logger,
-  MarkerView,
 } from "@maplibre/maplibre-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
@@ -72,10 +72,10 @@ export default Home = () => {
       let location_data = await Location.getCurrentPositionAsync({});
       setLocation(location_data);
     };
-
+    getCurrentLocation();
     const interval = setInterval(() => {
       getCurrentLocation();
-    }, 5000);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [hasPermission]);
@@ -201,7 +201,7 @@ export default Home = () => {
         // mapStyle="https://tiles.openfreemap.org/styles/bright"
         mapStyle="https://tiles.openfreemap.org/styles/positron"
         rotateEnabled={false}
-        logoEnabled={true}
+        logoEnabled={false}
         attributionEnabled={false}
       >
         <Camera
@@ -211,10 +211,32 @@ export default Home = () => {
               ? [location.coords.longitude, location.coords.latitude]
               : [0, 0]
           }
-          zoomLevel={9}
+          followUserLocation
+          followZoomLevel={16}
+          zoomLevel={16}
           animationDuration={0}
         />
-        <UserLocation />
+        <PointAnnotation
+          id="uniquePoint"
+          title="My Circle Annotation"
+          snippet="This is a circle annotation"
+          coordinate={[location.coords.longitude, location.coords.latitude]}
+          selected={false}
+          draggable={true}
+          anchor={{ x: 0.5, y: 0.5 }}
+        >
+          <View
+            style={{
+              width: 30,
+              height: 30,
+              borderRadius: 20,
+              backgroundColor: "#ffa500",
+              borderWidth: 4,
+              borderColor: "#000",
+            }}
+          />
+        </PointAnnotation>
+        {/* <UserLocation /> */}
       </MapView>
       <View
         style={{

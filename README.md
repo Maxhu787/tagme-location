@@ -3,19 +3,19 @@
 ## add
 
 - snapping zoom scrollbar
-- set get location interval and location marker
 - top navbar with profile
+- cache map for offline viewing
 - add themes context
 - setup db schema design tables
-- cache map for offline viewing
   https://github.com/react-native-maps/react-native-maps/issues/3258
-- handle access in-phone location settings
 - add zoom in out scroll bar
 - group locations
 - add widgets
 - set safe areas where you wont be tracked (place marker set radius)
 - setup login with apple
 - Use expo-build-properties
+- ~~set get location interval and location marker~~
+- ~~handle access in-phone location settings~~
 - ~~in-app usable auth~~
 - ~~profile route~~
 - ~~expo router~~
