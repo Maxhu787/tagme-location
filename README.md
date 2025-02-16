@@ -2,9 +2,12 @@
 
 ## add
 
+- read location options https://docs.expo.dev/versions/latest/sdk/location/#locationoptions
 - snapping zoom scrollbar
-- top navbar with profile
 - cache map for offline viewing
+- add smooth animation
+- store location to supabase
+- top navbar with profile
 - add themes context
 - setup db schema design tables
   https://github.com/react-native-maps/react-native-maps/issues/3258
