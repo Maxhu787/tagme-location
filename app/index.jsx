@@ -1,5 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Text,
+  Platform,
+} from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -69,9 +75,11 @@ export default Home = () => {
     if (!hasPermission) return;
 
     const getCurrentLocation = async () => {
-      let location_data = await Location.getCurrentPositionAsync({});
+      let location_data = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Highest,
+        // maximumAge: 1000,
+      });
       setLocation(location_data);
-      // console.log(location_data);
     };
     getCurrentLocation();
     const interval = setInterval(() => {
@@ -106,6 +114,7 @@ export default Home = () => {
         2000
       );
     }
+    console.log("moveToCurrentLocation");
   };
 
   return (
@@ -114,7 +123,7 @@ export default Home = () => {
         display: "flex",
         flexDirection: "column",
         flex: 1,
-        paddingTop: insets.top,
+        paddingTop: Platform.OS === "ios" ? 0 : insets.top,
         // paddingBottom: insets.bottom,
       }}
     >
@@ -123,7 +132,7 @@ export default Home = () => {
           display: "flex",
           position: "absolute",
           zIndex: 2,
-          top: 10, // 40 for ios
+          top: Platform.OS === "ios" ? 40 : 10,
           width: "100%",
           justifyContent: "center",
           alignItems: "center",
@@ -212,18 +221,19 @@ export default Home = () => {
               ? [location.coords.longitude, location.coords.latitude]
               : [0, 0]
           }
-          followUserLocation
-          followZoomLevel={16}
           zoomLevel={16}
           animationDuration={0}
+          // try 2000
+          // followUserLocation={true} ios
+          // followZoomLevel={16} ios
         />
         <PointAnnotation
-          id="uniquePoint"
-          title="My Circle Annotation"
-          snippet="This is a circle annotation"
+          // id="uniquePoint"
+          // title="My Circle Annotation"
+          // snippet="This is a circle annotation"
           coordinate={[location.coords.longitude, location.coords.latitude]}
           selected={false}
-          draggable={true}
+          draggable={false}
           anchor={{ x: 0.5, y: 0.5 }}
         >
           <View
@@ -237,7 +247,6 @@ export default Home = () => {
             }}
           />
         </PointAnnotation>
-        <UserLocation minDisplacement={1} />
       </MapView>
       <View
         style={{
