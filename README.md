@@ -2,6 +2,7 @@
 
 ## add
 
+- snapping zoom scrollbar
 - set get location interval and location marker
 - top navbar with profile
 - add themes context
@@ -106,3 +107,4 @@ https://www.youtube.com/watch?v=U5qSNhUXASE
 ## tomorrow
 
 https://dev.to/vrinch/optimizing-performance-in-react-native-apps-expo-354k
+user location logic

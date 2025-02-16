@@ -10,6 +10,7 @@ import {
   Camera,
   UserLocation,
   Logger,
+  MarkerView,
 } from "@maplibre/maplibre-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
@@ -53,49 +54,58 @@ export default Home = () => {
   }));
 
   useEffect(() => {
-    const setDefault = () => {
-      cameraRef.current?.fitBounds(
-        [120.85647759578082, 25.307686891669203],
-        [120.80154595772647, 21.895556655975508],
-        [60, 80, 40, 20],
-        1000
-      );
-    };
-    async function getCurrentLocation() {
+    const getCurrentLocation = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         console.log("Permission to access location was denied");
         return;
       }
-
       let location_data = await Location.getCurrentPositionAsync({});
       setLocation(location_data);
-      setDefault();
-    }
-    getCurrentLocation();
-    // setInterval(() => {
-    // }, 1000);
+    };
+    // getCurrentLocation();
+
+    // const interval = setInterval(() => {
+    //   getCurrentLocation();
+    // }, 5000);
+
+    // return () => clearInterval(interval);
   }, []);
 
-  // maybe call moveToCurrentLocation(location) and pass in location state
-  // more reusable
   const moveToCurrentLocation = () => {
     if (location) {
-      cameraRef.current?.setCamera({
-        centerCoordinate: [location.coords.longitude, location.coords.latitude],
-        // centerCoordinate: [120.49113661544325, 22.773879696935218],
-        zoomLevel: 15,
-        animationDuration: 2000,
-      });
-      // cameraRef.current?.flyTo([120.49113661544325, 22.773879696935218], 2000);
-      // cameraRef.current?.setCamera({
-      //   centerCoordinate: [120.49113661544325, 22.773879696935218],
-      //   zoomLevel: 12,
-      //   animationDuration: 2000,
-      // });
-      // cameraRef.current?.zoomTo(12, 2000);
+      cameraRef.current?.moveTo(
+        [location.coords.longitude, location.coords.latitude],
+        2000
+      );
     }
   };
+
+  if (!location) {
+    const requestPermission = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        return (
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <Text style={{ fontSize: 24 }}>
+              Permission to access location was denied
+            </Text>
+          </View>
+        );
+      }
+    };
+
+    requestPermission();
+
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text style={{ fontSize: 24 }}>Loading...</Text>
+      </View>
+    );
+  }
+
   return (
     <View
       style={{
@@ -129,6 +139,8 @@ export default Home = () => {
               backgroundColor: "#fff",
               justifyContent: "center",
               alignItems: "center",
+              shadowColor: "#000",
+              elevation: 15,
             }}
             activeOpacity={1}
             onPressIn={() =>
@@ -159,6 +171,8 @@ export default Home = () => {
               backgroundColor: "#fff",
               justifyContent: "center",
               alignItems: "center",
+              shadowColor: "#000",
+              elevation: 15,
             }}
             activeOpacity={1}
             onPressIn={() =>
@@ -186,9 +200,18 @@ export default Home = () => {
         // mapStyle="https://tiles.openfreemap.org/styles/bright"
         mapStyle="https://tiles.openfreemap.org/styles/positron"
         rotateEnabled={false}
-        logoEnabled={true}
+        // logoEnabled={true}
       >
-        <Camera ref={cameraRef} />
+        <Camera
+          ref={cameraRef}
+          centerCoordinate={
+            location
+              ? [location.coords.longitude, location.coords.latitude]
+              : [0, 0]
+          }
+          zoomLevel={6}
+          animationDuration={0}
+        />
         <UserLocation />
       </MapView>
       <View
