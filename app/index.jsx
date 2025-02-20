@@ -60,6 +60,7 @@ export default Home = () => {
     transform: [{ scale: scaleLocation.value }],
   }));
 
+  //
   const animatedLongitude = useSharedValue(0);
   const animatedLatitude = useSharedValue(0);
 
@@ -82,6 +83,7 @@ export default Home = () => {
     animatedLongitude.value,
     animatedLatitude.value,
   ]);
+  //
 
   useEffect(() => {
     const requestPermission = async () => {
@@ -253,23 +255,6 @@ export default Home = () => {
           // followUserLocation={true}
           // followZoomLevel={16}
         />
-        {/* <PointAnnotation
-          coordinate={[location.coords.longitude, location.coords.latitude]}
-          selected={false}
-          draggable={false}
-          anchor={{ x: 0.5, y: 0.5 }}
-        >
-          <View
-            style={{
-              width: 30,
-              height: 30,
-              borderRadius: 20,
-              backgroundColor: "#ffa500",
-              borderWidth: 4,
-              borderColor: "#000",
-            }}
-          />
-        </PointAnnotation> */}
         <ShapeSource
           id="myShapeSource"
           shape={{
@@ -299,6 +284,23 @@ export default Home = () => {
             }}
           />
         </ShapeSource>
+        {/* <PointAnnotation
+          coordinate={[location.coords.longitude, location.coords.latitude]}
+          selected={false}
+          draggable={false}
+          anchor={{ x: 0.5, y: 0.5 }}
+        >
+          <View
+            style={{
+              width: 30,
+              height: 30,
+              borderRadius: 20,
+              backgroundColor: "#ffa500",
+              borderWidth: 4,
+              borderColor: "#000",
+            }}
+          />
+        </PointAnnotation> */}
       </MapView>
       <View
         style={{
