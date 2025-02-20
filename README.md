@@ -2,6 +2,8 @@
 
 ## add
 
+- https://maplibre.org/maplibre-react-native/docs/components/general/point-annotation
+- https://github.com/maplibre/maplibre-react-native/tree/main/examples/shared/src/examples
 - read location options https://docs.expo.dev/versions/latest/sdk/location/#locationoptions
 - snapping zoom scrollbar
 - cache map for offline viewing
@@ -110,4 +112,3 @@ https://www.youtube.com/watch?v=U5qSNhUXASE
 ## tomorrow
 
 https://dev.to/vrinch/optimizing-performance-in-react-native-apps-expo-354k
-user location logic

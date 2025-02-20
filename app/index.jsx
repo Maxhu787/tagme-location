@@ -9,14 +9,16 @@ import {
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
+  useDerivedValue,
   withSpring,
+  withTiming,
 } from "react-native-reanimated";
 import {
   MapView,
   Camera,
-  UserLocation,
-  PointAnnotation,
   Logger,
+  ShapeSource,
+  CircleLayer,
 } from "@maplibre/maplibre-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
@@ -57,6 +59,29 @@ export default Home = () => {
   const animatedStyleLocation = useAnimatedStyle(() => ({
     transform: [{ scale: scaleLocation.value }],
   }));
+
+  const animatedLongitude = useSharedValue(0);
+  const animatedLatitude = useSharedValue(0);
+
+  useEffect(() => {
+    if (!location) return;
+
+    animatedLongitude.value = withSpring(location.coords.longitude, {
+      stiffness: 50,
+      damping: 10,
+      mass: 1,
+    });
+    animatedLatitude.value = withSpring(location.coords.latitude, {
+      stiffness: 50,
+      damping: 10,
+      mass: 1,
+    });
+  }, [location]);
+
+  const animatedCoordinates = useDerivedValue(() => [
+    animatedLongitude.value,
+    animatedLatitude.value,
+  ]);
 
   useEffect(() => {
     const requestPermission = async () => {
@@ -114,7 +139,6 @@ export default Home = () => {
         2000
       );
     }
-    console.log("moveToCurrentLocation");
   };
 
   return (
@@ -221,16 +245,15 @@ export default Home = () => {
               ? [location.coords.longitude, location.coords.latitude]
               : [0, 0]
           }
+          // centerCoordinate={animatedCoordinates.value}
           zoomLevel={16}
           animationDuration={0}
-          // try 2000
-          // followUserLocation={true} ios
-          // followZoomLevel={16} ios
+          // ios
+          // animationDuration={2000}
+          // followUserLocation={true}
+          // followZoomLevel={16}
         />
-        <PointAnnotation
-          // id="uniquePoint"
-          // title="My Circle Annotation"
-          // snippet="This is a circle annotation"
+        {/* <PointAnnotation
           coordinate={[location.coords.longitude, location.coords.latitude]}
           selected={false}
           draggable={false}
@@ -246,7 +269,36 @@ export default Home = () => {
               borderColor: "#000",
             }}
           />
-        </PointAnnotation>
+        </PointAnnotation> */}
+        <ShapeSource
+          id="myShapeSource"
+          shape={{
+            type: "FeatureCollection",
+            features: [
+              {
+                type: "Feature",
+                geometry: {
+                  type: "Point",
+                  coordinates: animatedCoordinates.value,
+                },
+                properties: {
+                  title: "Current Location",
+                },
+              },
+            ],
+          }}
+        >
+          <CircleLayer
+            id="circleLayer"
+            style={{
+              circleRadius: 9,
+              circleColor: "#ffa500",
+              circleOpacity: 0.8,
+              circleStrokeWidth: 5,
+              circleStrokeColor: "#000",
+            }}
+          />
+        </ShapeSource>
       </MapView>
       <View
         style={{
