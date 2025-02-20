@@ -9,9 +9,7 @@ import {
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
-  useDerivedValue,
   withSpring,
-  withTiming,
 } from "react-native-reanimated";
 import {
   MapView,
@@ -59,31 +57,6 @@ export default Home = () => {
   const animatedStyleLocation = useAnimatedStyle(() => ({
     transform: [{ scale: scaleLocation.value }],
   }));
-
-  //
-  const animatedLongitude = useSharedValue(0);
-  const animatedLatitude = useSharedValue(0);
-
-  useEffect(() => {
-    if (!location) return;
-
-    animatedLongitude.value = withSpring(location.coords.longitude, {
-      stiffness: 50,
-      damping: 10,
-      mass: 1,
-    });
-    animatedLatitude.value = withSpring(location.coords.latitude, {
-      stiffness: 50,
-      damping: 10,
-      mass: 1,
-    });
-  }, [location]);
-
-  const animatedCoordinates = useDerivedValue(() => [
-    animatedLongitude.value,
-    animatedLatitude.value,
-  ]);
-  //
 
   useEffect(() => {
     const requestPermission = async () => {
@@ -242,18 +215,17 @@ export default Home = () => {
       >
         <Camera
           ref={cameraRef}
-          centerCoordinate={
-            location
-              ? [location.coords.longitude, location.coords.latitude]
-              : [0, 0]
-          }
-          // centerCoordinate={animatedCoordinates.value}
+          // centerCoordinate={
+          //   location
+          //     ? [location.coords.longitude, location.coords.latitude]
+          //     : [0, 0]
+          // }
           zoomLevel={16}
-          animationDuration={0}
+          // animationDuration={0}
           // ios
-          // animationDuration={2000}
-          // followUserLocation={true}
-          // followZoomLevel={16}
+          animationDuration={2000}
+          followUserLocation={true}
+          followZoomLevel={16}
         />
         <ShapeSource
           id="myShapeSource"
@@ -264,7 +236,10 @@ export default Home = () => {
                 type: "Feature",
                 geometry: {
                   type: "Point",
-                  coordinates: animatedCoordinates.value,
+                  coordinates: [
+                    location.coords.longitude,
+                    location.coords.latitude,
+                  ],
                 },
                 properties: {
                   title: "Current Location",
