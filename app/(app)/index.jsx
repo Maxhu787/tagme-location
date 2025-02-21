@@ -1,22 +1,19 @@
 import { useEffect, useRef, useState } from "react";
-import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
-} from "react-native-reanimated";
+import { StyleSheet, View, Text, Platform } from "react-native";
 import {
   MapView,
   Camera,
-  UserLocation,
-  PointAnnotation,
   Logger,
+  ShapeSource,
+  CircleLayer,
+  UserLocation,
+  UserLocationRenderMode,
 } from "@maplibre/maplibre-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import * as Location from "expo-location";
-import { router } from "expo-router";
+import TopNav from "../../components/TopNav";
+import Locate from "../../components/Locate";
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -38,20 +35,6 @@ export default Home = () => {
   const [location, setLocation] = useState(null);
   const [hasPermission, setHasPermission] = useState(false);
 
-  const scaleSignout = useSharedValue(1);
-  const scaleProfile = useSharedValue(1);
-  const scaleLocation = useSharedValue(1);
-
-  const animatedStyleSignout = useAnimatedStyle(() => ({
-    transform: [{ scale: scaleSignout.value }],
-  }));
-  const animatedStyleProfile = useAnimatedStyle(() => ({
-    transform: [{ scale: scaleProfile.value }],
-  }));
-  const animatedStyleLocation = useAnimatedStyle(() => ({
-    transform: [{ scale: scaleLocation.value }],
-  }));
-
   useEffect(() => {
     const requestPermission = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -69,7 +52,10 @@ export default Home = () => {
     if (!hasPermission) return;
 
     const getCurrentLocation = async () => {
-      let location_data = await Location.getCurrentPositionAsync({});
+      let location_data = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Highest,
+        // maximumAge: 1000,
+      });
       setLocation(location_data);
     };
     getCurrentLocation();
@@ -98,104 +84,17 @@ export default Home = () => {
     );
   }
 
-  const moveToCurrentLocation = () => {
-    if (location) {
-      cameraRef.current?.moveTo(
-        [location.coords.longitude, location.coords.latitude],
-        2000
-      );
-    }
-  };
-
   return (
     <View
       style={{
         display: "flex",
         flexDirection: "column",
         flex: 1,
-        paddingTop: insets.top,
+        paddingTop: Platform.OS === "ios" ? 0 : insets.top,
         // paddingBottom: insets.bottom,
       }}
     >
-      <View
-        style={{
-          display: "flex",
-          position: "absolute",
-          zIndex: 2,
-          top: 10,
-          width: "100%",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "row",
-          padding: 32,
-          gap: 48,
-        }}
-      >
-        <Animated.View style={animatedStyleSignout}>
-          <TouchableOpacity
-            style={{
-              height: 50,
-              width: 100,
-              borderRadius: 10,
-              backgroundColor: "#fff",
-              justifyContent: "center",
-              alignItems: "center",
-              shadowColor: "#000",
-              elevation: 15,
-            }}
-            activeOpacity={1}
-            onPressIn={() =>
-              (scaleSignout.value = withSpring(0.75, {
-                stiffness: 300,
-                damping: 15,
-              }))
-            }
-            onPressOut={() =>
-              (scaleSignout.value = withSpring(1, {
-                stiffness: 150,
-                damping: 10,
-              }))
-            }
-            onPress={() => {
-              router.push("/(app)/settings");
-            }}
-          >
-            <Text>Settings</Text>
-          </TouchableOpacity>
-        </Animated.View>
-        <Animated.View style={animatedStyleProfile}>
-          <TouchableOpacity
-            style={{
-              height: 50,
-              width: 100,
-              borderRadius: 10,
-              backgroundColor: "#fff",
-              justifyContent: "center",
-              alignItems: "center",
-              shadowColor: "#000",
-              elevation: 15,
-            }}
-            activeOpacity={1}
-            onPressIn={() =>
-              (scaleProfile.value = withSpring(0.75, {
-                stiffness: 300,
-                damping: 15,
-              }))
-            }
-            onPressOut={() =>
-              (scaleProfile.value = withSpring(1, {
-                stiffness: 150,
-                damping: 10,
-              }))
-            }
-            onPress={() => {
-              router.push("/(auth)/signout");
-            }}
-          >
-            <Text>Signout</Text>
-          </TouchableOpacity>
-        </Animated.View>
-      </View>
+      <TopNav />
       <MapView
         style={{ flex: 1 }}
         // mapStyle="https://tiles.openfreemap.org/styles/bright"
@@ -206,23 +105,63 @@ export default Home = () => {
       >
         <Camera
           ref={cameraRef}
-          centerCoordinate={
-            location
-              ? [location.coords.longitude, location.coords.latitude]
-              : [0, 0]
-          }
-          followUserLocation
+          // centerCoordinate={
+          //   location
+          //     ? [location.coords.longitude, location.coords.latitude]
+          //     : [0, 0]
+          // }
+          // zoomLevel={16}
+          // animationDuration={0}
+          // ios
+          animationDuration={2000}
+          followUserLocation={true}
           followZoomLevel={16}
-          zoomLevel={16}
-          animationDuration={0}
         />
-        <PointAnnotation
-          id="uniquePoint"
-          title="My Circle Annotation"
-          snippet="This is a circle annotation"
+        {/* <ShapeSource
+          id="myShapeSource"
+          shape={{
+            type: "FeatureCollection",
+            features: [
+              {
+                type: "Feature",
+                geometry: {
+                  type: "Point",
+                  coordinates: [
+                    location.coords.longitude,
+                    location.coords.latitude,
+                  ],
+                },
+                properties: {
+                  title: "Current Location",
+                },
+              },
+            ],
+          }}
+        >
+          <CircleLayer
+            id="circleLayer"
+            style={{
+              circleRadius: 9,
+              circleColor: "blue",
+              circleOpacity: 0.8,
+              circleStrokeWidth: 5,
+              circleStrokeColor: "#000",
+            }}
+          />
+        </ShapeSource> */}
+        <UserLocation
+          androidRenderMode={"compass"}
+          renderMode={UserLocationRenderMode.Native}
+          showsUserHeadingIndicator={true}
+          visible={true}
+          requestsAlwaysUse={true}
+          minDisplacement={1}
+          animated={true}
+        />
+        {/* <PointAnnotation
           coordinate={[location.coords.longitude, location.coords.latitude]}
           selected={false}
-          draggable={true}
+          draggable={false}
           anchor={{ x: 0.5, y: 0.5 }}
         >
           <View
@@ -235,50 +174,9 @@ export default Home = () => {
               borderColor: "#000",
             }}
           />
-        </PointAnnotation>
-        {/* <UserLocation /> */}
+        </PointAnnotation> */}
       </MapView>
-      <View
-        style={{
-          display: "flex",
-          position: "absolute",
-          bottom: 0,
-          width: "100%",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "row",
-          padding: 32,
-        }}
-      >
-        <Animated.View style={animatedStyleLocation}>
-          <TouchableOpacity
-            style={{
-              width: 75,
-              backgroundColor: "#fff",
-              padding: 22,
-              borderRadius: 18,
-              shadowColor: "#000",
-              elevation: 15,
-            }}
-            activeOpacity={1}
-            onPressIn={() =>
-              (scaleLocation.value = withSpring(0.75, {
-                stiffness: 300,
-                damping: 15,
-              }))
-            }
-            onPressOut={() =>
-              (scaleLocation.value = withSpring(1, {
-                stiffness: 150,
-                damping: 10,
-              }))
-            }
-            onPress={moveToCurrentLocation}
-          >
-            <FontAwesome6 name="location-crosshairs" size={32} color="black" />
-          </TouchableOpacity>
-        </Animated.View>
-      </View>
+      <Locate cameraRef={cameraRef} location={location} />
       <StatusBar style="auto" />
     </View>
   );

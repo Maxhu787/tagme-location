@@ -13,8 +13,8 @@ export default Signin = () => {
       >
         (Sign in)
       </Text>
-      <Auth />
-      {/* <Pressable
+      {/* <Auth /> */}
+      <Pressable
         onPress={() => {
           router.dismissAll();
           router.replace("/(app)");
@@ -28,7 +28,7 @@ export default Signin = () => {
         >
           login test
         </Text>
-      </Pressable> */}
+      </Pressable>
       <StatusBar style="auto" />
     </View>
   );
