@@ -5,12 +5,11 @@
 - https://github.com/maplibre/maplibre-react-native/tree/main/examples/shared/src/examples
 - read location options https://docs.expo.dev/versions/latest/sdk/location/#locationoptions
 - snapping zoom scrollbar
+- setup db schema design tables
 - cache map for offline viewing
 - add smooth animation
 - store location to supabase
-- top navbar with profile
 - add themes context
-- setup db schema design tables
   https://github.com/react-native-maps/react-native-maps/issues/3258
 - add zoom in out scroll bar
 - group locations
@@ -18,6 +17,7 @@
 - set safe areas where you wont be tracked (place marker set radius)
 - setup login with apple
 - Use expo-build-properties
+- ~~top navbar with profile~~
 - ~~fix detect when user panning~~
 - ~~set get location interval and location marker~~
 - ~~handle access in-phone location settings~~

@@ -6,35 +6,33 @@ export default TopNav = () => {
   return (
     <View
       style={{
-        display: "flex",
+        // display: "flex",
         position: "absolute",
         zIndex: 2,
-        top: Platform.OS === "ios" ? 40 : 10,
-        width: "100%",
+        top: Platform.OS === "ios" ? 40 : 50,
+        right: 14,
+        // width: "100%",
+        // backgroundColor: "red",
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",
-        paddingHorizontal: 32,
-        paddingVertical: 32,
-        gap: 24,
       }}
     >
       <AnimatedButton
         style={{
-          height: 50,
-          width: 50,
-          borderRadius: 25,
+          height: 64,
+          width: 64,
+          borderRadius: 50,
           backgroundColor: "#fff",
           justifyContent: "center",
           alignItems: "center",
-          shadowColor: "#000",
-          elevation: 15,
         }}
         onPress={() => router.push("/profile/hukaixiang")}
       >
         <Image
-          source={{ uri: "https://picsum.photos/240/240" }}
-          style={{ width: 40, height: 40, borderRadius: 100 }}
+          // source={{ uri: "https://picsum.photos/240/240" }}
+          source={require("../assets/icon.png")}
+          style={{ width: 52, height: 52, borderRadius: 100 }}
           resizeMode="contain"
         />
       </AnimatedButton>
