@@ -9,7 +9,7 @@ export default TopNav = () => {
         // display: "flex",
         position: "absolute",
         zIndex: 2,
-        top: Platform.OS === "ios" ? 40 : 50,
+        top: Platform.OS === "ios" ? 60 : 50,
         right: 14,
         // width: "100%",
         // backgroundColor: "red",
