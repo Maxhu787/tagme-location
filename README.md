@@ -2,7 +2,6 @@
 
 ## add
 
-- fix detect when user panning
 - https://github.com/maplibre/maplibre-react-native/tree/main/examples/shared/src/examples
 - read location options https://docs.expo.dev/versions/latest/sdk/location/#locationoptions
 - snapping zoom scrollbar
@@ -19,6 +18,7 @@
 - set safe areas where you wont be tracked (place marker set radius)
 - setup login with apple
 - Use expo-build-properties
+- ~~fix detect when user panning~~
 - ~~set get location interval and location marker~~
 - ~~handle access in-phone location settings~~
 - ~~in-app usable auth~~
