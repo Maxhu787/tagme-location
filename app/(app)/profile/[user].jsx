@@ -1,9 +1,10 @@
 import { View, Text } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
+import { router } from "expo-router";
+import AnimatedButton from "../../../components/AnimatedButton";
 
 export default User = () => {
   const local = useLocalSearchParams();
-  // add username to header title
   return (
     <View
       style={{
@@ -13,6 +14,11 @@ export default User = () => {
         gap: 20,
       }}
     >
+      <Stack.Screen
+        options={{
+          title: `${local.user}`,
+        }}
+      />
       <Text
         style={{
           fontSize: 30,
@@ -27,6 +33,22 @@ export default User = () => {
       >
         username: {local.user}
       </Text>
+      <AnimatedButton
+        style={{
+          height: 50,
+          width: 100,
+          borderRadius: 10,
+          backgroundColor: "#fff",
+          justifyContent: "center",
+          alignItems: "center",
+          shadowColor: "#000",
+          elevation: 15,
+        }}
+        text="Settings"
+        onPress={() => {
+          router.push("/(app)/settings");
+        }}
+      />
     </View>
   );
 };

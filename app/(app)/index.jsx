@@ -106,7 +106,7 @@ export default Home = () => {
       <MapView
         style={{ flex: 1 }}
         // mapStyle="https://tiles.openfreemap.org/styles/bright"
-        mapStyle="https://tiles.openfreemap.org/styles/positron"
+        // mapStyle="https://tiles.openfreemap.org/styles/positron"
         rotateEnabled={false}
         logoEnabled={false}
         attributionEnabled={false}

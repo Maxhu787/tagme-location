@@ -36,6 +36,7 @@ export default function App() {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size="large" color="#ffa500" />
+        {/* replace with logo soon */}
       </View>
     );
   }

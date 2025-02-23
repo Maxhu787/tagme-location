@@ -1,6 +1,7 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router } from "expo-router";
+import AnimatedButton from "../../components/AnimatedButton";
 
 export default Settings = () => {
   const insets = useSafeAreaInsets();
@@ -26,16 +27,22 @@ export default Settings = () => {
       >
         (Settings page)
       </Text>
-      <Pressable onPress={() => router.push("/profile/username")}>
-        <Text
-          style={{
-            fontSize: 25,
-            color: "rgb(56, 162, 254)",
-          }}
-        >
-          profile test (username)
-        </Text>
-      </Pressable>
+      <AnimatedButton
+        style={{
+          height: 50,
+          width: 100,
+          borderRadius: 10,
+          backgroundColor: "#fff",
+          justifyContent: "center",
+          alignItems: "center",
+          shadowColor: "#000",
+          elevation: 5,
+        }}
+        text="Signout"
+        onPress={() => {
+          router.push("/(auth)/signout");
+        }}
+      />
     </View>
   );
 };
