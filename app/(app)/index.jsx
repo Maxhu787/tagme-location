@@ -7,6 +7,7 @@ import {
   ShapeSource,
   CircleLayer,
   UserLocation,
+  PointAnnotation,
   UserLocationRenderMode,
 } from "@maplibre/maplibre-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -35,6 +36,7 @@ export default Home = () => {
   const insets = useSafeAreaInsets();
   const [location, setLocation] = useState(null);
   const [hasPermission, setHasPermission] = useState(false);
+  const [following, setFollowing] = useState(true);
 
   useEffect(() => {
     const requestPermission = async () => {
@@ -112,6 +114,7 @@ export default Home = () => {
         // paddingBottom: insets.bottom,
       }}
     >
+      <Text>{following ? "true" : "false"}</Text>
       <TopNav />
       <MapView
         style={{ flex: 1 }}
@@ -123,17 +126,18 @@ export default Home = () => {
       >
         <Camera
           ref={cameraRef}
-          // centerCoordinate={
-          //   location
-          //     ? [location.coords.longitude, location.coords.latitude]
-          //     : [0, 0]
-          // }
-          // zoomLevel={16}
-          // animationDuration={0}
-          // ios
-          // animationDuration={2000}
-          // followUserLocation={true}
-          // followZoomLevel={16}
+          animationDuration={2000}
+          followUserLocation={following}
+          {...(Platform.OS === "ios" ? { followZoomLevel: 16 } : {})}
+        />
+        <UserLocation
+          androidRenderMode={"compass"}
+          renderMode={UserLocationRenderMode.Native}
+          showsUserHeadingIndicator={true}
+          visible={true}
+          requestsAlwaysUse={true}
+          minDisplacement={1}
+          animated={true}
         />
         {/* <ShapeSource
           id="myShapeSource"
@@ -160,22 +164,13 @@ export default Home = () => {
             id="circleLayer"
             style={{
               circleRadius: 9,
-              circleColor: "blue",
-              circleOpacity: 0.8,
+              circleColor: "#fff",
+              circleOpacity: 1,
               circleStrokeWidth: 5,
-              circleStrokeColor: "#000",
+              circleStrokeColor: "#fd572e",
             }}
           />
         </ShapeSource> */}
-        <UserLocation
-          androidRenderMode={"compass"}
-          renderMode={UserLocationRenderMode.Native}
-          showsUserHeadingIndicator={true}
-          visible={true}
-          requestsAlwaysUse={true}
-          minDisplacement={1}
-          animated={true}
-        />
         {/* <PointAnnotation
           coordinate={[location.coords.longitude, location.coords.latitude]}
           selected={false}
@@ -194,7 +189,12 @@ export default Home = () => {
           />
         </PointAnnotation> */}
       </MapView>
-      <Locate cameraRef={cameraRef} location={location} />
+      <Locate
+        following={following}
+        setFollowing={setFollowing}
+        cameraRef={cameraRef}
+        location={location}
+      />
       <StatusBar style="auto" />
     </View>
   );

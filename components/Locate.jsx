@@ -2,13 +2,21 @@ import { View, StyleSheet, Platform } from "react-native";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import AnimatedButton from "./AnimatedButton";
 
-export default TopNav = ({ location, cameraRef }) => {
+export default TopNav = ({ following, setFollowing, location, cameraRef }) => {
   const moveToCurrentLocation = () => {
-    if (location) {
-      cameraRef.current?.moveTo(
-        [location.coords.longitude, location.coords.latitude],
-        2000
-      );
+    if (Platform.OS === "ios") {
+      if (location) {
+        cameraRef.current?.moveTo(
+          [location.coords.longitude, location.coords.latitude],
+          2000
+        );
+      }
+    } else {
+      if (following) {
+        setFollowing(false);
+      } else {
+        setFollowing(true);
+      }
     }
   };
   return (
