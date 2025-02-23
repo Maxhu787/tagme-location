@@ -85,8 +85,9 @@ adb reverse tcp:54321 tcp:54321
 router.dimissall
 ```
 
-### useful
+### useful && bugs
 
+https://github.com/nitaliano/react-native-mapbox-gl/issues/222
 https://github.com/rnmapbox/maps/issues/943
 https://github.com/expo/router/discussions/495
 https://icons.expo.fyi/Index

@@ -16,6 +16,7 @@ import * as Location from "expo-location";
 import TopNav from "../../components/TopNav";
 import Locate from "../../components/Locate";
 import Loading from "../../components/Loading";
+import SideBar from "../../components/SideBar";
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -88,22 +89,6 @@ export default Home = () => {
     );
   }
 
-  // return (
-  //   <MapView
-  //     mapStyle="https://tiles.openfreemap.org/styles/positron"
-  //     style={{ flex: 1 }}
-  //   >
-  //     <UserLocation
-  //       androidRenderMode={"compass"}
-  //       renderMode={UserLocationRenderMode.Native}
-  //       showsUserHeadingIndicator={true}
-  //       visible={true}
-  //       requestsAlwaysUse={true}
-  //       minDisplacement={1}
-  //       animated={true}
-  //     />
-  //   </MapView>
-  // );
   return (
     <View
       style={{
@@ -119,7 +104,7 @@ export default Home = () => {
       <MapView
         style={{ flex: 1 }}
         // mapStyle="https://tiles.openfreemap.org/styles/bright"
-        mapStyle="https://tiles.openfreemap.org/styles/positron"
+        // mapStyle="https://tiles.openfreemap.org/styles/positron"
         rotateEnabled={false}
         logoEnabled={false}
         attributionEnabled={false}
@@ -189,6 +174,11 @@ export default Home = () => {
           />
         </PointAnnotation> */}
       </MapView>
+      <SideBar
+        following={following}
+        setFollowing={setFollowing}
+        cameraRef={cameraRef}
+      />
       <Locate
         following={following}
         setFollowing={setFollowing}

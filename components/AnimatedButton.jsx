@@ -31,7 +31,11 @@ export default function AnimatedButton({ text, style, onPress, children }) {
         }
         onPress={onPress || (() => Alert.alert("test"))}
       >
-        {children ? children : <Text>{text}</Text>}
+        {children ? (
+          children
+        ) : (
+          <Text style={{ fontWeight: 600, fontSize: 16 }}>{text}</Text>
+        )}
       </TouchableOpacity>
     </Animated.View>
   );
