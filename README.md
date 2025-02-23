@@ -114,3 +114,5 @@ https://www.youtube.com/watch?v=U5qSNhUXASE
 
 https://dev.to/vrinch/optimizing-performance-in-react-native-apps-expo-354k
 https://protomaps.com/
+
+#fd572e

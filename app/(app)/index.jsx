@@ -101,7 +101,7 @@ export default Home = () => {
         // paddingBottom: insets.bottom,
       }}
     >
-      <Text style={{ marginTop: 200 }}>{following ? "true" : "false"}</Text>
+      {/* <Text style={{ marginTop: 80 }}>{following ? "true" : "false"}</Text> */}
       <TopNav />
       <MapView
         style={{ flex: 1 }}

@@ -43,7 +43,18 @@
         }
       ],
       "@react-native-google-signin/google-signin",
-      "expo-router"
+      "expo-router",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableProguardInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true,
+            "useLegacyPackaging": true
+          },
+          "ios": {}
+        }
+      ]
     ],
     "extra": {
       "router": {
