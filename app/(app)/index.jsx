@@ -14,6 +14,7 @@ import { StatusBar } from "expo-status-bar";
 import * as Location from "expo-location";
 import TopNav from "../../components/TopNav";
 import Locate from "../../components/Locate";
+import Loading from "../../components/Loading";
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -81,9 +82,26 @@ export default Home = () => {
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text style={{ fontSize: 24 }}>Loading...</Text>
       </View>
+      // <Loading />
     );
   }
 
+  // return (
+  //   <MapView
+  //     mapStyle="https://tiles.openfreemap.org/styles/positron"
+  //     style={{ flex: 1 }}
+  //   >
+  //     <UserLocation
+  //       androidRenderMode={"compass"}
+  //       renderMode={UserLocationRenderMode.Native}
+  //       showsUserHeadingIndicator={true}
+  //       visible={true}
+  //       requestsAlwaysUse={true}
+  //       minDisplacement={1}
+  //       animated={true}
+  //     />
+  //   </MapView>
+  // );
   return (
     <View
       style={{
@@ -113,9 +131,9 @@ export default Home = () => {
           // zoomLevel={16}
           // animationDuration={0}
           // ios
-          animationDuration={2000}
-          followUserLocation={true}
-          followZoomLevel={16}
+          // animationDuration={2000}
+          // followUserLocation={true}
+          // followZoomLevel={16}
         />
         {/* <ShapeSource
           id="myShapeSource"
