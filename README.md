@@ -2,7 +2,7 @@
 
 ## add
 
-- https://maplibre.org/maplibre-react-native/docs/components/general/point-annotation
+- fix detect when user panning
 - https://github.com/maplibre/maplibre-react-native/tree/main/examples/shared/src/examples
 - read location options https://docs.expo.dev/versions/latest/sdk/location/#locationoptions
 - snapping zoom scrollbar
