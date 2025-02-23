@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useRouter } from "expo-router";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { supabase } from "../../utils/supabase";
+import { Alert } from "react-native";
 
 export default function Signout() {
   GoogleSignin.configure({
@@ -18,7 +19,7 @@ export default function Signout() {
         router.dismissAll();
         router.replace("/");
       } catch (error) {
-        console.log("Logout error:", error);
+        Alert.alert("Logout error:", error);
       }
     };
     logout();

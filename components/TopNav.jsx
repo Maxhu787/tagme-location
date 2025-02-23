@@ -27,7 +27,7 @@ export default TopNav = () => {
           justifyContent: "center",
           alignItems: "center",
         }}
-        onPress={() => router.push("/profile/hukaixiang")}
+        onPress={() => router.push("/profile/usr_name")}
       >
         <Image
           // source={{ uri: "https://picsum.photos/240/240" }}

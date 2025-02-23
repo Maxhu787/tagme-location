@@ -42,7 +42,7 @@ export default User = () => {
           justifyContent: "center",
           alignItems: "center",
           shadowColor: "#000",
-          elevation: 15,
+          elevation: 5,
         }}
         text="Settings"
         onPress={() => {

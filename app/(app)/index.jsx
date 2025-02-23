@@ -72,6 +72,10 @@ export default Home = () => {
     return () => clearInterval(interval);
   }, [hasPermission]);
 
+  if (!location) {
+    return <Loading />;
+  }
+
   if (!hasPermission) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -79,15 +83,6 @@ export default Home = () => {
           Permission to access location was denied
         </Text>
       </View>
-    );
-  }
-
-  if (!location) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text style={{ fontSize: 24 }}>Loading...</Text>
-      </View>
-      // <Loading />
     );
   }
 
@@ -105,8 +100,8 @@ export default Home = () => {
       <TopNav />
       <MapView
         style={{ flex: 1 }}
-        mapStyle="https://tiles.openfreemap.org/styles/bright"
-        // mapStyle="https://tiles.openfreemap.org/styles/positron"
+        // mapStyle="https://tiles.openfreemap.org/styles/bright"
+        mapStyle="https://tiles.openfreemap.org/styles/positron"
         rotateEnabled={false}
         logoEnabled={false}
         attributionEnabled={false}

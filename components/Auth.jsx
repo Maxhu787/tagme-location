@@ -25,14 +25,14 @@ export default function Auth() {
               provider: "google",
               token: userInfo.data.idToken,
             });
-            console.log(
-              error,
-              JSON.stringify(
-                data.user.identities[0]["identity_data"]["name"],
-                null,
-                2
-              )
-            );
+            // console.log(
+            //   error,
+            //   JSON.stringify(
+            //     data.user.identities[0]["identity_data"]["name"],
+            //     null,
+            //     2
+            //   )
+            // );
             router.dismissAll();
             router.replace("/");
             if (error) Alert.alert(error.message);

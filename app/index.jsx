@@ -3,6 +3,7 @@ import { Redirect } from "expo-router";
 import { supabase } from "../utils/supabase";
 import { View, ActivityIndicator } from "react-native";
 import Bording from "../components/Bording";
+import Loading from "../components/Loading";
 
 export default function App() {
   const [session, setSession] = useState(null);
@@ -36,7 +37,7 @@ export default function App() {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size="large" color="#ffa500" />
-        {/* replace with logo soon */}
+        {/* <Loading /> */}
       </View>
     );
   }
