@@ -1,20 +1,29 @@
 import { View, StyleSheet, Platform } from "react-native";
 import AnimatedButton from "./AnimatedButton";
 
-export default SideBar = ({ following, setFollowing, cameraRef }) => {
+export default SideBar = ({
+  setFollowZoom,
+  following,
+  setFollowing,
+  cameraRef,
+}) => {
   const delay = 2000;
   const handleZoom = (n) => {
-    if (following) {
-      setFollowing(false);
-      cameraRef.current?.zoomTo(n, delay);
-
-      const timeout = setTimeout(() => {
-        setFollowing(true);
-      }, delay + 1000);
-
-      return () => clearTimeout(timeout);
+    if (Platform.OS === "ios") {
+      setFollowZoom(n);
     } else {
-      cameraRef.current?.zoomTo(n, delay);
+      if (following) {
+        setFollowing(false);
+        cameraRef.current?.zoomTo(n, delay);
+
+        const timeout = setTimeout(() => {
+          setFollowing(true);
+        }, delay + 1000);
+
+        return () => clearTimeout(timeout);
+      } else {
+        cameraRef.current?.zoomTo(n, delay);
+      }
     }
   };
 

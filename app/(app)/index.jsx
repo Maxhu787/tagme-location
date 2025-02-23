@@ -17,6 +17,7 @@ import TopNav from "../../components/TopNav";
 import Locate from "../../components/Locate";
 import Loading from "../../components/Loading";
 import SideBar from "../../components/SideBar";
+import AnimatedButton from "../../components/AnimatedButton";
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -37,7 +38,8 @@ export default Home = () => {
   const insets = useSafeAreaInsets();
   const [location, setLocation] = useState(null);
   const [hasPermission, setHasPermission] = useState(false);
-  const [following, setFollowing] = useState(true);
+  const [following, setFollowing] = useState(true); // android
+  const [followZoom, setFollowZoom] = useState(16); // ios
 
   useEffect(() => {
     const requestPermission = async () => {
@@ -99,7 +101,7 @@ export default Home = () => {
         // paddingBottom: insets.bottom,
       }}
     >
-      <Text>{following ? "true" : "false"}</Text>
+      <Text style={{ marginTop: 200 }}>{following ? "true" : "false"}</Text>
       <TopNav />
       <MapView
         style={{ flex: 1 }}
@@ -120,8 +122,8 @@ export default Home = () => {
           }}
           ref={cameraRef}
           animationDuration={2000}
-          followUserLocation={following}
-          {...(Platform.OS === "ios" ? { followZoomLevel: 16 } : {})}
+          followUserLocation={Platform.OS === "ios" ? true : following}
+          {...(Platform.OS === "ios" ? { followZoomLevel: followZoom } : {})}
         />
         <UserLocation
           androidRenderMode={"compass"}
@@ -183,6 +185,7 @@ export default Home = () => {
         </PointAnnotation> */}
       </MapView>
       <SideBar
+        setFollowZoom={setFollowZoom}
         following={following}
         setFollowing={setFollowing}
         cameraRef={cameraRef}
