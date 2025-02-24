@@ -6,13 +6,10 @@ export default TopNav = () => {
   return (
     <View
       style={{
-        // display: "flex",
         position: "absolute",
         zIndex: 2,
-        top: Platform.OS === "ios" ? 60 : 50,
-        right: 14,
-        // width: "100%",
-        // backgroundColor: "red",
+        top: Platform.OS === "ios" ? 65 : 50,
+        right: 20,
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",

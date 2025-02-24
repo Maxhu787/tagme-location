@@ -96,7 +96,6 @@ export default Home = () => {
         // paddingBottom: insets.bottom,
       }}
     >
-      {/* <Text style={{ marginTop: 80 }}>{following ? "true" : "false"}</Text> */}
       <TopNav />
       <MapView
         style={{ flex: 1 }}
@@ -139,8 +138,8 @@ export default Home = () => {
                 geometry: {
                   type: "Point",
                   coordinates: [
-                    location.coords.longitude,
-                    location.coords.latitude,
+                    location.coords.longitude - 0.001,
+                    location.coords.latitude - 0.001,
                   ],
                 },
                 properties: {
@@ -160,9 +159,12 @@ export default Home = () => {
               circleStrokeColor: "#fd572e",
             }}
           />
-        </ShapeSource> */}
-        {/* <PointAnnotation
-          coordinate={[location.coords.longitude, location.coords.latitude]}
+        </ShapeSource>
+        <PointAnnotation
+          coordinate={[
+            location.coords.longitude + 0.001,
+            location.coords.latitude + 0.001,
+          ]}
           selected={false}
           draggable={false}
           anchor={{ x: 0.5, y: 0.5 }}
