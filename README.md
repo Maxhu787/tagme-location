@@ -114,5 +114,7 @@ https://www.youtube.com/watch?v=U5qSNhUXASE
 
 https://dev.to/vrinch/optimizing-performance-in-react-native-apps-expo-354k
 https://protomaps.com/
-
+https://picsum.photos/240/240
 #fd572e
+
+setup render multiple points

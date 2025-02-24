@@ -6,6 +6,7 @@ import {
   Logger,
   ShapeSource,
   CircleLayer,
+  SymbolLayer,
   UserLocation,
   PointAnnotation,
   UserLocationRenderMode,
@@ -17,7 +18,6 @@ import TopNav from "../../components/TopNav";
 import Locate from "../../components/Locate";
 import Loading from "../../components/Loading";
 import SideBar from "../../components/SideBar";
-import AnimatedButton from "../../components/AnimatedButton";
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -32,6 +32,34 @@ Logger.setLogCallback((log) => {
   }
   return false;
 });
+
+const test = [
+  {
+    id: "1",
+    coordinates: [-74.006, 40.7128],
+    icon: "https://picsum.photos/240/240",
+  },
+  {
+    id: "2",
+    coordinates: [-118.2437, 34.0522],
+    icon: "https://picsum.photos/240/240",
+  },
+  {
+    id: "3",
+    coordinates: [-0.1278, 51.5074],
+    icon: "https://picsum.photos/240/240",
+  },
+];
+
+const geoJsonData = {
+  type: "FeatureCollection",
+  features: test.map((item) => ({
+    type: "Feature",
+    id: item.id,
+    properties: { icon: item.icon },
+    geometry: { type: "Point", coordinates: item.coordinates },
+  })),
+};
 
 export default Home = () => {
   const cameraRef = useRef(null);
@@ -100,7 +128,7 @@ export default Home = () => {
       <MapView
         style={{ flex: 1 }}
         // mapStyle="https://tiles.openfreemap.org/styles/bright"
-        mapStyle="https://tiles.openfreemap.org/styles/positron"
+        // mapStyle="https://tiles.openfreemap.org/styles/positron"
         rotateEnabled={false}
         logoEnabled={false}
         attributionEnabled={false}
@@ -119,6 +147,24 @@ export default Home = () => {
           followUserLocation={Platform.OS === "ios" ? true : following}
           {...(Platform.OS === "ios" ? { followZoomLevel: followZoom } : {})}
         />
+        {/* <ShapeSource
+          id="markerSource"
+          shape={geoJsonData}
+          // images={Object.fromEntries(test.map((i) => [i.icon, i.icon]))}
+          images={test.reduce(
+            (acc, item) => ({ ...acc, [item.id]: item.icon }),
+            {}
+          )}
+        >
+          <SymbolLayer
+            id="markerLayer"
+            style={{
+              iconImage: ["get", "id"],
+              iconSize: 0.5,
+              iconAllowOverlap: true,
+            }}
+          />
+        </ShapeSource> */}
         <UserLocation
           androidRenderMode={"compass"}
           renderMode={UserLocationRenderMode.Native}
