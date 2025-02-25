@@ -5,9 +5,11 @@ import {
 } from "@react-native-google-signin/google-signin";
 import { supabase } from "../utils/supabase";
 import { router } from "expo-router";
-import { Alert } from "react-native";
+import { Alert, Text, View } from "react-native";
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
+import AnimatedButton from "./AnimatedButton";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 export default function Auth() {
   GoogleSignin.configure({
@@ -16,50 +18,90 @@ export default function Auth() {
   });
   const { user, setUser } = useContext(UserContext);
 
+  const handlePress = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      if (userInfo.data.idToken) {
+        const { data, error } = await supabase.auth.signInWithIdToken({
+          provider: "google",
+          token: userInfo.data.idToken,
+        });
+        // console.log(
+        //   error,
+        //   JSON.stringify(
+        //     data.user.identities[0]["identity_data"]["name"],
+        //     null,
+        //     2
+        //   )
+        // );
+        setUser(data.user);
+        router.dismissAll();
+        router.replace("/");
+        if (error) Alert.alert(error.message);
+      } else {
+        throw new Error("No ID token found");
+      }
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+        console.log(error);
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+        console.log(error);
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+        console.log(error);
+      } else {
+        // some other error happened
+        console.log(error);
+      }
+    }
+  };
   return (
-    <GoogleSigninButton
-      size={GoogleSigninButton.Size.Wide}
-      color={GoogleSigninButton.Color.Dark}
-      onPress={async () => {
-        try {
-          await GoogleSignin.hasPlayServices();
-          const userInfo = await GoogleSignin.signIn();
-          if (userInfo.data.idToken) {
-            const { data, error } = await supabase.auth.signInWithIdToken({
-              provider: "google",
-              token: userInfo.data.idToken,
-            });
-            // console.log(
-            //   error,
-            //   JSON.stringify(
-            //     data.user.identities[0]["identity_data"]["name"],
-            //     null,
-            //     2
-            //   )
-            // );
-            setUser(data.user);
-            router.dismissAll();
-            router.replace("/");
-            if (error) Alert.alert(error.message);
-          } else {
-            throw new Error("No ID token found");
-          }
-        } catch (error) {
-          if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-            // user cancelled the login flow
-            console.log(error);
-          } else if (error.code === statusCodes.IN_PROGRESS) {
-            // operation (e.g. sign in) is in progress already
-            console.log(error);
-          } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-            // play services not available or outdated
-            console.log(error);
-          } else {
-            // some other error happened
-            console.log(error);
-          }
-        }
-      }}
-    />
+    <>
+      {/* <GoogleSigninButton
+        size={GoogleSigninButton.Size.Wide}
+        color={GoogleSigninButton.Color.Dark}
+        onPress={handlePress}
+      /> */}
+      <AnimatedButton
+        style={{
+          height: 52,
+          width: 290,
+          borderRadius: 50,
+          backgroundColor: "#4285F4",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        onPress={handlePress}
+      >
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "row",
+            gap: 12,
+          }}
+        >
+          <AntDesign
+            name="google"
+            style={{ marginRight: 0 }}
+            size={30}
+            color="#fff"
+          />
+          <Text
+            style={{
+              fontSize: 16,
+              color: "#fff",
+              fontWeight: "bold",
+              marginBottom: 1,
+            }}
+          >
+            Sign in with google
+          </Text>
+        </View>
+      </AnimatedButton>
+    </>
   );
 }

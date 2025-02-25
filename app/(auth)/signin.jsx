@@ -6,13 +6,13 @@ import { router } from "expo-router";
 export default Signin = () => {
   return (
     <View style={styles.container}>
-      <Text
+      {/* <Text
         style={{
           fontSize: 30,
         }}
       >
         (Sign in)
-      </Text>
+      </Text> */}
       <Auth />
       {/* <Pressable
         onPress={() => {

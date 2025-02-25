@@ -119,3 +119,5 @@ https://picsum.photos/240/240
 
 setup render multiple points
 username min 4 max 32
+country codes
+https://stackoverflow.com/questions/76720049/how-to-utilize-usecontext-in-expo-router

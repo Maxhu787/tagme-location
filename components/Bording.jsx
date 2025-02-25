@@ -1,44 +1,141 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import { Link } from "expo-router";
-import { useContext } from "react";
-import { UserContext } from "../contexts/UserContext";
+import React, { useRef, useState } from "react";
+import {
+  View,
+  Text,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+  Animated,
+} from "react-native";
+import { FlashList } from "@shopify/flash-list";
+import { router } from "expo-router";
 
-export default Bording = () => {
-  // add bording scroll view
-  const { user, setUser } = useContext(UserContext);
+const { width } = Dimensions.get("window");
+
+const slides = [
+  {
+    id: "1",
+    title: "Screen 1",
+    description: "lorem ipsum dolor sit amet",
+    // image: "https://picsum.photos/300/300",
+  },
+  {
+    id: "2",
+    title: "Screen 2",
+    description: "lorem ipsum dolor sit amet",
+    // image: "https://picsum.photos/300/300",
+  },
+  {
+    id: "3",
+    title: "Screen 3",
+    description: "lore ipsum dolor sit amet",
+    // image: "https://picsum.photos/300/300",
+  },
+];
+
+const OnboardingItem = ({ item }) => (
+  <View
+    style={{
+      width,
+      alignItems: "center",
+      padding: 40,
+      flex: 1,
+    }}
+  >
+    <Image
+      source={{ uri: item.image }}
+      style={{ width: 355, height: 450, borderRadius: 20, marginTop: 80 }}
+    />
+    <Text style={{ fontSize: 24, fontWeight: "bold", marginTop: 30 }}>
+      {item.title}
+    </Text>
+    <Text style={{ fontSize: 16, textAlign: "center", marginTop: 10 }}>
+      {item.description}
+    </Text>
+  </View>
+);
+
+const Bording = () => {
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const flashListRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const indicators = useRef(slides.map(() => new Animated.Value(10))).current;
+
+  const handleScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+    { useNativeDriver: false }
+  );
+
+  const animateIndicator = (index) => {
+    indicators.forEach((indicator, i) => {
+      Animated.timing(indicator, {
+        toValue: i === index ? 20 : 10,
+        duration: 100,
+        useNativeDriver: false,
+      }).start();
+    });
+  };
+
+  const handleNext = () => {
+    if (currentIndex < slides.length - 1) {
+      const newIndex = currentIndex + 1;
+      setCurrentIndex(newIndex);
+      animateIndicator(newIndex);
+      flashListRef.current.scrollToIndex({ index: newIndex, animated: true });
+    } else {
+      router.push("/(auth)/signin");
+    }
+  };
+
   return (
-    <View style={styles.container}>
-      <Text
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <FlashList
+        ref={flashListRef}
+        data={slides}
+        keyExtractor={(item) => item.id}
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        onScroll={handleScroll}
+        onViewableItemsChanged={({ viewableItems }) => {
+          const newIndex = viewableItems[0]?.index || 0;
+          setCurrentIndex(newIndex);
+          animateIndicator(newIndex);
+        }}
+        estimatedItemSize={width}
+        renderItem={({ item }) => <OnboardingItem item={item} />}
+      />
+      <View style={{ flexDirection: "row", position: "absolute", bottom: 90 }}>
+        {slides.map((_, i) => (
+          <Animated.View
+            key={i}
+            style={{
+              width: indicators[i],
+              height: 10,
+              borderRadius: 5,
+              backgroundColor: i === currentIndex ? "black" : "gray",
+              margin: 5,
+            }}
+          />
+        ))}
+      </View>
+      <TouchableOpacity
+        onPress={handleNext}
         style={{
-          fontSize: 30,
+          width: width - 40,
+          paddingVertical: 10,
+          backgroundColor: "#000",
+          borderRadius: 5,
+          alignItems: "center",
+          bottom: 40,
         }}
       >
-        (Bording view)
-      </Text>
-      <Text>{JSON.stringify(user)}</Text>
-      <Link href="/(auth)/signin" asChild>
-        <Pressable>
-          <Text
-            style={{
-              fontSize: 25,
-              color: "rgb(56, 162, 254)",
-            }}
-          >
-            signin
-          </Text>
-        </Pressable>
-      </Link>
-      <StatusBar style="auto" />
+        <Text style={{ color: "white", fontSize: 16 }}>
+          {currentIndex == 2 ? "Get Started!" : "Next"}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 20,
-  },
-});
+export default Bording;
