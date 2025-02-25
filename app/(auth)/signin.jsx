@@ -14,7 +14,7 @@ export default Signin = () => {
       >
         Sign in
       </Text>
-      {Platform.OS !== "ios" ? (
+      {Platform.OS === "ios" ? (
         <Pressable
           onPress={() => {
             router.dismissAll();
