@@ -118,3 +118,4 @@ https://picsum.photos/240/240
 #fd572e
 
 setup render multiple points
+username min 4 max 32

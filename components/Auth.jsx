@@ -5,6 +5,7 @@ import {
 } from "@react-native-google-signin/google-signin";
 import { supabase } from "../utils/supabase";
 import { router } from "expo-router";
+import { Alert } from "react-native";
 
 export default function Auth() {
   GoogleSignin.configure({
