@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Redirect } from "expo-router";
 import { supabase } from "../utils/supabase";
 import { View, ActivityIndicator } from "react-native";
 import Bording from "../components/Bording";
-import Loading from "../components/Loading";
+import { UserContext } from "../contexts/UserContext";
 
 export default function App() {
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const { user, setUser } = useContext(UserContext);
   useEffect(() => {
     const fetchSession = async () => {
       const { data } = await supabase.auth.getSession();
@@ -37,16 +38,11 @@ export default function App() {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size="large" color="#ffa500" />
-        {/* <Loading /> */}
       </View>
     );
   }
 
   // return session && session.user ? <Redirect href="/(app)" /> : <Bording />;
 
-  return session && session.user ? (
-    <Redirect href="/(app)" />
-  ) : (
-    <Redirect href="/(app)" />
-  );
+  return <Bording />;
 }

@@ -1,9 +1,12 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Link } from "expo-router";
+import { useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
 
 export default Bording = () => {
   // add bording scroll view
+  const { user, setUser } = useContext(UserContext);
   return (
     <View style={styles.container}>
       <Text
@@ -13,6 +16,7 @@ export default Bording = () => {
       >
         (Bording view)
       </Text>
+      <Text>{JSON.stringify(user)}</Text>
       <Link href="/(auth)/signin" asChild>
         <Pressable>
           <Text

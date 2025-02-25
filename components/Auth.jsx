@@ -6,12 +6,15 @@ import {
 import { supabase } from "../utils/supabase";
 import { router } from "expo-router";
 import { Alert } from "react-native";
+import { useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
 
 export default function Auth() {
   GoogleSignin.configure({
     webClientId:
       "1094899319864-in6t1vgarrq32m59d34vpuk692nesg93.apps.googleusercontent.com",
   });
+  const { user, setUser } = useContext(UserContext);
 
   return (
     <GoogleSigninButton
@@ -34,6 +37,7 @@ export default function Auth() {
             //     2
             //   )
             // );
+            setUser(data.user);
             router.dismissAll();
             router.replace("/");
             if (error) Alert.alert(error.message);
