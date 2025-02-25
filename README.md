@@ -94,6 +94,7 @@ https://icons.expo.fyi/Index
 https://jwt.io/
 https://supabase.com/docs/reference/javascript/explain
 https://docs.expo.dev/versions/latest/sdk/location/
+https://github.com/Shopify/flash-list/issues/1352
 
 ### research
 
@@ -121,3 +122,4 @@ setup render multiple points
 username min 4 max 32
 country codes
 https://stackoverflow.com/questions/76720049/how-to-utilize-usecontext-in-expo-router
+pod install
