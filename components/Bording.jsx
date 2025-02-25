@@ -6,60 +6,69 @@ import {
   Dimensions,
   TouchableOpacity,
   Animated,
+  Platform,
 } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { router, useFocusEffect } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const slides = [
   {
     id: "1",
     title: "Screen 1",
     description: "lorem ipsum dolor sit amet",
-    // image: "https://picsum.photos/300/300",
+    image: "https://picsum.photos/id/664/1920/1080",
   },
   {
     id: "2",
     title: "Screen 2",
     description: "lorem ipsum dolor sit amet",
-    // image: "https://picsum.photos/300/300",
+    image: "https://picsum.photos/id/664/1920/1080",
   },
   {
     id: "3",
     title: "Screen 3",
     description: "lore ipsum dolor sit amet",
-    // image: "https://picsum.photos/300/300",
+    image: "https://picsum.photos/id/664/1920/1080",
   },
 ];
 
-const OnboardingItem = ({ item }) => (
-  <View
-    style={{
-      width,
-      alignItems: "center",
-      padding: 40,
-      flex: 1,
-    }}
-  >
-    <Image
-      source={{ uri: item.image }}
+const OnboardingItem = ({ item }) => {
+  const insets = useSafeAreaInsets();
+
+  return (
+    <View
       style={{
-        width: width,
-        height: 540,
-        // borderBottomLeftRadius: 20,
-        // borderBottomRightRadius: 20,
-        marginTop: -20,
+        width,
+        alignItems: "center",
+        padding: 35,
+        backgroundColor: "Red",
+        flex: 1,
       }}
-    />
-    <Text style={{ fontSize: 24, fontWeight: "bold", marginTop: 20 }}>
-      {item.title}
-    </Text>
-    <Text style={{ fontSize: 16, textAlign: "center", marginTop: 10 }}>
-      {item.description}
-    </Text>
-  </View>
-);
+    >
+      <Image
+        source={{ uri: item.image }}
+        style={{
+          width: width,
+          // height: 540,
+          height:
+            Platform.OS === "ios" ? height / 1.45 + insets.top : height / 1.45,
+          // borderBottomLeftRadius: 20,
+          // borderBottomRightRadius: 20,
+          marginTop: -20,
+        }}
+      />
+      <Text style={{ fontSize: 24, fontWeight: "bold", marginTop: 20 }}>
+        {item.title}
+      </Text>
+      <Text style={{ fontSize: 16, textAlign: "center", marginTop: 10 }}>
+        {item.description}
+      </Text>
+    </View>
+  );
+};
 
 const Bording = () => {
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -119,7 +128,13 @@ const Bording = () => {
         estimatedItemSize={width}
         renderItem={({ item }) => <OnboardingItem item={item} />}
       />
-      <View style={{ flexDirection: "row", position: "absolute", bottom: 90 }}>
+      <View
+        style={{
+          flexDirection: "row",
+          position: "absolute",
+          bottom: Platform.OS === "ios" ? 100 : 90,
+        }}
+      >
         {slides.map((_, i) => (
           <Animated.View
             key={i}
@@ -141,7 +156,7 @@ const Bording = () => {
           backgroundColor: "#000",
           borderRadius: 5,
           alignItems: "center",
-          bottom: 40,
+          bottom: Platform.OS === "ios" ? 60 : 40,
         }}
       >
         <Text style={{ color: "white", fontSize: 16 }}>
