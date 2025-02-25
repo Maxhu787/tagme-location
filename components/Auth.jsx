@@ -70,7 +70,7 @@ export default function Auth() {
           height: 52,
           width: 290,
           borderRadius: 50,
-          backgroundColor: "#4285F4",
+          backgroundColor: "#000",
           justifyContent: "center",
           alignItems: "center",
         }}

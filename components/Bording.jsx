@@ -8,7 +8,7 @@ import {
   Animated,
 } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 
 const { width } = Dimensions.get("window");
 
@@ -44,9 +44,15 @@ const OnboardingItem = ({ item }) => (
   >
     <Image
       source={{ uri: item.image }}
-      style={{ width: 355, height: 450, borderRadius: 20, marginTop: 80 }}
+      style={{
+        width: width,
+        height: 540,
+        // borderBottomLeftRadius: 20,
+        // borderBottomRightRadius: 20,
+        marginTop: -20,
+      }}
     />
-    <Text style={{ fontSize: 24, fontWeight: "bold", marginTop: 30 }}>
+    <Text style={{ fontSize: 24, fontWeight: "bold", marginTop: 20 }}>
       {item.title}
     </Text>
     <Text style={{ fontSize: 16, textAlign: "center", marginTop: 10 }}>
@@ -60,6 +66,14 @@ const Bording = () => {
   const flashListRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const indicators = useRef(slides.map(() => new Animated.Value(10))).current;
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setCurrentIndex(0);
+      animateIndicator(0);
+      flashListRef.current?.scrollToIndex({ index: 0, animated: false });
+    }, [])
+  );
 
   const handleScroll = Animated.event(
     [{ nativeEvent: { contentOffset: { x: scrollX } } }],

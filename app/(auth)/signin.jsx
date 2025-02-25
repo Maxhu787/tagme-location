@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Platform, Pressable } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Auth from "../../components/Auth";
 import { router } from "expo-router";
@@ -6,29 +6,33 @@ import { router } from "expo-router";
 export default Signin = () => {
   return (
     <View style={styles.container}>
-      {/* <Text
+      <Text
         style={{
-          fontSize: 30,
+          fontSize: 40,
+          fontWeight: "bold",
         }}
       >
-        (Sign in)
-      </Text> */}
-      <Auth />
-      {/* <Pressable
-        onPress={() => {
-          router.dismissAll();
-          router.replace("/(app)");
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 25,
-            color: "rgb(56, 162, 254)",
+        Sign in
+      </Text>
+      {Platform.OS !== "ios" ? (
+        <Pressable
+          onPress={() => {
+            router.dismissAll();
+            router.replace("/(app)");
           }}
         >
-          login test
-        </Text>
-      </Pressable> */}
+          <Text
+            style={{
+              fontSize: 25,
+              color: "rgb(56, 162, 254)",
+            }}
+          >
+            login test
+          </Text>
+        </Pressable>
+      ) : (
+        <Auth />
+      )}
       <StatusBar style="auto" />
     </View>
   );
@@ -39,6 +43,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    gap: 20,
+    gap: 60,
   },
 });

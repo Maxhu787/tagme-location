@@ -42,7 +42,7 @@ export default function App() {
     );
   }
 
-  // return session && session.user ? <Redirect href="/(app)" /> : <Bording />;
+  return session && session.user ? <Redirect href="/(app)" /> : <Bording />;
 
-  return <Bording />;
+  // return <Bording />;
 }
