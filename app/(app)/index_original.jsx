@@ -42,16 +42,27 @@ export default Home = () => {
   const [followZoom, setFollowZoom] = useState(16); // ios
 
   useEffect(() => {
+    const requestPermission = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status === "granted") {
+        setHasPermission(true);
+      } else {
+        setHasPermission(false);
+      }
+    };
+
+    requestPermission();
+  }, []);
+
+  useEffect(() => {
+    if (!hasPermission) return;
+
     const getCurrentLocation = async () => {
       let location_data = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.Highest,
         // maximumAge: 1000,
       });
-      if (Platform.OS === "ios") {
-        setLocation(location_data);
-      } else {
-        setLocation("");
-      }
+      setLocation(location_data);
     };
     getCurrentLocation();
     const interval = setInterval(() => {
@@ -59,7 +70,21 @@ export default Home = () => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [hasPermission]);
+
+  if (!location) {
+    return <Loading />;
+  }
+
+  if (!hasPermission) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text style={{ fontSize: 24 }}>
+          Permission to access location was denied
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <View
@@ -71,6 +96,7 @@ export default Home = () => {
         // paddingBottom: insets.bottom,
       }}
     >
+      <TopNav />
       <MapView
         style={{ flex: 1 }}
         // mapStyle="https://tiles.openfreemap.org/styles/bright"
@@ -85,9 +111,13 @@ export default Home = () => {
         }}
       >
         <Camera
+          defaultSettings={{
+            zoomLevel: 5,
+          }}
           ref={cameraRef}
-          followUserLocation={true}
-          followZoomLevel={16}
+          // animationDuration={2000}
+          followUserLocation={Platform.OS === "ios" ? true : following}
+          {...(Platform.OS === "ios" ? { followZoomLevel: followZoom } : {})}
         />
         <UserLocation
           androidRenderMode={"compass"}
@@ -99,7 +129,6 @@ export default Home = () => {
           animated={true}
         />
       </MapView>
-      <TopNav />
       <SideBar
         setFollowZoom={setFollowZoom}
         following={following}

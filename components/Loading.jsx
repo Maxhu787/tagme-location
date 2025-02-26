@@ -1,9 +1,10 @@
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, Text } from "react-native";
 
 export default function Loading() {
   return (
     <View style={styles.container}>
-      <Image source={require("../assets/tagme.png")} style={styles.logo} />
+      <Text>e</Text>
+      {/* <Image source={require("../assets/tagme.png")} style={styles.logo} /> */}
     </View>
   );
 }
