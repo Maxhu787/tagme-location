@@ -5,7 +5,13 @@ import Animated, {
 } from "react-native-reanimated";
 import { Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 
-export default function AnimatedButton({ text, style, onPress, children }) {
+export default function AnimatedButton({
+  text,
+  style,
+  onPress,
+  buttonScale = 0.75,
+  children,
+}) {
   const scaleButton = useSharedValue(1);
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -18,7 +24,7 @@ export default function AnimatedButton({ text, style, onPress, children }) {
         style={[styles.button, style]}
         activeOpacity={1}
         onPressIn={() =>
-          (scaleButton.value = withSpring(0.75, {
+          (scaleButton.value = withSpring(buttonScale, {
             stiffness: 300,
             damping: 15,
           }))
@@ -41,15 +47,4 @@ export default function AnimatedButton({ text, style, onPress, children }) {
   );
 }
 
-const styles = StyleSheet.create({
-  button: {
-    // height: 50,
-    // width: 100,
-    // borderRadius: 10,
-    // backgroundColor: "#fff",
-    // justifyContent: "center",
-    // alignItems: "center",
-    // shadowColor: "#000",
-    // elevation: 15,
-  },
-});
+const styles = StyleSheet.create({});

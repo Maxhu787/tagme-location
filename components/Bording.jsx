@@ -11,6 +11,7 @@ import {
 import { FlashList } from "@shopify/flash-list";
 import { router, useFocusEffect } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import AnimatedButton from "./AnimatedButton";
 
 const { width, height } = Dimensions.get("window");
 
@@ -106,8 +107,8 @@ const Bording = () => {
       animateIndicator(newIndex);
       flashListRef.current.scrollToIndex({ index: newIndex, animated: true });
     } else {
-      // router.push("/(auth)/signin");
-      router.push("/(app)");
+      router.push("/(auth)/signin");
+      // router.push("/(app)");
     }
   };
 
@@ -149,7 +150,7 @@ const Bording = () => {
           />
         ))}
       </View>
-      <TouchableOpacity
+      <AnimatedButton
         onPress={handleNext}
         style={{
           width: width - 40,
@@ -159,11 +160,12 @@ const Bording = () => {
           alignItems: "center",
           bottom: Platform.OS === "ios" ? 60 : 40,
         }}
+        buttonScale={0.85}
       >
         <Text style={{ color: "white", fontSize: 16 }}>
           {currentIndex == 2 ? "Get Started!" : "Next"}
         </Text>
-      </TouchableOpacity>
+      </AnimatedButton>
     </View>
   );
 };

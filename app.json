@@ -34,7 +34,14 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "@maplibre/maplibre-react-native",
+      [
+        "@maplibre/maplibre-react-native",
+        {
+          "android": {
+            "locationEngine": "google"
+          }
+        }
+      ],
       [
         "expo-location",
         {

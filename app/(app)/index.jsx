@@ -102,12 +102,12 @@ export default Home = () => {
         />
       </MapView>
       <TopNav />
-      <SideBar
+      {/* <SideBar
         setFollowZoom={setFollowZoom}
         following={following}
         setFollowing={setFollowing}
         cameraRef={cameraRef}
-      />
+      /> */}
       <Locate
         following={following}
         setFollowing={setFollowing}

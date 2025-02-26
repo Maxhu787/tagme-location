@@ -44,6 +44,6 @@ export default function App() {
 
   // return session && session.user ? <Redirect href="/(app)" /> : <Bording />;
 
-  // return <Redirect href="/(app)" />;
-  return <Bording />;
+  return <Redirect href="/(app)" />;
+  // return <Bording />;
 }

@@ -45,16 +45,16 @@ export default function Auth() {
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
-        console.log(error);
+        console.log(error, "SIGN_IN_CANCELLED");
       } else if (error.code === statusCodes.IN_PROGRESS) {
         // operation (e.g. sign in) is in progress already
-        console.log(error);
+        console.log(error, "IN_PROGRESS");
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
         // play services not available or outdated
-        console.log(error);
+        console.log(error, "PLAY_SERVICES_NOT_AVAILABLE");
       } else {
         // some other error happened
-        console.log(error);
+        console.log(error, "auth error");
       }
     }
   };
