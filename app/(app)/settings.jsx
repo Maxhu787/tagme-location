@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { router } from "expo-router";
+import { router, Stack } from "expo-router";
 import AnimatedButton from "../../components/AnimatedButton";
 
 export default Settings = () => {
@@ -20,13 +20,12 @@ export default Settings = () => {
         gap: 20,
       }}
     >
-      <Text
-        style={{
-          fontSize: 30,
+      <Stack.Screen
+        options={{
+          // headerTitle: (props) => <LogoTitle {...props} />,
+          headerShadowVisible: false,
         }}
-      >
-        (Settings page)
-      </Text>
+      />
       <AnimatedButton
         style={{
           height: 50,

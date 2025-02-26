@@ -28,7 +28,7 @@ export default TopNav = () => {
       >
         <Image
           // source={{ uri: "https://picsum.photos/240/240" }}
-          source={require("../assets/icon.png")}
+          // source={require("../assets/icon.png")}
           style={{ width: 52, height: 52, borderRadius: 100 }}
           resizeMode="contain"
         />

@@ -12,11 +12,6 @@ export default TopNav = ({ following, setFollowing, location, cameraRef }) => {
         );
       }
     } else {
-      // if (following) {
-      //   setFollowing(false);
-      // } else {
-      //   setFollowing(true);
-      // }
       setFollowing(true);
     }
   };
