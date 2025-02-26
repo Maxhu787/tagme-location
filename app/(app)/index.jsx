@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { StyleSheet, View, Text, Platform } from "react-native";
+import { StyleSheet, View, Text, Platform, Dimensions } from "react-native";
 import {
   MapView,
   Camera,
@@ -18,6 +18,8 @@ import TopNav from "../../components/TopNav";
 import Locate from "../../components/Locate";
 import Loading from "../../components/Loading";
 import SideBar from "../../components/SideBar";
+
+const { height } = Dimensions.get("window");
 
 Logger.setLogCallback((log) => {
   const { message } = log;
