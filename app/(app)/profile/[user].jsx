@@ -43,7 +43,7 @@ export default User = () => {
                 router.push("/(app)/settings");
               }}
             >
-              <FontAwesome6 name="gear" size={24} color="black" />{" "}
+              <FontAwesome6 name="gear" size={24} color="black" />
             </AnimatedButton>
           ),
         }}

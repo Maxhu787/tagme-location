@@ -14,7 +14,6 @@ export default Settings = () => {
         flex: 1,
         paddingTop: insets.top,
         paddingBottom: insets.bottom,
-
         justifyContent: "center",
         alignItems: "center",
         gap: 20,
@@ -22,7 +21,6 @@ export default Settings = () => {
     >
       <Stack.Screen
         options={{
-          // headerTitle: (props) => <LogoTitle {...props} />,
           headerShadowVisible: false,
         }}
       />
