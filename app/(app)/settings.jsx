@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import AnimatedButton from "../../components/AnimatedButton";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
 export default function Example() {
   const [darkMode, setDarkMode] = useState(false);
@@ -173,7 +174,7 @@ export default function Example() {
             style={styles.row}
             // onPress={() => router.push("/(auth)/signout")}
           >
-            <Text style={styles.rowLabel}>Signout</Text>
+            <Text style={[styles.rowLabel, { color: "#444" }]}>Signout</Text>
             <View style={styles.rowSpacer} />
           </AnimatedButton>
         </View>
