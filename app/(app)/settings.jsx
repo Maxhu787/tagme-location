@@ -1,7 +1,5 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router, Stack } from "expo-router";
-import AnimatedButton from "../../components/AnimatedButton";
-
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -9,62 +7,33 @@ import {
   ScrollView,
   View,
   Text,
-  TouchableOpacity,
   Switch,
   Image,
 } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
+import AnimatedButton from "../../components/AnimatedButton";
 
 export default function Example() {
-  const [form, setForm] = useState({
-    darkMode: false,
-    emailNotifications: true,
-    pushNotifications: false,
-  });
+  const [darkMode, setDarkMode] = useState(false);
+  const [emailNotifications, setEmailNotifications] = useState(false);
+  const [pushNotifications, setPushNotifications] = useState(true);
+
   const insets = useSafeAreaInsets();
+
   return (
-    <SafeAreaView
-      style={{
-        // display: "flex",
-        // flexDirection: "column",
-        flex: 1,
-        // paddingTop: insets.top,
-        // paddingBottom: insets.bottom,
-        // gap: 20,
-        backgroundColor: "#fff",
-      }}
-    >
-      <Stack.Screen
-        options={{
-          headerShadowVisible: false,
-        }}
-      />
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <Stack.Screen options={{ headerShadowVisible: false }} />
       <ScrollView>
         <View style={styles.profile}>
-          <TouchableOpacity
-            onPress={() => {
-              // handle onPress
-            }}
-          >
+          <AnimatedButton buttonScale={0.9} onPress={() => {}}>
             <View style={styles.profileAvatarWrapper}>
               <Image
                 alt=""
-                source={{
-                  uri: "https://picsum.photos/id/664/1920/1080",
-                }}
+                source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
                 style={styles.profileAvatar}
               />
-              {/* <TouchableOpacity
-              onPress={() => {
-                // handle onPress
-              }}
-            >
-              <View style={styles.profileAction}>
-                <FeatherIcon color="#fff" name="edit-3" size={15} />
-              </View>
-            </TouchableOpacity> */}
             </View>
-          </TouchableOpacity>
+          </AnimatedButton>
           <View>
             <Text style={styles.profileName}>Hu Kaixiang</Text>
             <Text style={styles.profileBio}>
@@ -74,10 +43,9 @@ export default function Example() {
         </View>
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Preferences</Text>
-          <TouchableOpacity
-            onPress={() => {
-              // handle onPress
-            }}
+          <AnimatedButton
+            buttonScale={0.9}
+            onPress={() => {}}
             style={styles.row}
           >
             <View style={[styles.rowIcon, { backgroundColor: "#fe9400" }]}>
@@ -86,22 +54,27 @@ export default function Example() {
             <Text style={styles.rowLabel}>Language</Text>
             <View style={styles.rowSpacer} />
             <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
-          </TouchableOpacity>
-          <View style={styles.row}>
+          </AnimatedButton>
+          <AnimatedButton
+            buttonScale={0.9}
+            onPress={() => {
+              setDarkMode(!darkMode);
+            }}
+            style={styles.row}
+          >
             <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
               <FeatherIcon color="#fff" name="moon" size={20} />
             </View>
             <Text style={styles.rowLabel}>Dark Mode</Text>
             <View style={styles.rowSpacer} />
             <Switch
-              onValueChange={(darkMode) => setForm({ ...form, darkMode })}
-              value={form.darkMode}
+              onValueChange={(darkMode) => setDarkMode(darkMode)}
+              value={darkMode}
             />
-          </View>
-          <TouchableOpacity
-            onPress={() => {
-              // handle onPress
-            }}
+          </AnimatedButton>
+          <AnimatedButton
+            buttonScale={0.9}
+            onPress={() => {}}
             style={styles.row}
           >
             <View style={[styles.rowIcon, { backgroundColor: "#32c759" }]}>
@@ -110,8 +83,14 @@ export default function Example() {
             <Text style={styles.rowLabel}>Location</Text>
             <View style={styles.rowSpacer} />
             <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
-          </TouchableOpacity>
-          <View style={styles.row}>
+          </AnimatedButton>
+          <AnimatedButton
+            buttonScale={0.9}
+            onPress={() => {
+              setEmailNotifications(!emailNotifications);
+            }}
+            style={styles.row}
+          >
             <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
               <FeatherIcon color="#fff" name="at-sign" size={20} />
             </View>
@@ -119,12 +98,18 @@ export default function Example() {
             <View style={styles.rowSpacer} />
             <Switch
               onValueChange={(emailNotifications) =>
-                setForm({ ...form, emailNotifications })
+                setEmailNotifications(emailNotifications)
               }
-              value={form.emailNotifications}
+              value={emailNotifications}
             />
-          </View>
-          <View style={styles.row}>
+          </AnimatedButton>
+          <AnimatedButton
+            buttonScale={0.9}
+            onPress={() => {
+              setPushNotifications(!pushNotifications);
+            }}
+            style={styles.row}
+          >
             <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
               <FeatherIcon color="#fff" name="bell" size={20} />
             </View>
@@ -132,18 +117,17 @@ export default function Example() {
             <View style={styles.rowSpacer} />
             <Switch
               onValueChange={(pushNotifications) =>
-                setForm({ ...form, pushNotifications })
+                setPushNotifications(pushNotifications)
               }
-              value={form.pushNotifications}
+              value={pushNotifications}
             />
-          </View>
+          </AnimatedButton>
         </View>
         <View style={[styles.section, { paddingBottom: 40 }]}>
           <Text style={styles.sectionTitle}>Resources</Text>
-          <TouchableOpacity
-            onPress={() => {
-              // handle onPress
-            }}
+          <AnimatedButton
+            buttonScale={0.9}
+            onPress={() => {}}
             style={styles.row}
           >
             <View style={[styles.rowIcon, { backgroundColor: "#8e8d91" }]}>
@@ -152,11 +136,10 @@ export default function Example() {
             <Text style={styles.rowLabel}>Report Bug</Text>
             <View style={styles.rowSpacer} />
             <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              // handle onPress
-            }}
+          </AnimatedButton>
+          <AnimatedButton
+            buttonScale={0.9}
+            onPress={() => {}}
             style={styles.row}
           >
             <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
@@ -165,11 +148,10 @@ export default function Example() {
             <Text style={styles.rowLabel}>Contact Us</Text>
             <View style={styles.rowSpacer} />
             <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              // handle onPress
-            }}
+          </AnimatedButton>
+          <AnimatedButton
+            buttonScale={0.9}
+            onPress={() => {}}
             style={styles.row}
           >
             <View style={[styles.rowIcon, { backgroundColor: "#32c759" }]}>
@@ -178,16 +160,15 @@ export default function Example() {
             <Text style={styles.rowLabel}>Rate in App Store</Text>
             <View style={styles.rowSpacer} />
             <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
-          </TouchableOpacity>
-          <TouchableOpacity
+          </AnimatedButton>
+          <AnimatedButton
+            buttonScale={0.9}
             style={styles.row}
-            onPress={() => {
-              router.push("/(auth)/signout");
-            }}
+            // onPress={() => router.push("/(auth)/signout")}
           >
             <Text style={styles.rowLabel}>Signout</Text>
             <View style={styles.rowSpacer} />
-          </TouchableOpacity>
+          </AnimatedButton>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -195,11 +176,9 @@ export default function Example() {
 }
 
 const styles = StyleSheet.create({
-  /** Profile */
   profile: {
     padding: 24,
     backgroundColor: "#fff",
-    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -207,21 +186,9 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   profileAvatar: {
-    // width: 72,
     width: 100,
     height: 100,
     borderRadius: 9999,
-  },
-  profileAction: {
-    position: "absolute",
-    right: -4,
-    bottom: -10,
-    alignItems: "center",
-    justifyContent: "center",
-    width: 28,
-    height: 28,
-    borderRadius: 9999,
-    backgroundColor: "#007bff",
   },
   profileName: {
     marginTop: 12,
@@ -236,7 +203,6 @@ const styles = StyleSheet.create({
     color: "#989898",
     textAlign: "center",
   },
-  /** Section */
   section: {
     paddingHorizontal: 24,
   },
@@ -248,11 +214,9 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     letterSpacing: 1.1,
   },
-  /** Row */
   row: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-start",
     height: 50,
     backgroundColor: "#f2f2f2",
     borderRadius: 8,
@@ -264,7 +228,6 @@ const styles = StyleSheet.create({
     height: 32,
     borderRadius: 9999,
     marginRight: 12,
-    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -275,7 +238,5 @@ const styles = StyleSheet.create({
   },
   rowSpacer: {
     flexGrow: 1,
-    flexShrink: 1,
-    flexBasis: 0,
   },
 });
