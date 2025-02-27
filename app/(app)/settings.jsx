@@ -25,7 +25,7 @@ export default function Example() {
       <Stack.Screen options={{ headerShadowVisible: false }} />
       <ScrollView>
         <View style={styles.profile}>
-          <AnimatedButton buttonScale={0.9} onPress={() => {}}>
+          <AnimatedButton buttonScale={0.8} onPress={() => {}}>
             <View style={styles.profileAvatarWrapper}>
               <Image
                 alt=""
@@ -68,6 +68,8 @@ export default function Example() {
             <Text style={styles.rowLabel}>Dark Mode</Text>
             <View style={styles.rowSpacer} />
             <Switch
+              trackColor={{ false: "#ccc", true: "#ffa500" }}
+              thumbColor={darkMode ? "#fff" : "#fff"}
               onValueChange={(darkMode) => setDarkMode(darkMode)}
               value={darkMode}
             />
@@ -97,6 +99,8 @@ export default function Example() {
             <Text style={styles.rowLabel}>Email Notifications</Text>
             <View style={styles.rowSpacer} />
             <Switch
+              trackColor={{ false: "#ccc", true: "#ffa500" }}
+              thumbColor={darkMode ? "#fff" : "#fff"}
               onValueChange={(emailNotifications) =>
                 setEmailNotifications(emailNotifications)
               }
@@ -116,6 +120,8 @@ export default function Example() {
             <Text style={styles.rowLabel}>Push Notifications</Text>
             <View style={styles.rowSpacer} />
             <Switch
+              trackColor={{ false: "#ccc", true: "#ffa500" }}
+              thumbColor={darkMode ? "#fff" : "#fff"}
               onValueChange={(pushNotifications) =>
                 setPushNotifications(pushNotifications)
               }
