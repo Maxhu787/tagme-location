@@ -1,11 +1,10 @@
 import {
-  MarkerView,
   MapView,
   Camera,
   PointAnnotation,
 } from "@maplibre/maplibre-react-native";
 import React, { useRef } from "react";
-import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 
 const test = [
   {
@@ -21,10 +20,7 @@ const test = [
 ];
 
 const MapScreen = () => {
-  const handlePress = (id) => {
-    console.log(`Marker ${id} pressed`);
-  };
-  const markerRef = useRef(null);
+  const markerRefs = useRef({});
 
   return (
     <View style={styles.container}>
@@ -36,17 +32,18 @@ const MapScreen = () => {
 
         {test.map((item) => (
           <PointAnnotation
-            ref={markerRef}
+            key={item.id}
+            ref={(ref) => (markerRefs.current[item.id] = ref)}
             coordinate={item.coordinates}
-            // onSelected={() => centerOnMarker(vehicle)}
           >
-            {/* <View style={{ height: 75, width: 75 }}>
+            <View style={styles.markerContainer}>
               <Image
-                source={require("../../assets/icon.png")}
-                style={{ height: 54, width: 43.5 }}
-                // onLoad={() => markerRef.refresh()}
+                // source={require("../../assets/icon.png")}
+                source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+                style={styles.image}
+                onLoad={() => markerRefs.current[item.id]?.refresh()}
               />
-            </View> */}
+            </View>
           </PointAnnotation>
         ))}
       </MapView>
@@ -57,13 +54,11 @@ const MapScreen = () => {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   map: { flex: 1 },
-  image: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    borderWidth: 2,
-    borderColor: "white",
+  markerContainer: {
+    height: 54,
+    width: 54,
   },
+  image: { height: 54, width: 54, borderRadius: 1000 },
 });
 
 export default MapScreen;
