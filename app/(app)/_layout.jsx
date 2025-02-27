@@ -8,7 +8,10 @@ export default Layout = () => {
       }}
     >
       <Stack.Screen name="index" />
-      <Stack.Screen name="settings" options={{ headerShown: true }} />
+      <Stack.Screen
+        name="settings"
+        options={{ headerShown: true, headerTitle: "Settings" }}
+      />
     </Stack>
   );
 };

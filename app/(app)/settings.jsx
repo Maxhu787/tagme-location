@@ -70,7 +70,7 @@ export default function Example() {
             <Text style={styles.rowLabel}>Dark Mode</Text>
             <View style={styles.rowSpacer} />
             <Switch
-              trackColor={{ false: "#ccc", true: "#777" }}
+              trackColor={{ false: "#ccc", true: "#999" }}
               thumbColor={darkMode ? "#fff" : "#fff"}
               onValueChange={(darkMode) => setDarkMode(darkMode)}
               value={darkMode}
@@ -101,7 +101,7 @@ export default function Example() {
             <Text style={styles.rowLabel}>Email Notifications</Text>
             <View style={styles.rowSpacer} />
             <Switch
-              trackColor={{ false: "#ccc", true: "#777" }}
+              trackColor={{ false: "#ccc", true: "#999" }}
               thumbColor={darkMode ? "#fff" : "#fff"}
               onValueChange={(emailNotifications) =>
                 setEmailNotifications(emailNotifications)
@@ -122,7 +122,7 @@ export default function Example() {
             <Text style={styles.rowLabel}>Push Notifications</Text>
             <View style={styles.rowSpacer} />
             <Switch
-              trackColor={{ false: "#ccc", true: "#777" }}
+              trackColor={{ false: "#ccc", true: "#999" }}
               thumbColor={darkMode ? "#fff" : "#fff"}
               onValueChange={(pushNotifications) =>
                 setPushNotifications(pushNotifications)
@@ -172,7 +172,7 @@ export default function Example() {
           <AnimatedButton
             buttonScale={0.9}
             style={styles.row}
-            // onPress={() => router.push("/(auth)/signout")}
+            onPress={() => router.push("/(auth)/signout")}
           >
             <Text style={[styles.rowLabel, { color: "#444" }]}>Signout</Text>
             <View style={styles.rowSpacer} />
