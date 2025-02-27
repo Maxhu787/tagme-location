@@ -34,13 +34,14 @@ export default function Example() {
               />
             </View>
           </AnimatedButton>
-          <View>
+          <View style={styles.profileText}>
             <Text style={styles.profileName}>Hu Kaixiang</Text>
             <Text style={styles.profileBio}>
               lorem ipsum dolor sit amet, consectetur adipiscing elit
             </Text>
           </View>
         </View>
+
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Preferences</Text>
           <AnimatedButton
@@ -68,7 +69,7 @@ export default function Example() {
             <Text style={styles.rowLabel}>Dark Mode</Text>
             <View style={styles.rowSpacer} />
             <Switch
-              trackColor={{ false: "#ccc", true: "#ffa500" }}
+              trackColor={{ false: "#ccc", true: "#777" }}
               thumbColor={darkMode ? "#fff" : "#fff"}
               onValueChange={(darkMode) => setDarkMode(darkMode)}
               value={darkMode}
@@ -99,7 +100,7 @@ export default function Example() {
             <Text style={styles.rowLabel}>Email Notifications</Text>
             <View style={styles.rowSpacer} />
             <Switch
-              trackColor={{ false: "#ccc", true: "#ffa500" }}
+              trackColor={{ false: "#ccc", true: "#777" }}
               thumbColor={darkMode ? "#fff" : "#fff"}
               onValueChange={(emailNotifications) =>
                 setEmailNotifications(emailNotifications)
@@ -120,7 +121,7 @@ export default function Example() {
             <Text style={styles.rowLabel}>Push Notifications</Text>
             <View style={styles.rowSpacer} />
             <Switch
-              trackColor={{ false: "#ccc", true: "#ffa500" }}
+              trackColor={{ false: "#ccc", true: "#777" }}
               thumbColor={darkMode ? "#fff" : "#fff"}
               onValueChange={(pushNotifications) =>
                 setPushNotifications(pushNotifications)
@@ -185,29 +186,35 @@ const styles = StyleSheet.create({
   profile: {
     padding: 24,
     backgroundColor: "#fff",
+    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+  },
+  profileText: {
+    marginLeft: 8,
+    flex: 1,
+    paddingHorizontal: 12,
+    paddingBottom: 12,
+  },
+  profileAvatar: {
+    width: 110,
+    height: 110,
+    borderRadius: 9999,
   },
   profileAvatarWrapper: {
     position: "relative",
-  },
-  profileAvatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 9999,
   },
   profileName: {
     marginTop: 12,
     fontSize: 24,
     fontWeight: "600",
     color: "#414d63",
-    textAlign: "center",
+    textAlign: "left",
   },
   profileBio: {
     marginTop: 5,
     fontSize: 16,
     color: "#989898",
-    textAlign: "center",
+    textAlign: "left",
   },
   section: {
     paddingHorizontal: 24,
