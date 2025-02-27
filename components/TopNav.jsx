@@ -27,7 +27,7 @@ export default TopNav = () => {
         onPress={() => router.push("/profile/usr_name")}
       >
         <Image
-          // source={{ uri: "https://picsum.photos/240/240" }}
+          // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
           // source={require("../assets/icon.png")}
           style={{ width: 52, height: 52, borderRadius: 100 }}
           resizeMode="contain"
