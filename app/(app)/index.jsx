@@ -14,7 +14,12 @@ const test = [
   },
   {
     id: 2,
-    coordinates: [-122.4364, 37.78125],
+    coordinates: [-122.44, 37.75125],
+    image: "https://picsum.photos/id/664/1920/1080",
+  },
+  {
+    id: 3,
+    coordinates: [-122.45, 37.8],
     image: "https://picsum.photos/id/664/1920/1080",
   },
 ];
@@ -38,8 +43,8 @@ const MapScreen = () => {
           >
             <View style={styles.markerContainer}>
               <Image
-                // source={require("../../assets/icon.png")}
-                source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+                source={require("../../assets/icon.png")}
+                // source={{ uri: item.image }}
                 style={styles.image}
                 onLoad={() => markerRefs.current[item.id]?.refresh()}
               />
