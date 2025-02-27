@@ -37,7 +37,8 @@ export default function Auth() {
         // );
         setUser(data.user);
         router.dismissAll();
-        router.replace("/");
+        // router.replace("/");
+        router.replace("/(app)/test");
         if (error) Alert.alert(error.message);
       } else {
         throw new Error("No ID token found");

@@ -14,7 +14,7 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import AnimatedButton from "../../components/AnimatedButton";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
-export default function Example() {
+export default function Settings() {
   const [darkMode, setDarkMode] = useState(false);
   const [emailNotifications, setEmailNotifications] = useState(false);
   const [pushNotifications, setPushNotifications] = useState(true);

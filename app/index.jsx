@@ -15,6 +15,7 @@ export default function App() {
       const { data } = await supabase.auth.getSession();
       setTimeout(() => {
         setSession(data.session);
+        setUser(data.session.user);
         setLoading(false);
       }, 10);
     };
@@ -42,7 +43,17 @@ export default function App() {
     );
   }
 
-  // return session && session.user ? <Redirect href="/(app)" /> : <Bording />;
+  // return session && session.user ? (
+  //   <Redirect href="/(app)/test" />
+  // ) : (
+  //   <Bording />
+  // );
+
+  // return session && session.user ? (
+  //   <Redirect href="/(app)" />
+  // ) : (
+  //   <Bording />
+  // );
 
   // return <Redirect href="/(app)" />;
   return <Bording />;

@@ -39,3 +39,4 @@ with check (
     auth.uid() = id 
     AND NOT EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid())
 );
+

@@ -2,21 +2,20 @@
 
 ## add
 
-- https://github.com/maplibre/maplibre-react-native/tree/main/examples/shared/src/examples
-- read location options https://docs.expo.dev/versions/latest/sdk/location/#locationoptions
-- snapping zoom scrollbar
-- setup db schema design tables
+- zoom scrollbar
 - cache map for offline viewing
-- add smooth animation
 - store location to supabase
 - add themes context
-  https://github.com/react-native-maps/react-native-maps/issues/3258
-- add zoom in out scroll bar
-- group locations
+- Categorizing Locations
+- public location mode (strangers see where you are (optional))
 - add widgets
+- add emoji like circles with eyes svg, and pay features
 - set safe areas where you wont be tracked (place marker set radius)
+- refine settings page
+- add smooth animation
+- get better app performence
 - setup login with apple
-- Use expo-build-properties
+- ~~setup db schema design tables~~
 - ~~top navbar with profile~~
 - ~~fix detect when user panning~~
 - ~~set get location interval and location marker~~
@@ -29,7 +28,6 @@
 
 - free accounts can place specific amount of markers with a specified radius and when user is in that area they wont be tracked upgrade to get more
 - location updated every 30~60s upgrade to get more accurate data
-- have buttons on the side to lock zoom and rotate
 - poke or send some sort of signal system limited amount every time frame upgrade gets more etc
 
 ### map
@@ -56,10 +54,6 @@ https://docs.expo.dev/versions/latest/sdk/gesture-handler/
 https://docs.swmansion.com/react-native-reanimated/
 https://www.youtube.com/watch?v=tsleLxbvxe0
 
-### onbording screen & page indicator
-
-https://www.youtube.com/watch?v=r2NJJye0XnM
-
 ### payment
 
 https://www.youtube.com/watch?v=noTeDJypcqY
@@ -77,24 +71,29 @@ https://online-video-cutter.com/remove-logo
 
 supabase start
 supabase stop
-adb reverse tcp:54321 tcp:54321
+npm run tcp
+
+pod install
 
 ### random code snippets
 
-```
 router.dimissall
-```
+shift + i change phone ios simulator
 
 ### useful && bugs
 
+https://github.com/maplibre/maplibre-react-native/tree/main/examples/shared/src/examples
+https://stackoverflow.com/questions/76720049/how-to-utilize-usecontext-in-expo-router
+https://stackoverflow.com/questions/1196415/what-datatype-to-use-when-storing-latitude-and-longitude-data-in-sql-databases
 https://github.com/nitaliano/react-native-mapbox-gl/issues/222
-https://github.com/rnmapbox/maps/issues/943
+https://github.com/Shopify/flash-list/issues/1352
 https://github.com/expo/router/discussions/495
+https://github.com/rnmapbox/maps/issues/943
+
+https://supabase.com/docs/reference/javascript/explain
+https://docs.expo.dev/versions/latest/sdk/location/#locationoptions
 https://icons.expo.fyi/Index
 https://jwt.io/
-https://supabase.com/docs/reference/javascript/explain
-https://docs.expo.dev/versions/latest/sdk/location/
-https://github.com/Shopify/flash-list/issues/1352
 
 ### research
 
@@ -113,38 +112,10 @@ https://www.youtube.com/watch?v=U5qSNhUXASE
 
 ## tomorrow
 
-https://dev.to/vrinch/optimizing-performance-in-react-native-apps-expo-354k
 https://protomaps.com/
-https://picsum.photos/240/240
 #fd572e
-
-setup render multiple points
-username min 4 max 32
-country codes
-https://stackoverflow.com/questions/76720049/how-to-utilize-usecontext-in-expo-router
-pod install
 https://muffingroup.com/blog/orange-color-palette/
 
-### Location Data Table (location_data)
-
-Stores real-time user location and device status.
-
-Column Type Description
-id uuid (PK) Auto-generated ID
-user_id uuid References profiles.id
-latitude float8 Latitude coordinate
-longitude float8 Longitude coordinate
-direction float8 Direction in degrees (e.g., compass heading)
-battery int Battery percentage (0-100)
-timestamp timestamp Time of location update
-
-### Friends Table (friends)
-
-Stores friendships between users.
-
-Column Type Description
-id uuid (PK) Auto-generated ID
-user_id uuid References profiles.id (Google Auth ID)
-friend_id uuid References profiles.id (Google Auth ID)
-status text e.g., pending, accepted, blocked
-created_at timestamp Timestamp when friendship was created
+supabase insert data setup tested
+add bording profile info fill page
+display friends data on map point annotation
