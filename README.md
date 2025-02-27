@@ -124,3 +124,27 @@ country codes
 https://stackoverflow.com/questions/76720049/how-to-utilize-usecontext-in-expo-router
 pod install
 https://muffingroup.com/blog/orange-color-palette/
+
+### Location Data Table (location_data)
+
+Stores real-time user location and device status.
+
+Column Type Description
+id uuid (PK) Auto-generated ID
+user_id uuid References profiles.id
+latitude float8 Latitude coordinate
+longitude float8 Longitude coordinate
+direction float8 Direction in degrees (e.g., compass heading)
+battery int Battery percentage (0-100)
+timestamp timestamp Time of location update
+
+### Friends Table (friends)
+
+Stores friendships between users.
+
+Column Type Description
+id uuid (PK) Auto-generated ID
+user_id uuid References profiles.id (Google Auth ID)
+friend_id uuid References profiles.id (Google Auth ID)
+status text e.g., pending, accepted, blocked
+created_at timestamp Timestamp when friendship was created

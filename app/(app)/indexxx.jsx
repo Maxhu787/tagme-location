@@ -5,11 +5,11 @@ import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
 const test = [
   {
     coordinates: [-122.4324, 37.78825],
-    image: "https://picsum.photos/800/800",
+    image: "https://picsum.photos/id/664/1920/1080",
   },
   {
     coordinates: [-122.4364, 37.78125],
-    image: "https://picsum.photos/800/800",
+    image: "https://picsum.photos/id/664/1920/1080",
   },
 ];
 
