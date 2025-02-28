@@ -1,4 +1,3 @@
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router, Stack } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -8,41 +7,19 @@ import {
   View,
   Text,
   Switch,
-  Image,
 } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import AnimatedButton from "../../components/AnimatedButton";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
 export default function Settings() {
   const [darkMode, setDarkMode] = useState(false);
   const [emailNotifications, setEmailNotifications] = useState(false);
   const [pushNotifications, setPushNotifications] = useState(true);
 
-  const insets = useSafeAreaInsets();
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <Stack.Screen options={{ headerShadowVisible: false }} />
       <ScrollView>
-        <View style={styles.profile}>
-          <AnimatedButton buttonScale={0.8} onPress={() => {}}>
-            <View style={styles.profileAvatarWrapper}>
-              <Image
-                alt=""
-                source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
-                style={styles.profileAvatar}
-              />
-            </View>
-          </AnimatedButton>
-          <View style={styles.profileText}>
-            <Text style={styles.profileName}>Hu Kaixiang</Text>
-            <Text style={styles.profileBio}>
-              lorem ipsum dolor sit amet, consectetur adipiscing elit
-            </Text>
-          </View>
-        </View>
-
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Preferences</Text>
           <AnimatedButton
@@ -171,11 +148,18 @@ export default function Settings() {
           </AnimatedButton>
           <AnimatedButton
             buttonScale={0.9}
-            style={styles.row}
+            // onPress={() => {}}
             onPress={() => router.push("/(auth)/signout")}
+            style={[
+              styles.row,
+              { backgroundColor: "#f2f2f2", marginHorizontal: 8 },
+            ]}
           >
-            <Text style={[styles.rowLabel, { color: "#444" }]}>Signout</Text>
+            <Text style={[styles.rowLabel, { paddingLeft: 12, color: "#444" }]}>
+              Signout
+            </Text>
             <View style={styles.rowSpacer} />
+            <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
           </AnimatedButton>
         </View>
       </ScrollView>
@@ -184,44 +168,12 @@ export default function Settings() {
 }
 
 const styles = StyleSheet.create({
-  profile: {
-    padding: 24,
-    backgroundColor: "#fff",
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  profileText: {
-    marginLeft: 8,
-    flex: 1,
-    paddingHorizontal: 12,
-    paddingBottom: 12,
-  },
-  profileAvatar: {
-    width: 110,
-    height: 110,
-    borderRadius: 9999,
-  },
-  profileAvatarWrapper: {
-    position: "relative",
-  },
-  profileName: {
-    marginTop: 12,
-    fontSize: 24,
-    fontWeight: "600",
-    color: "#414d63",
-    textAlign: "left",
-  },
-  profileBio: {
-    marginTop: 5,
-    fontSize: 16,
-    color: "#989898",
-    textAlign: "left",
-  },
   section: {
-    paddingHorizontal: 24,
+    paddingHorizontal: 12,
+    // 24
   },
   sectionTitle: {
-    paddingVertical: 12,
+    padding: 12,
     fontSize: 12,
     fontWeight: "600",
     color: "#9e9e9e",
@@ -232,7 +184,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 50,
-    backgroundColor: "#f2f2f2",
+    // backgroundColor: "#f2f2f2",
+    backgroundColor: "#fff",
+    // borderWidth: 1,
+    // borderColor: "#f2f2f2",
     borderRadius: 8,
     marginBottom: 12,
     paddingHorizontal: 12,
