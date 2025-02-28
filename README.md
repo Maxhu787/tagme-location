@@ -115,7 +115,7 @@ https://www.youtube.com/watch?v=U5qSNhUXASE
 https://protomaps.com/
 #fd572e
 https://muffingroup.com/blog/orange-color-palette/
-
+rgb(240, 150, 91)
 supabase insert data setup tested
 add bording profile info fill page
 display friends data on map point annotation
