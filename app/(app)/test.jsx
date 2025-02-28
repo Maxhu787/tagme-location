@@ -63,6 +63,14 @@ export default function Test() {
       <AnimatedButton
         buttonScale={0.9}
         style={styles.button}
+        onPress={() => router.push("/(app)")}
+      >
+        <Text style={{ fontSize: 20 }}>map</Text>
+        <View style={styles.rowSpacer} />
+      </AnimatedButton>
+      <AnimatedButton
+        buttonScale={0.9}
+        style={styles.button}
         onPress={() => router.push("/(auth)/signout")}
       >
         <Text style={{ fontSize: 20 }}>Signout</Text>

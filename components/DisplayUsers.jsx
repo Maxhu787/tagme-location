@@ -22,6 +22,11 @@ const test = [
     coordinates: [120.492319, 22.779233],
     image: "https://picsum.photos/id/664/1920/1080",
   },
+  {
+    id: 4,
+    coordinates: [120.502319, 22.779233],
+    image: "https://picsum.photos/id/664/1920/1080",
+  },
 ];
 
 const DisplayUsers = () => {
@@ -37,8 +42,8 @@ const DisplayUsers = () => {
         >
           <View style={styles.markerContainer}>
             <Image
-              // source={require("../assets/icon.png")}
-              source={{ uri: item.image }}
+              source={require("../assets/hi.png")}
+              // source={{ uri: item.image }}
               style={styles.image}
               onLoad={() => markerRefs.current[item.id]?.refresh()}
             />
