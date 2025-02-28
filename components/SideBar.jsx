@@ -9,22 +9,7 @@ export default SideBar = ({
 }) => {
   const delay = 2000;
   const handleZoom = (n) => {
-    if (Platform.OS === "ios") {
-      setFollowZoom(n);
-    } else {
-      if (following) {
-        setFollowing(false);
-        cameraRef.current?.zoomTo(n, delay);
-
-        const timeout = setTimeout(() => {
-          setFollowing(true);
-        }, delay + 1000);
-
-        return () => clearTimeout(timeout);
-      } else {
-        cameraRef.current?.zoomTo(n, delay);
-      }
-    }
+    setFollowZoom(n);
   };
 
   return (

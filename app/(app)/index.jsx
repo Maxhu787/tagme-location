@@ -1,24 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { StyleSheet, View, Text, Platform, Dimensions } from "react-native";
+import { StyleSheet, View, Platform } from "react-native";
 import {
   MapView,
   Camera,
   Logger,
-  ShapeSource,
-  CircleLayer,
-  SymbolLayer,
   UserLocation,
-  PointAnnotation,
   UserLocationRenderMode,
 } from "@maplibre/maplibre-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import * as Location from "expo-location";
 import TopNav from "../../components/TopNav";
 import Locate from "../../components/Locate";
 import Loading from "../../components/Loading";
 import SideBar from "../../components/SideBar";
-
-const { height } = Dimensions.get("window");
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -41,18 +34,18 @@ export default Home = () => {
   const [following, setFollowing] = useState(true);
   const [followZoom, setFollowZoom] = useState(16);
 
-  useEffect(() => {
-    // const getCurrentLocation = async () => {
-    //   let location_data = await Location.getCurrentPositionAsync({
-    //     accuracy: Location.Accuracy.Highest,
-    //   });
-    // };
-    // getCurrentLocation();
-    // const interval = setInterval(() => {
-    //   getCurrentLocation();
-    // }, 1000);
-    // return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  // const getCurrentLocation = async () => {
+  //   let location_data = await Location.getCurrentPositionAsync({
+  //     accuracy: Location.Accuracy.Highest,
+  //   });
+  // };
+  // getCurrentLocation();
+  // const interval = setInterval(() => {
+  //   getCurrentLocation();
+  // }, 1000);
+  // return () => clearInterval(interval);
+  // }, []);
 
   return (
     <View
@@ -60,8 +53,7 @@ export default Home = () => {
         display: "flex",
         flexDirection: "column",
         flex: 1,
-        // paddingTop: Platform.OS === "ios" ? 0 : insets.top,
-        // paddingBottom: insets.bottom,
+        paddingTop: Platform.OS === "ios" ? 0 : insets.top,
       }}
     >
       <MapView
@@ -80,7 +72,7 @@ export default Home = () => {
         <Camera
           ref={cameraRef}
           followUserLocation={true}
-          followZoomLevel={16}
+          followZoomLevel={followZoom}
         />
         <UserLocation
           androidRenderMode={"compass"}
@@ -93,12 +85,12 @@ export default Home = () => {
         />
       </MapView>
       <TopNav />
-      <SideBar
-        setFollowZoom={setFollowZoom}
+      {/* <SideBar
         following={following}
         setFollowing={setFollowing}
+        setFollowZoom={setFollowZoom}
         cameraRef={cameraRef}
-      />
+      /> */}
       <Locate setFollowing={setFollowing} cameraRef={cameraRef} />
     </View>
   );
