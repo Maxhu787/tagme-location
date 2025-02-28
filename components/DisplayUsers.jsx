@@ -27,6 +27,11 @@ const test = [
     coordinates: [120.502319, 22.779233],
     image: "https://picsum.photos/id/664/1920/1080",
   },
+  {
+    id: 5,
+    coordinates: [120.488521, 22.686551],
+    image: "https://picsum.photos/id/664/1920/1080",
+  },
 ];
 
 const DisplayUsers = () => {

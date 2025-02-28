@@ -4,6 +4,7 @@ import { supabase } from "../utils/supabase";
 import { View, ActivityIndicator } from "react-native";
 import Bording from "../components/Bording";
 import { UserContext } from "../contexts/UserContext";
+import Loading from "../components/Loading";
 
 export default function App() {
   const [session, setSession] = useState(null);
@@ -19,7 +20,7 @@ export default function App() {
           setUser(data.session.user);
         }
         setLoading(false);
-      }, 10);
+      }, 1000);
     };
     fetchSession();
 
@@ -39,17 +40,18 @@ export default function App() {
 
   if (loading) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color="#ffa500" />
-      </View>
+      // <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      //   <ActivityIndicator size="large" color="#ffa500" />
+      // </View>
+      <Loading />
     );
   }
 
-  return session && session.user ? (
-    <Redirect href="/(app)/test" />
-  ) : (
-    <Bording />
-  );
+  // return session && session.user ? (
+  //   <Redirect href="/(app)/test" />
+  // ) : (
+  //   <Bording />
+  // );
 
   // return session && session.user ? (
   //   <Redirect href="/(app)" />
@@ -58,5 +60,5 @@ export default function App() {
   // );
 
   // return <Redirect href="/(app)" />;
-  // return <Bording />;
+  return <Bording />;
 }

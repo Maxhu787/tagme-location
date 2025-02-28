@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     // borderColor: "#f2f2f2",
     borderRadius: 8,
-    marginBottom: 12,
+    marginBottom: 5,
     paddingHorizontal: 12,
   },
   rowIcon: {

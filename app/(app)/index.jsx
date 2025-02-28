@@ -13,6 +13,7 @@ import Locate from "../../components/Locate";
 import DisplayUsers from "../../components/DisplayUsers";
 // import Loading from "../../components/Loading";
 // import SideBar from "../../components/SideBar";
+import * as Location from "expo-location";
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -34,18 +35,31 @@ export default Home = () => {
   const [following, setFollowing] = useState(true);
   const [followZoom, setFollowZoom] = useState(16);
 
-  // useEffect(() => {
-  // const getCurrentLocation = async () => {
-  //   let location_data = await Location.getCurrentPositionAsync({
-  //     accuracy: Location.Accuracy.Highest,
-  //   });
-  // };
-  // getCurrentLocation();
-  // const interval = setInterval(() => {
-  //   getCurrentLocation();
-  // }, 1000);
-  // return () => clearInterval(interval);
-  // }, []);
+  useEffect(() => {
+    const requestPermissions = async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.warn("Permission to access location was denied");
+        return;
+      }
+      getCurrentLocation();
+    };
+
+    const getCurrentLocation = async () => {
+      try {
+        let location_data = await Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.Highest,
+        });
+      } catch (error) {
+        console.error("Error getting location:", error);
+      }
+    };
+
+    requestPermissions();
+    const interval = setInterval(getCurrentLocation, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <View
