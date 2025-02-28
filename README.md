@@ -120,3 +120,4 @@ supabase insert data setup tested
 add bording profile info fill page
 display friends data on map point annotation
 https://console.cloud.google.com/auth/audience
+https://www.svgator.com/

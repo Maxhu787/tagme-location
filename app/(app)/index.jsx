@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { StyleSheet, View, Platform } from "react-native";
+import { View, Platform } from "react-native";
 import {
   MapView,
   Camera,
@@ -10,8 +10,9 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import TopNav from "../../components/TopNav";
 import Locate from "../../components/Locate";
-import Loading from "../../components/Loading";
-import SideBar from "../../components/SideBar";
+import DisplayUsers from "../../components/DisplayUsers";
+// import Loading from "../../components/Loading";
+// import SideBar from "../../components/SideBar";
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -20,8 +21,7 @@ Logger.setLogCallback((log) => {
     message.match("Request failed due to a permanent error: Socket Closed") ||
     message.match(
       "Request failed due to a permanent error: stream was reset: CANCEL"
-    ) ||
-    message.match("MapLibre warning eglSwapBuffer error: 12301.")
+    )
   ) {
     return true;
   }
@@ -83,6 +83,7 @@ export default Home = () => {
           minDisplacement={1}
           animated={true}
         />
+        <DisplayUsers />
       </MapView>
       <TopNav />
       {/* <SideBar
@@ -95,5 +96,3 @@ export default Home = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({});

@@ -9,17 +9,17 @@ import { View, Image, StyleSheet } from "react-native";
 const test = [
   {
     id: 1,
-    coordinates: [-122.4324, 37.78825],
+    coordinates: [120.492021, 22.783503],
     image: "https://picsum.photos/id/664/1920/1080",
   },
   {
     id: 2,
-    coordinates: [-122.44, 37.75125],
+    coordinates: [120.494519, 22.782503],
     image: "https://picsum.photos/id/664/1920/1080",
   },
   {
     id: 3,
-    coordinates: [-122.45, 37.8],
+    coordinates: [120.492319, 22.779233],
     image: "https://picsum.photos/id/664/1920/1080",
   },
 ];
@@ -37,8 +37,8 @@ const DisplayUsers = () => {
         >
           <View style={styles.markerContainer}>
             <Image
-              source={require("../../assets/icon.png")}
-              // source={{ uri: item.image }}
+              // source={require("../assets/icon.png")}
+              source={{ uri: item.image }}
               style={styles.image}
               onLoad={() => markerRefs.current[item.id]?.refresh()}
             />

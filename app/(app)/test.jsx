@@ -8,25 +8,44 @@ import { supabase } from "../../utils/supabase"; // Ensure the supabase client i
 export default function Test() {
   const { user, setUser } = useContext(UserContext);
 
-  // Function to insert test data into the profiles table
-  const insertTestProfileData = async () => {
-    if (!user) {
-      console.log("No user logged in");
-      return;
-    }
+  // const insertTestProfileData = async () => {
+  //   if (!user) {
+  //     console.log("No user logged in");
+  //     return;
+  //   }
 
-    const { data, error } = await supabase.from("profiles").upsert([
-      {
-        id: user.id,
-        username: "test_user",
-        bio: "This is a test bio. 2",
-        profile_picture: "",
-        country: "TW",
-        public: true,
-        created_at: new Date().toISOString(),
-      },
-    ]);
+  //   const { data, error } = await supabase.from("profiles").upsert([
+  //     {
+  //       id: user.id,
+  //       username: "test_user",
+  //       bio: "This is a test bio. 2",
+  //       profile_picture: "",
+  //       country: "TW",
+  //       public: true,
+  //       created_at: new Date().toISOString(),
+  //     },
+  //   ]);
 
+  //   if (error) {
+  //     console.log("Error inserting profile:", error);
+  //   } else {
+  //     console.log("Profile data inserted/updated:", data);
+  //   }
+  // };
+
+  const test_insert = async () => {
+    const { data, error } = await supabase.from("user_location").upsert(
+      [
+        {
+          id: user.id,
+          latitude: "40.7128",
+          longitude: "-74.0060",
+          battery: 80,
+          timestamp: new Date().toISOString(),
+        },
+      ],
+      { onConflict: ["id"] }
+    );
     if (error) {
       console.log("Error inserting profile:", error);
     } else {
@@ -38,15 +57,15 @@ export default function Test() {
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>test</Text>
       <Text>{JSON.stringify(user.id)}</Text>
-      <AnimatedButton style={styles.button} onPress={insertTestProfileData}>
-        <Text>Insert Test Profile</Text>
+      <AnimatedButton style={styles.button} onPress={test_insert}>
+        <Text style={{ fontSize: 20 }}>test</Text>
       </AnimatedButton>
       <AnimatedButton
         buttonScale={0.9}
         style={styles.button}
         onPress={() => router.push("/(auth)/signout")}
       >
-        <Text style={[styles.rowLabel, { color: "#444" }]}>Signout</Text>
+        <Text style={{ fontSize: 20 }}>Signout</Text>
         <View style={styles.rowSpacer} />
       </AnimatedButton>
     </View>
@@ -56,8 +75,8 @@ export default function Test() {
 const styles = StyleSheet.create({
   button: {
     marginTop: 20,
-    height: 64,
-    width: 64,
+    height: 80,
+    width: 120,
     borderRadius: 50, // Corrected typo 'borderradius' to 'borderRadius'
     backgroundColor: "#ffa500",
     justifyContent: "center",

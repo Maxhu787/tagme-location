@@ -107,8 +107,7 @@ const Bording = () => {
       animateIndicator(newIndex);
       flashListRef.current.scrollToIndex({ index: newIndex, animated: true });
     } else {
-      // router.push("/(auth)/signin");
-      router.push("/(app)");
+      router.push("/(auth)/signin");
     }
   };
 
