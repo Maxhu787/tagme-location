@@ -12,7 +12,6 @@ import {
   UserLocationRenderMode,
 } from "@maplibre/maplibre-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { StatusBar } from "expo-status-bar";
 import * as Location from "expo-location";
 import TopNav from "../../components/TopNav";
 import Locate from "../../components/Locate";
@@ -28,7 +27,8 @@ Logger.setLogCallback((log) => {
     message.match("Request failed due to a permanent error: Socket Closed") ||
     message.match(
       "Request failed due to a permanent error: stream was reset: CANCEL"
-    )
+    ) ||
+    message.match("MapLibre warning eglSwapBuffer error: 12301.")
   ) {
     return true;
   }
@@ -38,29 +38,20 @@ Logger.setLogCallback((log) => {
 export default Home = () => {
   const cameraRef = useRef(null);
   const insets = useSafeAreaInsets();
-  const [location, setLocation] = useState(null);
-  const [hasPermission, setHasPermission] = useState(false);
-  const [following, setFollowing] = useState(true); // android
-  const [followZoom, setFollowZoom] = useState(16); // ios
+  const [following, setFollowing] = useState(true);
+  const [followZoom, setFollowZoom] = useState(16);
 
   useEffect(() => {
-    const getCurrentLocation = async () => {
-      let location_data = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Highest,
-        // maximumAge: 1000,
-      });
-      if (Platform.OS === "ios") {
-        setLocation(location_data);
-      } else {
-        setLocation("");
-      }
-    };
-    getCurrentLocation();
-    const interval = setInterval(() => {
-      getCurrentLocation();
-    }, 1000);
-
-    return () => clearInterval(interval);
+    // const getCurrentLocation = async () => {
+    //   let location_data = await Location.getCurrentPositionAsync({
+    //     accuracy: Location.Accuracy.Highest,
+    //   });
+    // };
+    // getCurrentLocation();
+    // const interval = setInterval(() => {
+    //   getCurrentLocation();
+    // }, 1000);
+    // return () => clearInterval(interval);
   }, []);
 
   return (
@@ -73,6 +64,7 @@ export default Home = () => {
         // paddingBottom: insets.bottom,
       }}
     >
+      <Text>{following}</Text>
       <MapView
         style={{ flex: 1 }}
         // mapStyle="https://tiles.openfreemap.org/styles/bright"
@@ -102,19 +94,13 @@ export default Home = () => {
         />
       </MapView>
       <TopNav />
-      {/* <SideBar
+      <SideBar
         setFollowZoom={setFollowZoom}
         following={following}
         setFollowing={setFollowing}
         cameraRef={cameraRef}
-      /> */}
-      <Locate
-        following={following}
-        setFollowing={setFollowing}
-        cameraRef={cameraRef}
-        location={location}
       />
-      <StatusBar style="auto" />
+      <Locate setFollowing={setFollowing} cameraRef={cameraRef} />
     </View>
   );
 };

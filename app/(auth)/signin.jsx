@@ -1,5 +1,4 @@
 import { View, Text, StyleSheet, Platform, Pressable } from "react-native";
-import { StatusBar } from "expo-status-bar";
 import Auth from "../../components/Auth";
 import { router } from "expo-router";
 
@@ -33,7 +32,6 @@ export default Signin = () => {
       ) : (
         <Auth />
       )}
-      <StatusBar style="auto" />
     </View>
   );
 };

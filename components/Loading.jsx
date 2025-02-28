@@ -3,8 +3,8 @@ import { View, StyleSheet, Image, Text } from "react-native";
 export default function Loading() {
   return (
     <View style={styles.container}>
-      <Text>e</Text>
-      {/* <Image source={require("../assets/tagme.png")} style={styles.logo} /> */}
+      {/* <Text>e</Text> */}
+      <Image source={require("../assets/tagme.png")} style={styles.logo} />
     </View>
   );
 }

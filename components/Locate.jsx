@@ -1,18 +1,22 @@
-import { View, StyleSheet, Platform } from "react-native";
+import { View, Platform } from "react-native";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import AnimatedButton from "./AnimatedButton";
+import * as Location from "expo-location";
 
-export default TopNav = ({ following, setFollowing, location, cameraRef }) => {
-  const moveToCurrentLocation = () => {
-    if (Platform.OS === "ios") {
-      if (location) {
-        cameraRef.current?.moveTo(
-          [location.coords.longitude, location.coords.latitude],
-          2000
-        );
-      }
-    } else {
+export default TopNav = ({ setFollowing, cameraRef }) => {
+  const moveToCurrentLocation = async () => {
+    if (Platform.OS !== "ios") {
       setFollowing(true);
+    } else {
+      let location_data = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Highest,
+      });
+      if (location_data) {
+        cameraRef.current?.moveTo([
+          location_data.coords.longitude,
+          location_data.coords.latitude,
+        ]);
+      }
     }
   };
   return (
@@ -45,5 +49,3 @@ export default TopNav = ({ following, setFollowing, location, cameraRef }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({});
