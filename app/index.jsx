@@ -15,7 +15,9 @@ export default function App() {
       const { data } = await supabase.auth.getSession();
       setTimeout(() => {
         setSession(data.session);
-        setUser(data.session.user);
+        if (data.session && data.session.user) {
+          setUser(data.session.user);
+        }
         setLoading(false);
       }, 10);
     };
