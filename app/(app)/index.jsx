@@ -60,11 +60,10 @@ export default Home = () => {
         display: "flex",
         flexDirection: "column",
         flex: 1,
-        paddingTop: Platform.OS === "ios" ? 0 : insets.top,
+        // paddingTop: Platform.OS === "ios" ? 0 : insets.top,
         // paddingBottom: insets.bottom,
       }}
     >
-      <Text>{following}</Text>
       <MapView
         style={{ flex: 1 }}
         // mapStyle="https://tiles.openfreemap.org/styles/bright"
