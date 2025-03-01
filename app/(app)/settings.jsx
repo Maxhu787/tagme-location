@@ -152,14 +152,16 @@ export default function Settings() {
             onPress={() => router.push("/(auth)/signout")}
             style={[
               styles.row,
-              { backgroundColor: "#f2f2f2", marginHorizontal: 8 },
+              { backgroundColor: "#fcd5d2", marginHorizontal: 8 },
             ]}
           >
-            <Text style={[styles.rowLabel, { paddingLeft: 12, color: "#444" }]}>
+            <Text
+              style={[styles.rowLabel, { paddingLeft: 12, color: "#992b23" }]}
+            >
               Signout
             </Text>
             <View style={styles.rowSpacer} />
-            <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
+            {/* <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} /> */}
           </AnimatedButton>
         </View>
       </ScrollView>

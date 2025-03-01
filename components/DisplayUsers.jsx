@@ -42,7 +42,7 @@ const DisplayUsers = () => {
       {test.map((item) => (
         <PointAnnotation
           key={item.id}
-          ref={(ref) => (markerRefs.current[item.id] = ref)}
+          // ref={(ref) => (markerRefs.current[item.id] = ref)}
           coordinate={item.coordinates}
         >
           <View style={styles.markerContainer}>

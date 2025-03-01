@@ -22,16 +22,17 @@ export default function Profile() {
       <Stack.Screen
         options={{
           title: `${local.user}`,
-          headerShadowVisible: false,
+          headerShadowVisible: true,
           headerRight: () => (
             <AnimatedButton
               style={{
-                height: 40,
+                // marginRight: -12,
+                height: 55,
                 width: 40,
                 borderRadius: 10,
                 justifyContent: "center",
                 alignItems: "center",
-                shadowColor: "#000",
+                // backgroundColor: "red",
               }}
               text="Settings"
               onPress={() => {
@@ -49,7 +50,8 @@ export default function Profile() {
             <View style={styles.profileAvatarWrapper}>
               <Image
                 alt=""
-                source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+                // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+                source={require("../../../assets/hi.png")}
                 style={styles.profileAvatar}
               />
             </View>
@@ -70,7 +72,13 @@ export default function Profile() {
             style={styles.row}
           >
             <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
-              <FeatherIcon color="#fff" name="user" size={20} />
+              {/* <FeatherIcon color="#fff" name="user" size={20} /> */}
+              <Image
+                alt=""
+                // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+                source={require("../../../assets/2.png")}
+                style={{ height: 50, width: 50 }}
+              />
             </View>
             <Text style={styles.rowLabel}>Username</Text>
             <View style={styles.rowSpacer} />
@@ -83,7 +91,13 @@ export default function Profile() {
             style={styles.row}
           >
             <View style={[styles.rowIcon, { backgroundColor: "#fe9400" }]}>
-              <FeatherIcon color="#fff" name="mail" size={20} />
+              {/* <FeatherIcon color="#fff" name="mail" size={20} /> */}
+              <Image
+                alt=""
+                // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+                source={require("../../../assets/hi.png")}
+                style={{ height: 50, width: 50 }}
+              />
             </View>
             <Text style={styles.rowLabel}>Email</Text>
             <View style={styles.rowSpacer} />
@@ -96,7 +110,13 @@ export default function Profile() {
             style={styles.row}
           >
             <View style={[styles.rowIcon, { backgroundColor: "#32c759" }]}>
-              <FeatherIcon color="#fff" name="map-pin" size={20} />
+              {/* <FeatherIcon color="#fff" name="map-pin" size={20} /> */}
+              <Image
+                alt=""
+                // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+                source={require("../../../assets/3.png")}
+                style={{ height: 50, width: 50 }}
+              />
             </View>
             <Text style={styles.rowLabel}>Location</Text>
             <View style={styles.rowSpacer} />
@@ -112,7 +132,13 @@ export default function Profile() {
             style={styles.row}
           >
             <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
-              <FeatherIcon color="#fff" name="edit" size={20} />
+              {/* <FeatherIcon color="#fff" name="edit" size={20} /> */}
+              <Image
+                alt=""
+                // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+                source={require("../../../assets/5.png")}
+                style={{ height: 50, width: 50 }}
+              />
             </View>
             <Text style={styles.rowLabel}>Edit Profile</Text>
             <View style={styles.rowSpacer} />
