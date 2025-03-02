@@ -1,8 +1,4 @@
-import {
-  MapView,
-  Camera,
-  PointAnnotation,
-} from "@maplibre/maplibre-react-native";
+import { PointAnnotation } from "@maplibre/maplibre-react-native";
 import React, { useRef } from "react";
 import { View, Image, StyleSheet } from "react-native";
 
@@ -42,15 +38,17 @@ const DisplayUsers = () => {
       {test.map((item) => (
         <PointAnnotation
           key={item.id}
-          // ref={(ref) => (markerRefs.current[item.id] = ref)}
+          ref={(ref) => (markerRefs.current[item.id] = ref)}
           coordinate={item.coordinates}
+          onSelected={() => console.log("onSelected")}
         >
           <View style={styles.markerContainer}>
             <Image
               source={require("../assets/hi.png")}
               // source={{ uri: item.image }}
               style={styles.image}
-              onLoad={() => markerRefs.current[item.id]?.refresh()}
+              onLoad={() => markerRefs.current?.[item.id]?.refresh()}
+              fadeDuration={0}
             />
           </View>
         </PointAnnotation>

@@ -20,7 +20,7 @@ export default function App() {
           setUser(data.session.user);
         }
         setLoading(false);
-      }, 1000);
+      }, 2500);
     };
     fetchSession();
 

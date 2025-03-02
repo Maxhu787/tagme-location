@@ -88,6 +88,7 @@ https://stackoverflow.com/questions/1196415/what-datatype-to-use-when-storing-la
 https://github.com/nitaliano/react-native-mapbox-gl/issues/222
 https://github.com/Shopify/flash-list/issues/1352
 https://github.com/expo/router/discussions/495
+https://github.com/rnmapbox/maps/issues/2893
 https://github.com/rnmapbox/maps/issues/943
 
 https://supabase.com/docs/reference/javascript/explain

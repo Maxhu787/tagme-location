@@ -158,7 +158,7 @@ const Bording = () => {
           backgroundColor: "#000",
           borderRadius: 5,
           alignItems: "center",
-          bottom: Platform.OS === "ios" ? 60 : 40,
+          bottom: Platform.OS === "ios" ? 60 : 50,
         }}
         buttonScale={0.85}
       >
