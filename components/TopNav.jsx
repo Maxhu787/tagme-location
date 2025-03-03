@@ -8,7 +8,7 @@ export default TopNav = () => {
       style={{
         position: "absolute",
         zIndex: 2,
-        top: Platform.OS === "ios" ? 65 : 50,
+        top: Platform.OS === "ios" ? 65 : 55,
         right: 20,
         justifyContent: "center",
         alignItems: "center",

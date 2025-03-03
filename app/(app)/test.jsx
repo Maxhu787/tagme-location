@@ -7,33 +7,7 @@ import { supabase } from "../../utils/supabase"; // Ensure the supabase client i
 
 export default function Test() {
   const { user, setUser } = useContext(UserContext);
-
-  // const insertTestProfileData = async () => {
-  //   if (!user) {
-  //     console.log("No user logged in");
-  //     return;
-  //   }
-
-  //   const { data, error } = await supabase.from("profiles").upsert([
-  //     {
-  //       id: user.id,
-  //       username: "test_user",
-  //       bio: "This is a test bio. 2",
-  //       profile_picture: "",
-  //       country: "TW",
-  //       public: true,
-  //       created_at: new Date().toISOString(),
-  //     },
-  //   ]);
-
-  //   if (error) {
-  //     console.log("Error inserting profile:", error);
-  //   } else {
-  //     console.log("Profile data inserted/updated:", data);
-  //   }
-  // };
-
-  const test_insert = async () => {
+  const test_insert_location = async () => {
     const { data, error } = await supabase.from("user_location").upsert(
       [
         {
@@ -53,19 +27,76 @@ export default function Test() {
     }
   };
 
+  const checkProfileExists = async (userId) => {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("id")
+      .eq("id", userId)
+      .single();
+
+    if (error) {
+      if (error.code === "PGRST116") {
+        return false; // No rows found
+      }
+      console.log("Error checking profile:", error);
+      return null; // Return null for an unexpected error
+    }
+    return !!data; // Return true if profile exists
+  };
+
+  const upsertProfile = async (user) => {
+    if (!user) {
+      console.log("No user logged in");
+      return;
+    }
+
+    const profileExists = await checkProfileExists(user.id);
+    if (profileExists === null) return; // Stop if there was an error
+
+    if (!profileExists) {
+      const { data, error } = await supabase.from("profiles").upsert([
+        {
+          id: user.id,
+          username: "test_user",
+          website: "",
+          bio: "This is a test bio.",
+          profile_picture: "",
+          country: "TW",
+          public: true,
+          created_at: new Date().toISOString(),
+        },
+      ]);
+
+      if (error) {
+        console.log("Error inserting profile:", error);
+      } else {
+        console.log("Profile created:", data);
+      }
+    } else {
+      console.log("Profile already exists");
+    }
+  };
+
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>test</Text>
       <Text>{JSON.stringify(user.id)}</Text>
-      <AnimatedButton style={styles.button} onPress={test_insert}>
-        <Text style={{ fontSize: 20 }}>test</Text>
+      <AnimatedButton style={styles.button} onPress={test_insert_location}>
+        <Text style={{ fontSize: 18 }}>insert_location</Text>
+      </AnimatedButton>
+      <AnimatedButton
+        buttonScale={0.9}
+        style={styles.button}
+        onPress={() => upsertProfile(user)}
+      >
+        <Text style={{ fontSize: 18 }}>upsert</Text>
+        <View style={styles.rowSpacer} />
       </AnimatedButton>
       <AnimatedButton
         buttonScale={0.9}
         style={styles.button}
         onPress={() => router.push("/(app)")}
       >
-        <Text style={{ fontSize: 20 }}>map</Text>
+        <Text style={{ fontSize: 18 }}>map</Text>
         <View style={styles.rowSpacer} />
       </AnimatedButton>
       <AnimatedButton
@@ -73,7 +104,7 @@ export default function Test() {
         style={styles.button}
         onPress={() => router.push("/(auth)/signout")}
       >
-        <Text style={{ fontSize: 20 }}>Signout</Text>
+        <Text style={{ fontSize: 18 }}>Signout</Text>
         <View style={styles.rowSpacer} />
       </AnimatedButton>
     </View>
@@ -83,9 +114,9 @@ export default function Test() {
 const styles = StyleSheet.create({
   button: {
     marginTop: 20,
-    height: 80,
+    height: 50,
     width: 120,
-    borderRadius: 50, // Corrected typo 'borderradius' to 'borderRadius'
+    borderRadius: 12,
     backgroundColor: "#ffa500",
     justifyContent: "center",
     alignItems: "center",

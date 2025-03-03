@@ -122,3 +122,12 @@ add bording profile info fill page
 display friends data on map point annotation
 https://console.cloud.google.com/auth/audience
 https://www.svgator.com/
+
+bording -> login -> check if profile exists
+-> fetch profile data
+-> enter set username page
+
+add setup profile page then redirect to main app
+refine profile page
+setup friend
+setup friend location
