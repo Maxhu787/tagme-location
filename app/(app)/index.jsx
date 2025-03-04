@@ -12,7 +12,7 @@ import TopNav from "../../components/TopNav";
 import Locate from "../../components/Locate";
 import DisplayUsers from "../../components/DisplayUsers";
 // import Loading from "../../components/Loading";
-// import SideBar from "../../components/SideBar";
+import SideBar from "../../components/SideBar";
 import * as Location from "expo-location";
 
 Logger.setLogCallback((log) => {
@@ -100,12 +100,12 @@ export default Home = () => {
         <DisplayUsers />
       </MapView>
       <TopNav />
-      {/* <SideBar
+      <SideBar
         following={following}
         setFollowing={setFollowing}
         setFollowZoom={setFollowZoom}
         cameraRef={cameraRef}
-      /> */}
+      />
       <Locate setFollowing={setFollowing} cameraRef={cameraRef} />
     </View>
   );

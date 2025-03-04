@@ -22,7 +22,7 @@ export default function App() {
 
       if (data.session && data.session.user) {
         setUser(data.session.user);
-        console.log("fetch session");
+        // console.log("fetch session");
         const exists = await checkProfileExists(data.session.user.id);
         setProfileExists(exists);
       }
