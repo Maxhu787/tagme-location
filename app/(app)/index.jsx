@@ -97,15 +97,15 @@ export default Home = () => {
           minDisplacement={1}
           animated={true}
         />
-        <DisplayUsers />
+        {/* <DisplayUsers /> */}
       </MapView>
       <TopNav />
-      <SideBar
+      {/* <SideBar
         following={following}
         setFollowing={setFollowing}
         setFollowZoom={setFollowZoom}
         cameraRef={cameraRef}
-      />
+      /> */}
       <Locate setFollowing={setFollowing} cameraRef={cameraRef} />
     </View>
   );
