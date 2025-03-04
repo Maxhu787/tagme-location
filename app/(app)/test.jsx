@@ -58,9 +58,10 @@ export default function Test() {
         {
           id: user.id,
           username: "test_user",
-          website: "",
+          name: user.user_metadata.full_name,
+          website: "https://maxhu787.github.io/",
           bio: "This is a test bio.",
-          profile_picture: "",
+          profile_picture: user.user_metadata.avatar_url,
           country: "TW",
           public: true,
           created_at: new Date().toISOString(),
@@ -81,14 +82,14 @@ export default function Test() {
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>{JSON.stringify(user.id)}</Text>
       <AnimatedButton style={styles.button} onPress={test_insert_location}>
-        <Text style={{ fontSize: 18 }}>insert_location</Text>
+        <Text style={{ fontSize: 18 }}>insert location</Text>
       </AnimatedButton>
       <AnimatedButton
         buttonScale={0.9}
         style={styles.button}
         onPress={() => upsertProfile(user)}
       >
-        <Text style={{ fontSize: 18 }}>upsert</Text>
+        <Text style={{ fontSize: 18 }}>upsert profile</Text>
         <View style={styles.rowSpacer} />
       </AnimatedButton>
       <AnimatedButton

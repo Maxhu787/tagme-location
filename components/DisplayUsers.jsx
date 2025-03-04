@@ -43,13 +43,13 @@ const DisplayUsers = () => {
           onSelected={() => console.log("onSelected")}
         >
           <View style={styles.markerContainer}>
-            <Image
+            {/* <Image
               source={require("../assets/hi.png")}
               // source={{ uri: item.image }}
               style={styles.image}
               onLoad={() => markerRefs.current?.[item.id]?.refresh()}
               fadeDuration={0}
-            />
+            /> */}
           </View>
         </PointAnnotation>
       ))}

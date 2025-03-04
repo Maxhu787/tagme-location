@@ -18,23 +18,6 @@ export default function Auth() {
   });
   const { user, setUser } = useContext(UserContext);
 
-  const checkProfileExists = async (userId) => {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("id")
-      .eq("id", userId)
-      .single();
-
-    if (error) {
-      if (error.code === "PGRST116") {
-        return false; // No rows found
-      }
-      console.log("Error checking profile:", error);
-      return null; // Return null for an unexpected error
-    }
-    return !!data; // Return true if profile exists
-  };
-
   const handlePress = async () => {
     try {
       await GoogleSignin.hasPlayServices();
@@ -44,26 +27,13 @@ export default function Auth() {
           provider: "google",
           token: userInfo.data.idToken,
         });
-        // console.log(
-        //   error,
-        //   JSON.stringify(
-        //     data.user.identities[0]["identity_data"]["name"],
-        //     null,
-        //     2
-        //   )
-        // );
-        setUser(data.user);
-
-        const profileExists = await checkProfileExists(user.id);
-        if (profileExists === null) return; // Stop if there was an error
-
+        // console.log(error, JSON.stringify(data.user.identities[0]["identity_data"]["name"], null, 2));
+        // if (data.user) {
+        //   setUser(data.user);
+        // }
         router.dismissAll();
-        if (!profileExists) {
-          router.replace("/(app)/test");
-        } else {
-          router.replace("/");
-        }
-        if (error) Alert.alert(error.message);
+        router.replace("/");
+        if (error) console.log(error.message);
       } else {
         throw new Error("No ID token found");
       }

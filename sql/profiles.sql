@@ -1,6 +1,7 @@
 create table profiles (
     id uuid references auth.users on delete cascade not null primary key,
     username varchar(32) unique not null,
+    name varchar(50),
     bio varchar(150),
     profile_picture varchar(150),
     website varchar(150),

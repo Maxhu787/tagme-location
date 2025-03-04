@@ -16,6 +16,7 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 export default function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const local = useLocalSearchParams();
+  // !refetch data here again
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -141,6 +142,23 @@ export default function Profile() {
               />
             </View>
             <Text style={styles.rowLabel}>Edit Profile</Text>
+            <View style={styles.rowSpacer} />
+            <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
+          </AnimatedButton>
+          <AnimatedButton
+            buttonScale={0.9}
+            onPress={() => router.push("/(app)/test")}
+            style={styles.row}
+          >
+            <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
+              <Image
+                alt=""
+                // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+                source={require("../../../assets/4.png")}
+                style={{ height: 50, width: 50 }}
+              />
+            </View>
+            <Text style={styles.rowLabel}>Test Route</Text>
             <View style={styles.rowSpacer} />
             <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
           </AnimatedButton>

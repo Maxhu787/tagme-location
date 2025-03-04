@@ -1,9 +1,10 @@
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 
 export default function Loading() {
   return (
     <View style={styles.container}>
-      <Image source={require("../assets/tagme.png")} style={styles.logo} />
+      <Text>An error occurred</Text>
+      <Text>Please try again later</Text>
     </View>
   );
 }
@@ -14,10 +15,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-  logo: {
-    height: 120,
-    width: 350,
-    marginRight: 10,
   },
 });

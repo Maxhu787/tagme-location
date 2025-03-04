@@ -4,6 +4,7 @@ import { supabase } from "../utils/supabase";
 import { View } from "react-native";
 import Bording from "../components/Bording";
 import { UserContext } from "../contexts/UserContext";
+import { ProfileContext } from "../contexts/ProfileContext";
 import Loading from "../components/Loading";
 
 export default function App() {
@@ -12,6 +13,7 @@ export default function App() {
   const [profileExists, setProfileExists] = useState(null);
 
   const { user, setUser } = useContext(UserContext);
+  const { profile, setProfile } = useContext(ProfileContext);
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -20,6 +22,7 @@ export default function App() {
 
       if (data.session && data.session.user) {
         setUser(data.session.user);
+        console.log("fetch session");
         const exists = await checkProfileExists(data.session.user.id);
         setProfileExists(exists);
       }
@@ -34,6 +37,8 @@ export default function App() {
 
         if (session && session.user) {
           setUser(session.user);
+
+          // console.log("on auth state change");
           const exists = await checkProfileExists(session.user.id);
           setProfileExists(exists);
         }
@@ -52,6 +57,7 @@ export default function App() {
       .select("id")
       .eq("id", userId)
       .single();
+    setProfile(data);
 
     if (error) {
       if (error.code === "PGRST116") {
@@ -63,13 +69,14 @@ export default function App() {
     return !!data; // Return true if profile exists
   };
 
-  if (loading || profileExists === null) {
+  if (loading) {
     return <Loading />;
   }
 
-  if (!session || !session.user) {
-    return <Bording />;
-  }
+  return <Redirect href={"/(app)"} />;
+  // if (!session || !session.user) {
+  //   return <Bording />;
+  // }
 
-  return <Redirect href={profileExists ? "/(app)" : "/(app)/test"} />;
+  // return <Redirect href={profileExists ? "/(app)" : "/(app)/test"} />;
 }
