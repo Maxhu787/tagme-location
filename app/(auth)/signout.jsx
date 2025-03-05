@@ -3,6 +3,7 @@ import { useRouter } from "expo-router";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { supabase } from "../../utils/supabase";
 import { UserContext } from "../../contexts/UserContext";
+import { ProfileContext } from "../../contexts/ProfileContext";
 
 export default function Signout() {
   GoogleSignin.configure({
@@ -11,6 +12,7 @@ export default function Signout() {
   });
   const router = useRouter();
   const { setUser } = useContext(UserContext);
+  const { setProfile } = useContext(ProfileContext);
 
   useEffect(() => {
     const logout = async () => {
@@ -18,6 +20,7 @@ export default function Signout() {
         await GoogleSignin.signOut();
         await supabase.auth.signOut();
         setUser(null);
+        setProfile(null);
         router.dismissAll();
         router.replace("/");
       } catch (error) {

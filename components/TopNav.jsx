@@ -1,8 +1,11 @@
 import { View, StyleSheet, Platform, Image } from "react-native";
 import { router } from "expo-router";
 import AnimatedButton from "./AnimatedButton";
+import { useContext } from "react";
+import { ProfileContext } from "../contexts/ProfileContext";
 
 export default TopNav = () => {
+  const { profile } = useContext(ProfileContext);
   return (
     <View
       style={{
@@ -24,7 +27,7 @@ export default TopNav = () => {
           justifyContent: "center",
           alignItems: "center",
         }}
-        onPress={() => router.push("/profile/usr_name")}
+        onPress={() => router.push(`/profile/${profile.id}`)}
       >
         <Image
           // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}

@@ -1,5 +1,5 @@
 import { router, Stack, useLocalSearchParams } from "expo-router";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -7,165 +7,203 @@ import {
   View,
   Text,
   Image,
-  TouchableOpacity,
 } from "react-native";
 import AnimatedButton from "../../../components/AnimatedButton";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import { ProfileContext } from "../../../contexts/ProfileContext";
+import { supabase } from "../../../utils/supabase";
 
 export default function Profile() {
-  const [isEditing, setIsEditing] = useState(false);
+  const [fetchData, setFetchData] = useState(null);
+  const { profile, setProfile } = useContext(ProfileContext);
   const local = useLocalSearchParams();
+
+  useEffect(() => {
+    const fetch = async () => {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", local.user)
+        .single();
+
+      if (error) {
+        if (error.code === "PGRST116") {
+          setFetchData(false); // No profile found
+        }
+        console.log("Error checking profile:", error);
+        setFetchData(null); // Unexpected error
+      }
+      console.log(fetchData);
+      setFetchData(data);
+    };
+    fetch();
+  }, []);
   // !refetch data here again
 
-  return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-      <Stack.Screen
-        options={{
-          title: `${local.user}`,
-          headerShadowVisible: true,
-          headerRight: () => (
-            <AnimatedButton
-              style={{
-                // marginRight: -12,
-                height: 55,
-                width: 40,
-                borderRadius: 10,
-                justifyContent: "center",
-                alignItems: "center",
-                // backgroundColor: "red",
-              }}
-              text="Settings"
-              onPress={() => {
-                router.push("/(app)/settings");
-              }}
-            >
-              <FontAwesome6 name="gear" size={24} color="black" />
+  if (fetchData === false) {
+    return (
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+        <Text>Profile not found</Text>
+      </SafeAreaView>
+    );
+  } else if (fetchData === null) {
+    return (
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+        <Text>Unexpected error</Text>
+      </SafeAreaView>
+    );
+  } else {
+    return (
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+        <Stack.Screen
+          options={{
+            title: `${profile.username}`,
+            headerShadowVisible: true,
+            headerRight: () => (
+              <AnimatedButton
+                style={{
+                  // marginRight: -12,
+                  height: 55,
+                  width: 40,
+                  borderRadius: 10,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  // backgroundColor: "red",
+                }}
+                text="Settings"
+                onPress={() => {
+                  router.push("/(app)/settings");
+                }}
+              >
+                <FontAwesome6 name="gear" size={24} color="black" />
+              </AnimatedButton>
+            ),
+          }}
+        />
+        <ScrollView>
+          <View style={styles.profile}>
+            <AnimatedButton buttonScale={0.8} onPress={() => {}}>
+              <View style={styles.profileAvatarWrapper}>
+                <Image
+                  alt=""
+                  source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+                  // source={require("../../../assets/hi.png")}
+                  style={styles.profileAvatar}
+                />
+              </View>
             </AnimatedButton>
-          ),
-        }}
-      />
-      <ScrollView>
-        <View style={styles.profile}>
-          <AnimatedButton buttonScale={0.8} onPress={() => {}}>
-            <View style={styles.profileAvatarWrapper}>
-              <Image
-                alt=""
-                // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
-                source={require("../../../assets/hi.png")}
-                style={styles.profileAvatar}
-              />
+            <View style={styles.profileText}>
+              <Text style={styles.profileName}>{fetchData.username}</Text>
+              <Text style={styles.profileBio}>
+                lorem ipsum dolor sit amet, consectetur adipiscing elit
+              </Text>
             </View>
-          </AnimatedButton>
-          <View style={styles.profileText}>
-            <Text style={styles.profileName}>{local.user}</Text>
-            <Text style={styles.profileBio}>
-              lorem ipsum dolor sit amet, consectetur adipiscing elit
-            </Text>
           </View>
-        </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Profile Information</Text>
-          <AnimatedButton
-            buttonScale={0.9}
-            onPress={() => {}}
-            style={styles.row}
-          >
-            <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
-              {/* <FeatherIcon color="#fff" name="user" size={20} /> */}
-              <Image
-                alt=""
-                // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
-                source={require("../../../assets/2.png")}
-                style={{ height: 50, width: 50 }}
-              />
-            </View>
-            <Text style={styles.rowLabel}>Username</Text>
-            <View style={styles.rowSpacer} />
-            <Text style={styles.rowValue}>{local.user}</Text>
-          </AnimatedButton>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Profile Information</Text>
+            <AnimatedButton
+              buttonScale={0.9}
+              onPress={() => {}}
+              style={styles.row}
+            >
+              <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
+                <FeatherIcon color="#fff" name="user" size={20} />
+                {/* <Image
+                  alt=""
+                  // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+                  source={require("../../../assets/2.png")}
+                  style={{ height: 50, width: 50 }}
+                /> */}
+              </View>
+              <Text style={styles.rowLabel}>Username</Text>
+              <View style={styles.rowSpacer} />
+              <Text style={styles.rowValue}>{local.user}</Text>
+            </AnimatedButton>
 
-          <AnimatedButton
-            buttonScale={0.9}
-            onPress={() => {}}
-            style={styles.row}
-          >
-            <View style={[styles.rowIcon, { backgroundColor: "#fe9400" }]}>
-              {/* <FeatherIcon color="#fff" name="mail" size={20} /> */}
-              <Image
-                alt=""
-                // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
-                source={require("../../../assets/hi.png")}
-                style={{ height: 50, width: 50 }}
-              />
-            </View>
-            <Text style={styles.rowLabel}>Email</Text>
-            <View style={styles.rowSpacer} />
-            <Text style={styles.rowValue}>hu@example.com</Text>
-          </AnimatedButton>
+            <AnimatedButton
+              buttonScale={0.9}
+              onPress={() => {}}
+              style={styles.row}
+            >
+              <View style={[styles.rowIcon, { backgroundColor: "#fe9400" }]}>
+                <FeatherIcon color="#fff" name="mail" size={20} />
+                {/* <Image
+                  alt=""
+                  // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+                  source={require("../../../assets/hi.png")}
+                  style={{ height: 50, width: 50 }}
+                /> */}
+              </View>
+              <Text style={styles.rowLabel}>Email</Text>
+              <View style={styles.rowSpacer} />
+              <Text style={styles.rowValue}>hu@example.com</Text>
+            </AnimatedButton>
 
-          <AnimatedButton
-            buttonScale={0.9}
-            onPress={() => {}}
-            style={styles.row}
-          >
-            <View style={[styles.rowIcon, { backgroundColor: "#32c759" }]}>
-              {/* <FeatherIcon color="#fff" name="map-pin" size={20} /> */}
-              <Image
-                alt=""
-                // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
-                source={require("../../../assets/3.png")}
-                style={{ height: 50, width: 50 }}
-              />
-            </View>
-            <Text style={styles.rowLabel}>Location</Text>
-            <View style={styles.rowSpacer} />
-            <Text style={styles.rowValue}>New York, USA</Text>
-          </AnimatedButton>
-        </View>
+            <AnimatedButton
+              buttonScale={0.9}
+              onPress={() => {}}
+              style={styles.row}
+            >
+              <View style={[styles.rowIcon, { backgroundColor: "#32c759" }]}>
+                <FeatherIcon color="#fff" name="map-pin" size={20} />
+                {/* <Image
+                  alt=""
+                  // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+                  source={require("../../../assets/3.png")}
+                  style={{ height: 50, width: 50 }}
+                /> */}
+              </View>
+              <Text style={styles.rowLabel}>Location</Text>
+              <View style={styles.rowSpacer} />
+              <Text style={styles.rowValue}>New York, USA</Text>
+            </AnimatedButton>
+          </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Settings</Text>
-          <AnimatedButton
-            buttonScale={0.9}
-            onPress={() => setIsEditing(!isEditing)}
-            style={styles.row}
-          >
-            <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
-              {/* <FeatherIcon color="#fff" name="edit" size={20} /> */}
-              <Image
-                alt=""
-                // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
-                source={require("../../../assets/5.png")}
-                style={{ height: 50, width: 50 }}
-              />
-            </View>
-            <Text style={styles.rowLabel}>Edit Profile</Text>
-            <View style={styles.rowSpacer} />
-            <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
-          </AnimatedButton>
-          <AnimatedButton
-            buttonScale={0.9}
-            onPress={() => router.push("/(app)/test")}
-            style={styles.row}
-          >
-            <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
-              <Image
-                alt=""
-                // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
-                source={require("../../../assets/4.png")}
-                style={{ height: 50, width: 50 }}
-              />
-            </View>
-            <Text style={styles.rowLabel}>Test Route</Text>
-            <View style={styles.rowSpacer} />
-            <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
-          </AnimatedButton>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Settings</Text>
+            <AnimatedButton
+              buttonScale={0.9}
+              onPress={fetch}
+              style={styles.row}
+            >
+              <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
+                <FeatherIcon color="#fff" name="edit" size={20} />
+                {/* <Image
+                  alt=""
+                  // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+                  source={require("../../../assets/5.png")}
+                  style={{ height: 50, width: 50 }}
+                /> */}
+              </View>
+              <Text style={styles.rowLabel}>Edit Profile</Text>
+              <View style={styles.rowSpacer} />
+              <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
+            </AnimatedButton>
+            <AnimatedButton
+              buttonScale={0.9}
+              onPress={() => router.push("/(app)/test")}
+              style={styles.row}
+            >
+              <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
+                <FeatherIcon color="#fff" name="edit" size={20} />
+                {/* <Image
+                  alt=""
+                  // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+                  source={require("../../../assets/4.png")}
+                  style={{ height: 50, width: 50 }}
+                /> */}
+              </View>
+              <Text style={styles.rowLabel}>Test Route</Text>
+              <View style={styles.rowSpacer} />
+              <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
+            </AnimatedButton>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

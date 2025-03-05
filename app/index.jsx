@@ -54,11 +54,10 @@ export default function App() {
   const checkProfileExists = async (userId) => {
     const { data, error } = await supabase
       .from("profiles")
-      .select("id")
+      .select("*")
       .eq("id", userId)
       .single();
     setProfile(data);
-
     if (error) {
       if (error.code === "PGRST116") {
         return false; // No profile found
@@ -73,10 +72,10 @@ export default function App() {
     return <Loading />;
   }
 
-  return <Redirect href={"/(app)"} />;
-  // if (!session || !session.user) {
-  //   return <Bording />;
-  // }
+  // return <Redirect href={"/(app)"} />;
+  if (!session || !session.user) {
+    return <Bording />;
+  }
 
-  // return <Redirect href={profileExists ? "/(app)" : "/(app)/test"} />;
+  return <Redirect href={profileExists ? "/(app)" : "/(app)/test"} />;
 }
