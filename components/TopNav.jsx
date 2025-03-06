@@ -1,43 +1,161 @@
-import { View, StyleSheet, Platform, Image } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Platform,
+  Image,
+  TouchableOpacity,
+  Animated,
+} from "react-native";
 import { router } from "expo-router";
-import AnimatedButton from "./AnimatedButton";
-import { useContext } from "react";
+import { useContext, useRef, useState } from "react";
 import { ProfileContext } from "../contexts/ProfileContext";
+import AnimatedButton from "./AnimatedButton";
 
-export default TopNav = () => {
+export default function TopNav() {
   const { profile } = useContext(ProfileContext);
+  const [expanded, setExpanded] = useState(false);
+  const widthAnim = useRef(new Animated.Value(64)).current;
+  const opacityAnim = useRef(new Animated.Value(0)).current;
+  const profilePosition = useRef(new Animated.Value(0)).current;
+
+  const toggleNav = () => {
+    const toValue = expanded ? 64 : 280; // Expands width
+    Animated.timing(widthAnim, {
+      toValue,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+
+    Animated.timing(opacityAnim, {
+      toValue: expanded ? 0 : 1, // Controls opacity of buttons
+      duration: 200,
+      useNativeDriver: false,
+    }).start();
+
+    Animated.timing(profilePosition, {
+      toValue: expanded ? 0 : 140, // Moves profile icon to the right
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+
+    setExpanded(!expanded);
+  };
+
   return (
-    <View
-      style={{
-        position: "absolute",
-        zIndex: 2,
-        top: Platform.OS === "ios" ? 65 : 55,
-        right: 20,
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "row",
-      }}
-    >
-      <AnimatedButton
-        style={{
-          height: 64,
-          width: 64,
-          borderRadius: 50,
-          backgroundColor: "#fff",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-        onPress={() => router.push(`/profile/${profile.id}`)}
-      >
+    <Animated.View style={[styles.container, { width: widthAnim }]}>
+      {/* Close Button (Appears on left when expanded) */}
+      <TouchableOpacity onPress={toggleNav} style={styles.navButton}>
         <Image
-          // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
           source={require("../assets/icon.png")}
-          style={{ width: 52, height: 52, borderRadius: 100 }}
+          style={styles.icon}
           resizeMode="contain"
         />
-      </AnimatedButton>
-    </View>
-  );
-};
+      </TouchableOpacity>
 
-const styles = StyleSheet.create({});
+      <Animated.View
+        style={[
+          styles.buttonsContainer,
+          { opacity: opacityAnim, pointerEvents: expanded ? "auto" : "none" },
+        ]}
+      >
+        <AnimatedButton
+          style={styles.animatedButton}
+          onPress={() => {}}
+          buttonScale={0.65}
+        >
+          <Image
+            source={require("../assets/icon.png")}
+            style={styles.icon}
+            resizeMode="contain"
+          />
+        </AnimatedButton>
+
+        <AnimatedButton
+          style={styles.animatedButton}
+          onPress={() => {}}
+          buttonScale={0.65}
+        >
+          <Image
+            source={require("../assets/icon.png")}
+            style={styles.icon}
+            resizeMode="contain"
+          />
+        </AnimatedButton>
+
+        <AnimatedButton
+          style={styles.animatedButton}
+          onPress={() => router.push(`/profile/${profile.id}`)}
+          buttonScale={0.7}
+        >
+          <Image
+            // source={{ uri: "https://picsum.photos/id/664/500/500" }}
+            source={{ uri: profile.profile_picture }}
+            style={styles.icon}
+            resizeMode="contain"
+          />
+        </AnimatedButton>
+      </Animated.View>
+
+      {/* <Animated.View
+        style={[styles.profileContainer, { marginLeft: profilePosition }]}
+      >
+        <Image
+          // source={require("../assets/icon.png")}
+          source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+          style={styles.icon}
+          resizeMode="contain"
+        />
+      </Animated.View> */}
+    </Animated.View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    position: "absolute",
+    zIndex: 2,
+    top: Platform.OS === "ios" ? 65 : 55,
+    right: 20,
+    height: 64,
+    backgroundColor: "#fff",
+    borderRadius: 50,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingLeft: 5,
+    paddingRight: 5,
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    // backgroundColor: "red",
+    marginLeft: 10,
+  },
+  navButton: {
+    width: 52,
+    height: 52,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+  },
+  profileContainer: {
+    width: 52,
+    height: 52,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+  },
+  animatedButton: {
+    height: 64,
+    width: 64,
+    borderRadius: 50,
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 3,
+  },
+  icon: {
+    width: 52,
+    height: 52,
+    borderRadius: 100,
+  },
+});
