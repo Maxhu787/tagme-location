@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { View, Platform } from "react-native";
 import {
   MapView,
@@ -14,6 +14,8 @@ import DisplayUsers from "../../components/DisplayUsers";
 // import Loading from "../../components/Loading";
 import SideBar from "../../components/SideBar";
 import * as Location from "expo-location";
+import { UserContext } from "../../contexts/UserContext";
+import { supabase } from "../../utils/supabase";
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -34,6 +36,7 @@ export default Home = () => {
   const insets = useSafeAreaInsets();
   const [following, setFollowing] = useState(true);
   const [followZoom, setFollowZoom] = useState(16);
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     const requestPermissions = async () => {
@@ -50,13 +53,35 @@ export default Home = () => {
         let location_data = await Location.getCurrentPositionAsync({
           accuracy: Location.Accuracy.Highest,
         });
+        // console.log(location_data);
+        const insertLocationData = async (userId) => {
+          const { data, error } = await supabase.from("user_location").upsert(
+            [
+              {
+                id: userId,
+                latitude: location_data.coords.latitude,
+                longitude: location_data.coords.longitude,
+                battery: 80,
+                timestamp: new Date().toISOString(),
+              },
+            ],
+            { onConflict: ["id"] }
+          );
+
+          if (error) {
+            console.log("Error inserting location data:", error);
+            // } else {
+            // console.log("Location data inserted/updated:", data);
+          }
+        };
+        insertLocationData(user.id);
       } catch (error) {
         console.error("Error getting location:", error);
       }
     };
 
     requestPermissions();
-    const interval = setInterval(getCurrentLocation, 1000);
+    const interval = setInterval(getCurrentLocation, 5000);
 
     return () => clearInterval(interval);
   }, []);

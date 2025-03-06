@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { UserContext } from "../../contexts/UserContext";
 import AnimatedButton from "../../components/AnimatedButton";
 import { router } from "expo-router";
-import { supabase } from "../../utils/supabase"; // Ensure the supabase client is properly set up
+import { supabase } from "../../utils/supabase";
 
 export default function Test() {
   const { user, setUser } = useContext(UserContext);

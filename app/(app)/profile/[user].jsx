@@ -1,5 +1,5 @@
 import { router, Stack, useLocalSearchParams } from "expo-router";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -11,12 +11,12 @@ import {
 import AnimatedButton from "../../../components/AnimatedButton";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import { ProfileContext } from "../../../contexts/ProfileContext";
 import { supabase } from "../../../utils/supabase";
+import Loading from "../../../components/Loading";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 export default function Profile() {
   const [fetchData, setFetchData] = useState(null);
-  const { profile, setProfile } = useContext(ProfileContext);
   const local = useLocalSearchParams();
 
   useEffect(() => {
@@ -24,6 +24,7 @@ export default function Profile() {
       const { data, error } = await supabase
         .from("profiles")
         .select("*")
+        // .eq("id", "81a2b721-1811-469f-a02d-250821bb3612")
         .eq("id", local.user)
         .single();
 
@@ -32,10 +33,10 @@ export default function Profile() {
           setFetchData(false); // No profile found
         }
         console.log("Error checking profile:", error);
-        setFetchData(null); // Unexpected error
+        setFetchData(false); // Unexpected error
+      } else {
+        setFetchData(data);
       }
-      console.log(fetchData);
-      setFetchData(data);
     };
     fetch();
   }, []);
@@ -43,22 +44,44 @@ export default function Profile() {
 
   if (fetchData === false) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-        <Text>Profile not found</Text>
-      </SafeAreaView>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Stack.Screen
+          options={{
+            headerShown: true,
+            title: "Oops!",
+          }}
+        />
+        <Text style={{ fontSize: 30 }}>Oops!</Text>
+        <Text
+          style={{
+            fontSize: 23,
+            color: "#666",
+            textAlign: "center",
+            marginTop: 20,
+          }}
+        >
+          This profile doesn't exist or couldn't be loaded.
+        </Text>
+      </View>
     );
   } else if (fetchData === null) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-        <Text>Unexpected error</Text>
-      </SafeAreaView>
+      <>
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Loading />
+      </>
     );
   } else {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
         <Stack.Screen
           options={{
-            title: `${profile.username}`,
+            title: `${fetchData.username}`,
+            headerShown: true,
             headerShadowVisible: true,
             headerRight: () => (
               <AnimatedButton
@@ -87,17 +110,17 @@ export default function Profile() {
               <View style={styles.profileAvatarWrapper}>
                 <Image
                   alt=""
-                  source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+                  // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+                  source={{ uri: fetchData.profile_picture }}
                   // source={require("../../../assets/hi.png")}
                   style={styles.profileAvatar}
                 />
               </View>
             </AnimatedButton>
             <View style={styles.profileText}>
-              <Text style={styles.profileName}>{fetchData.username}</Text>
-              <Text style={styles.profileBio}>
-                lorem ipsum dolor sit amet, consectetur adipiscing elit
-              </Text>
+              <Text style={styles.profileUserName}>{fetchData.username}</Text>
+              <Text style={styles.profileName}>{fetchData.name}</Text>
+              <Text style={styles.profileBio}>{fetchData.bio}</Text>
             </View>
           </View>
 
@@ -119,7 +142,7 @@ export default function Profile() {
               </View>
               <Text style={styles.rowLabel}>Username</Text>
               <View style={styles.rowSpacer} />
-              <Text style={styles.rowValue}>{local.user}</Text>
+              <Text style={styles.rowValue}>{fetchData.username}</Text>
             </AnimatedButton>
 
             <AnimatedButton
@@ -128,7 +151,7 @@ export default function Profile() {
               style={styles.row}
             >
               <View style={[styles.rowIcon, { backgroundColor: "#fe9400" }]}>
-                <FeatherIcon color="#fff" name="mail" size={20} />
+                <MaterialCommunityIcons name="web" size={20} color="#fff" />
                 {/* <Image
                   alt=""
                   // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
@@ -136,9 +159,9 @@ export default function Profile() {
                   style={{ height: 50, width: 50 }}
                 /> */}
               </View>
-              <Text style={styles.rowLabel}>Email</Text>
+              <Text style={styles.rowLabel}>Website</Text>
               <View style={styles.rowSpacer} />
-              <Text style={styles.rowValue}>hu@example.com</Text>
+              <Text style={styles.rowValue}>{fetchData.website}</Text>
             </AnimatedButton>
 
             <AnimatedButton
@@ -157,7 +180,7 @@ export default function Profile() {
               </View>
               <Text style={styles.rowLabel}>Location</Text>
               <View style={styles.rowSpacer} />
-              <Text style={styles.rowValue}>New York, USA</Text>
+              <Text style={styles.rowValue}>{fetchData.country}</Text>
             </AnimatedButton>
           </View>
 
@@ -165,7 +188,7 @@ export default function Profile() {
             <Text style={styles.sectionTitle}>Settings</Text>
             <AnimatedButton
               buttonScale={0.9}
-              onPress={fetch}
+              onPress={() => {}}
               style={styles.row}
             >
               <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
@@ -208,7 +231,8 @@ export default function Profile() {
 
 const styles = StyleSheet.create({
   profile: {
-    padding: 24,
+    paddingHorizontal: 30,
+    paddingVertical: 30,
     backgroundColor: "#fff",
     flexDirection: "row",
     alignItems: "center",
@@ -227,11 +251,17 @@ const styles = StyleSheet.create({
   profileAvatarWrapper: {
     position: "relative",
   },
-  profileName: {
+  profileUserName: {
     marginTop: 12,
     fontSize: 24,
     fontWeight: "600",
     color: "#414d63",
+    textAlign: "left",
+  },
+  profileName: {
+    marginTop: 5,
+    fontSize: 13,
+    color: "#989898",
     textAlign: "left",
   },
   profileBio: {

@@ -127,16 +127,14 @@ bording -> login -> check if profile exists
 -> fetch profile data
 -> enter set username page
 
-add setup profile page then redirect to main app
-refine profile page
-setup friend
-setup friend location
-
 https://chatgpt.com/c/67c174a3-cf94-8004-8662-dcdc92ae4e15
 https://medium.com/@yildizfatma/handling-user-input-in-react-native-expo-text-input-buttons-6e7931bc227a
 
-profile load and context
 add toast message when profile created or error
 setup handle error and error page
-setup battery stats
-setup local store profile data
+set private profile logic
+setup expo battery
+add theme
+refine profile page
+setup friend
+setup friend location
