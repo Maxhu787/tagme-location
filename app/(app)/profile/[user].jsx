@@ -231,8 +231,7 @@ export default function Profile() {
 
 const styles = StyleSheet.create({
   profile: {
-    paddingHorizontal: 30,
-    paddingVertical: 30,
+    padding: 24,
     backgroundColor: "#fff",
     flexDirection: "row",
     alignItems: "center",
