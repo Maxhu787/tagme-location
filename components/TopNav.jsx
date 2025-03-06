@@ -43,15 +43,25 @@ export default function TopNav() {
 
   return (
     <Animated.View style={[styles.container, { width: widthAnim }]}>
-      {/* Close Button (Appears on left when expanded) */}
-      <TouchableOpacity onPress={toggleNav} style={styles.navButton}>
-        <Image
-          source={require("../assets/icon.png")}
-          style={styles.icon}
-          resizeMode="contain"
-        />
-      </TouchableOpacity>
-
+      {!expanded && (
+        <TouchableOpacity
+          onPress={toggleNav}
+          style={{
+            width: 52,
+            height: 52,
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: 50,
+          }}
+        >
+          <Image
+            source={require("../assets/icon.png")}
+            // source={{ uri: "https://picsum.photos/id/664/500/500" }}
+            style={styles.icon}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+      )}
       <Animated.View
         style={[
           styles.buttonsContainer,
@@ -88,24 +98,29 @@ export default function TopNav() {
           buttonScale={0.7}
         >
           <Image
-            // source={{ uri: "https://picsum.photos/id/664/500/500" }}
             source={{ uri: profile.profile_picture }}
             style={styles.icon}
             resizeMode="contain"
           />
         </AnimatedButton>
       </Animated.View>
-
-      {/* <Animated.View
-        style={[styles.profileContainer, { marginLeft: profilePosition }]}
+      <TouchableOpacity
+        onPress={toggleNav}
+        style={{
+          width: 52,
+          height: 52,
+          justifyContent: "center",
+          alignItems: "center",
+          borderRadius: 50,
+        }}
       >
         <Image
-          // source={require("../assets/icon.png")}
-          source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+          source={require("../assets/icon.png")}
+          // source={{ uri: "https://picsum.photos/id/664/500/500" }}
           style={styles.icon}
           resizeMode="contain"
         />
-      </Animated.View> */}
+      </TouchableOpacity>
     </Animated.View>
   );
 }
@@ -129,20 +144,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // backgroundColor: "red",
     marginLeft: 10,
-  },
-  navButton: {
-    width: 52,
-    height: 52,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 50,
-  },
-  profileContainer: {
-    width: 52,
-    height: 52,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 50,
   },
   animatedButton: {
     height: 64,
