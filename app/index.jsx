@@ -72,10 +72,10 @@ export default function App() {
     return <Loading />;
   }
 
-  // return <Redirect href={"/(app)"} />;
   if (!session || !session.user) {
     return <Bording />;
   }
 
   return <Redirect href={profileExists ? "/(app)" : "/(app)/test"} />;
+  // return <Redirect href={"/(app)/maptest"} />;
 }

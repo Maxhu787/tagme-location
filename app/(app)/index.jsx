@@ -96,6 +96,7 @@ export default Home = () => {
       }}
     >
       <MapView
+        // onMarkerPress={() => {}}
         style={{ flex: 1 }}
         // mapStyle="https://tiles.openfreemap.org/styles/bright"
         mapStyle="https://tiles.openfreemap.org/styles/positron"

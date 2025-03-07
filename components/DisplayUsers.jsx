@@ -1,6 +1,6 @@
-import { PointAnnotation } from "@maplibre/maplibre-react-native";
+import { PointAnnotation, MarkerView } from "@maplibre/maplibre-react-native";
 import React, { useRef } from "react";
-import { View, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
 
 const test = [
   {
@@ -43,16 +43,34 @@ const DisplayUsers = () => {
           onSelected={() => console.log("onSelected")}
         >
           <View style={styles.markerContainer}>
-            {/* <Image
+            <Image
               source={require("../assets/hi.png")}
               // source={{ uri: item.image }}
               style={styles.image}
               onLoad={() => markerRefs.current?.[item.id]?.refresh()}
               fadeDuration={0}
-            /> */}
+            />
           </View>
         </PointAnnotation>
       ))}
+      {/* {test.map((item) => (
+        <MarkerView
+          key={item.id}
+          // ref={(ref) => (markerRefs.current[item.id] = ref)}
+          coordinate={item.coordinates}
+          // onSelected={() => console.log("onSelected")}
+        >
+          <TouchableOpacity style={styles.markerContainer}>
+            <Image
+              source={require("../assets/hi.png")}
+              // source={{ uri: item.image }}
+              style={styles.image}
+              onLoad={() => markerRefs.current?.[item.id]?.refresh()}
+              fadeDuration={0}
+            />
+          </TouchableOpacity>
+        </MarkerView>
+      ))} */}
     </>
   );
 };

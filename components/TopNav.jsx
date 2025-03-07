@@ -19,7 +19,7 @@ export default function TopNav() {
   const profilePosition = useRef(new Animated.Value(0)).current;
 
   const toggleNav = () => {
-    const toValue = expanded ? 64 : 280; // Expands width
+    const toValue = expanded ? 64 : 270; // Expands width
     Animated.timing(widthAnim, {
       toValue,
       duration: 300,
@@ -46,13 +46,7 @@ export default function TopNav() {
       {!expanded && (
         <TouchableOpacity
           onPress={toggleNav}
-          style={{
-            width: 52,
-            height: 52,
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: 50,
-          }}
+          style={[styles.animatedButton, { marginLeft: -5 }]}
         >
           <Image
             source={require("../assets/icon.png")}
@@ -68,11 +62,15 @@ export default function TopNav() {
           { opacity: opacityAnim, pointerEvents: expanded ? "auto" : "none" },
         ]}
       >
-        <AnimatedButton
-          style={styles.animatedButton}
-          onPress={() => {}}
-          buttonScale={0.65}
-        >
+        <AnimatedButton style={styles.animatedButton} onPress={() => {}}>
+          <Image
+            source={require("../assets/icon.png")}
+            style={styles.icon}
+            resizeMode="contain"
+          />
+        </AnimatedButton>
+
+        <AnimatedButton style={styles.animatedButton} onPress={() => {}}>
           <Image
             source={require("../assets/icon.png")}
             style={styles.icon}
@@ -82,20 +80,8 @@ export default function TopNav() {
 
         <AnimatedButton
           style={styles.animatedButton}
+          // onPress={() => router.push(`/profile/${profile.id}`)}
           onPress={() => {}}
-          buttonScale={0.65}
-        >
-          <Image
-            source={require("../assets/icon.png")}
-            style={styles.icon}
-            resizeMode="contain"
-          />
-        </AnimatedButton>
-
-        <AnimatedButton
-          style={styles.animatedButton}
-          onPress={() => router.push(`/profile/${profile.id}`)}
-          buttonScale={0.7}
         >
           <Image
             source={{ uri: profile.profile_picture }}
@@ -104,16 +90,7 @@ export default function TopNav() {
           />
         </AnimatedButton>
       </Animated.View>
-      <TouchableOpacity
-        onPress={toggleNav}
-        style={{
-          width: 52,
-          height: 52,
-          justifyContent: "center",
-          alignItems: "center",
-          borderRadius: 50,
-        }}
-      >
+      <TouchableOpacity onPress={toggleNav} style={styles.animatedButton}>
         <Image
           source={require("../assets/icon.png")}
           // source={{ uri: "https://picsum.photos/id/664/500/500" }}
@@ -131,19 +108,20 @@ const styles = StyleSheet.create({
     zIndex: 2,
     top: Platform.OS === "ios" ? 65 : 55,
     right: 20,
-    height: 64,
-    backgroundColor: "#fff",
+    height: 64, //64
+    // backgroundColor: "#fff",
+    backgroundColor: "#ddd",
     borderRadius: 50,
     flexDirection: "row",
     alignItems: "center",
     paddingLeft: 5,
-    paddingRight: 5,
+    // paddingRight: 5,
   },
   buttonsContainer: {
     flexDirection: "row",
     alignItems: "center",
     // backgroundColor: "red",
-    marginLeft: 10,
+    marginLeft: -10,
   },
   animatedButton: {
     height: 64,
