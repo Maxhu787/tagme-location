@@ -98,8 +98,8 @@ export default function TopNav() {
         style={styles.animatedButton}
       >
         <Image
-          // source={require("../assets/icon.png")}
-          source={{ uri: "https://picsum.photos/id/664/500/500" }}
+          source={require("../assets/icon.png")}
+          // source={{ uri: "https://picsum.photos/id/664/500/500" }}
           style={styles.icon}
           resizeMode="contain"
         />
