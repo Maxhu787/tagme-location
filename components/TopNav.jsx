@@ -10,6 +10,7 @@ import { router } from "expo-router";
 import { useContext, useRef, useState } from "react";
 import { ProfileContext } from "../contexts/ProfileContext";
 import AnimatedButton from "./AnimatedButton";
+import Feather from "@expo/vector-icons/Feather";
 
 export default function TopNav() {
   const { profile } = useContext(ProfileContext);
@@ -63,11 +64,12 @@ export default function TopNav() {
         ]}
       >
         <AnimatedButton style={styles.animatedButton} onPress={() => {}}>
-          <Image
+          {/* <Image
             source={require("../assets/icon.png")}
             style={styles.icon}
             resizeMode="contain"
-          />
+          /> */}
+          <Feather name="user-plus" size={26} color="black" />
         </AnimatedButton>
 
         <AnimatedButton style={styles.animatedButton} onPress={() => {}}>
@@ -109,8 +111,8 @@ const styles = StyleSheet.create({
     top: Platform.OS === "ios" ? 65 : 55,
     right: 20,
     height: 64, //64
-    // backgroundColor: "#fff",
-    backgroundColor: "#ddd",
+    backgroundColor: "#fff",
+    // backgroundColor: "#ddd",
     borderRadius: 50,
     flexDirection: "row",
     alignItems: "center",
