@@ -1,5 +1,5 @@
 import { PointAnnotation, MarkerView } from "@maplibre/maplibre-react-native";
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
 
 const test = [
@@ -31,11 +31,31 @@ const test = [
 ];
 
 const DisplayUsers = () => {
+  const [coordinates, setCoordinates] = useState(test);
   const markerRefs = useRef({});
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCoordinates((prevCoordinates) =>
+        prevCoordinates.map((item) => {
+          const newCoordinates = [
+            item.coordinates[0] + (Math.random() - 0.5) * 0.001,
+            item.coordinates[1] + (Math.random() - 0.5) * 0.001,
+          ];
+          if (markerRefs.current[item.id]) {
+            markerRefs.current[item.id].refresh();
+          }
+          return { ...item, coordinates: newCoordinates };
+        })
+      );
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>
-      {test.map((item) => (
+      {coordinates.map((item) => (
         <PointAnnotation
           key={item.id}
           ref={(ref) => (markerRefs.current[item.id] = ref)}
@@ -53,7 +73,7 @@ const DisplayUsers = () => {
           </View>
         </PointAnnotation>
       ))}
-      {/* {test.map((item) => (
+      {/* {coordinates.map((item) => (
         <MarkerView
           key={item.id}
           // ref={(ref) => (markerRefs.current[item.id] = ref)}
