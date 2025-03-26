@@ -65,7 +65,8 @@ const DisplayUsers = () => {
           <View style={styles.markerContainer}>
             <Image
               // source={require("../assets/hi.png")}
-              source={{ uri: item.image }}
+              // source={{ uri: item.image }}
+              source={{ uri: "https://placehold.co/80x80" }}
               style={styles.image}
               onLoad={() => markerRefs.current?.[item.id]?.refresh()}
               fadeDuration={0}

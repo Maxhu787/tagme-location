@@ -125,7 +125,7 @@ export default Home = () => {
         />
         <DisplayUsers />
       </MapView>
-      <TopNav />
+      {/* <TopNav /> */}
       {/* <SideBar
         following={following}
         setFollowing={setFollowing}
