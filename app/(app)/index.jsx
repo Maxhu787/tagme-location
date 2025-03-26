@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { View, Platform } from "react-native";
+import { View, Platform, Text } from "react-native";
 import {
   MapView,
   Camera,
@@ -95,11 +95,17 @@ export default Home = () => {
         paddingTop: Platform.OS === "ios" ? 0 : insets.top,
       }}
     >
+      <Text>{following ? "true" : "false"}</Text>
       <MapView
         // onMarkerPress={() => {}}
+        // onRegionDidChange={(event) => {
+        //   if (following && event.properties.isUserInteraction) {
+        //     setFollowing(false);
+        //   }
+        // }}
         style={{ flex: 1 }}
-        mapStyle="https://tiles.openfreemap.org/styles/bright"
-        // mapStyle="https://tiles.openfreemap.org/styles/positron"
+        // mapStyle="https://tiles.openfreemap.org/styles/bright"
+        mapStyle="https://tiles.openfreemap.org/styles/positron"
         rotateEnabled={false}
         logoEnabled={false}
         attributionEnabled={false}
@@ -125,7 +131,7 @@ export default Home = () => {
         />
         <DisplayUsers />
       </MapView>
-      {/* <TopNav /> */}
+      <TopNav />
       {/* <SideBar
         following={following}
         setFollowing={setFollowing}
