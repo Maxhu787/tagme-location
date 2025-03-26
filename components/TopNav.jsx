@@ -19,32 +19,32 @@ export default function TopNav() {
   const opacityAnim = useRef(new Animated.Value(0)).current;
   const profilePosition = useRef(new Animated.Value(0)).current;
 
-  const toggleNav = () => {
-    const toValue = expanded ? 64 : 270; // Expands width
-    Animated.timing(widthAnim, {
-      toValue,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
+  // const toggleNav = () => {
+  //   const toValue = expanded ? 64 : 270; // Expands width
+  //   Animated.timing(widthAnim, {
+  //     toValue,
+  //     duration: 300,
+  //     useNativeDriver: false,
+  //   }).start();
 
-    Animated.timing(opacityAnim, {
-      toValue: expanded ? 0 : 1, // Controls opacity of buttons
-      duration: 200,
-      useNativeDriver: false,
-    }).start();
+  //   Animated.timing(opacityAnim, {
+  //     toValue: expanded ? 0 : 1, // Controls opacity of buttons
+  //     duration: 200,
+  //     useNativeDriver: false,
+  //   }).start();
 
-    Animated.timing(profilePosition, {
-      toValue: expanded ? 0 : 140, // Moves profile icon to the right
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
+  //   Animated.timing(profilePosition, {
+  //     toValue: expanded ? 0 : 140, // Moves profile icon to the right
+  //     duration: 300,
+  //     useNativeDriver: false,
+  //   }).start();
 
-    setExpanded(!expanded);
-  };
+  //   setExpanded(!expanded);
+  // };
 
   return (
     <Animated.View style={[styles.container, { width: widthAnim }]}>
-      {!expanded && (
+      {/* {!expanded && (
         <TouchableOpacity
           onPress={toggleNav}
           style={[styles.animatedButton, { marginLeft: -5 }]}
@@ -56,19 +56,19 @@ export default function TopNav() {
             resizeMode="contain"
           />
         </TouchableOpacity>
-      )}
-      <Animated.View
+      )} */}
+      {/* <Animated.View
         style={[
           styles.buttonsContainer,
           { opacity: opacityAnim, pointerEvents: expanded ? "auto" : "none" },
         ]}
       >
         <AnimatedButton style={styles.animatedButton} onPress={() => {}}>
-          {/* <Image
+          <Image
             source={require("../assets/icon.png")}
             style={styles.icon}
             resizeMode="contain"
-          /> */}
+          />
           <Feather name="user-plus" size={26} color="black" />
         </AnimatedButton>
 
@@ -82,7 +82,6 @@ export default function TopNav() {
 
         <AnimatedButton
           style={styles.animatedButton}
-          // onPress={() => router.push(`/profile/${profile.id}`)}
           onPress={() => {}}
         >
           <Image
@@ -91,15 +90,20 @@ export default function TopNav() {
             resizeMode="contain"
           />
         </AnimatedButton>
-      </Animated.View>
-      <TouchableOpacity onPress={toggleNav} style={styles.animatedButton}>
+      </Animated.View> */}
+      <AnimatedButton
+        // onPress={toggleNav}
+        // onPress={() => {}}
+        onPress={() => router.push(`/profile/${profile.id}`)}
+        style={styles.animatedButton}
+      >
         <Image
-          source={require("../assets/icon.png")}
-          // source={{ uri: "https://picsum.photos/id/664/500/500" }}
+          // source={require("../assets/icon.png")}
+          source={{ uri: "https://picsum.photos/id/664/500/500" }}
           style={styles.icon}
           resizeMode="contain"
         />
-      </TouchableOpacity>
+      </AnimatedButton>
     </Animated.View>
   );
 }
@@ -111,7 +115,7 @@ const styles = StyleSheet.create({
     top: Platform.OS === "ios" ? 65 : 55,
     right: 20,
     height: 64, //64
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     // backgroundColor: "#ddd",
     borderRadius: 50,
     flexDirection: "row",
@@ -129,10 +133,11 @@ const styles = StyleSheet.create({
     height: 64,
     width: 64,
     borderRadius: 50,
-    backgroundColor: "#fff",
+    backgroundColor: "#ffa500",
     justifyContent: "center",
     alignItems: "center",
     marginHorizontal: 3,
+    marginLeft: -2,
   },
   icon: {
     width: 52,

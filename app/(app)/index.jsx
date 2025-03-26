@@ -98,8 +98,8 @@ export default Home = () => {
       <MapView
         // onMarkerPress={() => {}}
         style={{ flex: 1 }}
-        // mapStyle="https://tiles.openfreemap.org/styles/bright"
-        mapStyle="https://tiles.openfreemap.org/styles/positron"
+        mapStyle="https://tiles.openfreemap.org/styles/bright"
+        // mapStyle="https://tiles.openfreemap.org/styles/positron"
         rotateEnabled={false}
         logoEnabled={false}
         attributionEnabled={false}
@@ -123,7 +123,7 @@ export default Home = () => {
           minDisplacement={1}
           animated={true}
         />
-        {/* <DisplayUsers /> */}
+        <DisplayUsers />
       </MapView>
       <TopNav />
       {/* <SideBar
