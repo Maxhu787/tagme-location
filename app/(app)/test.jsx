@@ -95,7 +95,11 @@ export default function Test() {
       <AnimatedButton
         buttonScale={0.9}
         style={styles.button}
-        onPress={() => router.push("/(app)")}
+        onPress={() => {
+          router.dismissAll();
+          router.replace("/(app)");
+          // router.push("/(app)")
+        }}
       >
         <Text style={{ fontSize: 18 }}>map</Text>
         <View style={styles.rowSpacer} />

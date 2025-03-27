@@ -1,6 +1,7 @@
 import { PointAnnotation, MarkerView } from "@maplibre/maplibre-react-native";
 import React, { useRef, useEffect, useState } from "react";
-import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Image, StyleSheet, Text, TouchableOpacity } from "react-native";
+import AnimatedButton from "./AnimatedButton";
 
 const test = [
   {
@@ -30,7 +31,7 @@ const test = [
   },
 ];
 
-const DisplayUsers = () => {
+const DisplayUsers = ({ setFollowing }) => {
   const [coordinates, setCoordinates] = useState(test);
   const markerRefs = useRef({});
 
@@ -43,18 +44,31 @@ const DisplayUsers = () => {
             item.coordinates[1] + (Math.random() - 0.5) * 0.001,
           ];
           if (markerRefs.current[item.id]) {
+            // setFollowing(false);
             markerRefs.current[item.id].refresh();
+            // setFollowing(true);
           }
           return { ...item, coordinates: newCoordinates };
         })
       );
-    }, 1000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
     <>
+      {/* <AnimatedButton
+        style={{
+          width: 75,
+          backgroundColor: "#fff",
+          padding: 22,
+          borderRadius: 18,
+          shadowColor: "#000",
+          elevation: 15,
+        }}
+        text="refresh"
+      ></AnimatedButton> */}
       {coordinates.map((item) => (
         <PointAnnotation
           key={item.id}
@@ -64,9 +78,8 @@ const DisplayUsers = () => {
         >
           <View style={styles.markerContainer}>
             <Image
-              // source={require("../assets/hi.png")}
+              source={require("../assets/hi.png")}
               // source={{ uri: item.image }}
-              source={{ uri: "https://placehold.co/80x80" }}
               style={styles.image}
               onLoad={() => markerRefs.current?.[item.id]?.refresh()}
               fadeDuration={0}
@@ -74,24 +87,6 @@ const DisplayUsers = () => {
           </View>
         </PointAnnotation>
       ))}
-      {/* {coordinates.map((item) => (
-        <MarkerView
-          key={item.id}
-          // ref={(ref) => (markerRefs.current[item.id] = ref)}
-          coordinate={item.coordinates}
-          // onSelected={() => console.log("onSelected")}
-        >
-          <TouchableOpacity style={styles.markerContainer}>
-            <Image
-              source={require("../assets/hi.png")}
-              // source={{ uri: item.image }}
-              style={styles.image}
-              onLoad={() => markerRefs.current?.[item.id]?.refresh()}
-              fadeDuration={0}
-            />
-          </TouchableOpacity>
-        </MarkerView>
-      ))} */}
     </>
   );
 };

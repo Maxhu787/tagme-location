@@ -36,27 +36,7 @@ export default Home = () => {
   const insets = useSafeAreaInsets();
   const [following, setFollowing] = useState(true); // android
   const [followZoom, setFollowZoom] = useState(16); // ios
-  const { user, setUser } = useContext(UserContext);
-
-  // useEffect(() => {
-  //   const getCurrentLocation = async () => {
-  //     let location_data = await Location.getCurrentPositionAsync({
-  //       accuracy: Location.Accuracy.Highest,
-  //       // maximumAge: 1000,
-  //     });
-  //     if (Platform.OS === "ios") {
-  //       setLocation(location_data);
-  //     } else {
-  //       setLocation("");
-  //     }
-  //   };
-  //   getCurrentLocation();
-  //   const interval = setInterval(() => {
-  //     getCurrentLocation();
-  //   }, 1000);
-
-  //   return () => clearInterval(interval);
-  // }, []);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     const requestPermissions = async () => {
@@ -73,7 +53,6 @@ export default Home = () => {
         let location_data = await Location.getCurrentPositionAsync({
           accuracy: Location.Accuracy.Highest,
         });
-        // console.log(location_data);
         const insertLocationData = async (userId) => {
           const { data, error } = await supabase.from("user_location").upsert(
             [
@@ -115,6 +94,7 @@ export default Home = () => {
         paddingTop: Platform.OS === "ios" ? 0 : insets.top,
       }}
     >
+      {/* <Text>{following ? "true" : "false"}</Text> */}
       <MapView
         // onRegionDidChange={(event) => {
         //   if (following && event.properties.isUserInteraction) {
@@ -152,7 +132,7 @@ export default Home = () => {
           minDisplacement={1}
           animated={true}
         />
-        {/* <DisplayUsers /> */}
+        {/* <DisplayUsers setFollowing={setFollowing} /> */}
       </MapView>
       <TopNav />
       {/* <SideBar

@@ -28,9 +28,9 @@ export default function Auth() {
           token: userInfo.data.idToken,
         });
         // console.log(error, JSON.stringify(data.user.identities[0]["identity_data"]["name"], null, 2));
-        // if (data.user) {
-        //   setUser(data.user);
-        // }
+        if (data.user) {
+          setUser(data.user);
+        }
         router.dismissAll();
         router.replace("/");
         if (error) console.log(error.message);

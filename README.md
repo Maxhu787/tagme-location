@@ -2,6 +2,8 @@
 
 ## add
 
+- identify how the current locate button works
+- fix displayusers consider time interval location update (ex 5min)
 - zoom scrollbar
 - cache map for offline viewing
 - store location to supabase

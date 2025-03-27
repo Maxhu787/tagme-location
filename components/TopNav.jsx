@@ -11,6 +11,7 @@ import { useContext, useRef, useState } from "react";
 import { ProfileContext } from "../contexts/ProfileContext";
 import AnimatedButton from "./AnimatedButton";
 import Feather from "@expo/vector-icons/Feather";
+import { UserContext } from "../contexts/UserContext";
 
 export default function TopNav() {
   const { profile } = useContext(ProfileContext);
@@ -18,6 +19,7 @@ export default function TopNav() {
   const widthAnim = useRef(new Animated.Value(64)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
   const profilePosition = useRef(new Animated.Value(0)).current;
+  const { user, setUser } = useContext(UserContext);
 
   // const toggleNav = () => {
   //   const toValue = expanded ? 64 : 270; // Expands width
@@ -98,7 +100,8 @@ export default function TopNav() {
         style={styles.animatedButton}
       >
         <Image
-          source={require("../assets/icon.png")}
+          // source={require("../assets/icon.png")}
+          source={{ uri: profile.profile_picture }}
           // source={{ uri: "https://picsum.photos/id/664/500/500" }}
           style={styles.icon}
           resizeMode="contain"
@@ -133,7 +136,8 @@ const styles = StyleSheet.create({
     height: 64,
     width: 64,
     borderRadius: 50,
-    backgroundColor: "#ffa500",
+    // backgroundColor: "#ffa500",
+    backgroundColor: "#fff",
     justifyContent: "center",
     alignItems: "center",
     marginHorizontal: 3,

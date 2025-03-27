@@ -34,9 +34,29 @@ Logger.setLogCallback((log) => {
 export default Home = () => {
   const cameraRef = useRef(null);
   const insets = useSafeAreaInsets();
-  const [following, setFollowing] = useState(true);
-  const [followZoom, setFollowZoom] = useState(16);
+  const [following, setFollowing] = useState(true); // android
+  const [followZoom, setFollowZoom] = useState(16); // ios
   const { user, setUser } = useContext(UserContext);
+
+  // useEffect(() => {
+  //   const getCurrentLocation = async () => {
+  //     let location_data = await Location.getCurrentPositionAsync({
+  //       accuracy: Location.Accuracy.Highest,
+  //       // maximumAge: 1000,
+  //     });
+  //     if (Platform.OS === "ios") {
+  //       setLocation(location_data);
+  //     } else {
+  //       setLocation("");
+  //     }
+  //   };
+  //   getCurrentLocation();
+  //   const interval = setInterval(() => {
+  //     getCurrentLocation();
+  //   }, 1000);
+
+  //   return () => clearInterval(interval);
+  // }, []);
 
   useEffect(() => {
     const requestPermissions = async () => {
@@ -80,10 +100,10 @@ export default Home = () => {
       }
     };
 
-    // requestPermissions();
-    // const interval = setInterval(getCurrentLocation, 5000);
+    requestPermissions();
+    const interval = setInterval(getCurrentLocation, 5000);
 
-    // return () => clearInterval(interval);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -96,7 +116,6 @@ export default Home = () => {
       }}
     >
       <MapView
-        // onMarkerPress={() => {}}
         // onRegionDidChange={(event) => {
         //   if (following && event.properties.isUserInteraction) {
         //     setFollowing(false);
@@ -133,7 +152,7 @@ export default Home = () => {
           minDisplacement={1}
           animated={true}
         />
-        <DisplayUsers />
+        {/* <DisplayUsers /> */}
       </MapView>
       <TopNav />
       {/* <SideBar
