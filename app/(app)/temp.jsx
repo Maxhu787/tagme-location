@@ -114,20 +114,15 @@ export default Home = () => {
           }
         }}
       >
-        {/* <Camera
-          ref={cameraRef}
-          followUserLocation
-          followZoomLevel={followZoom}
-          onUserTrackingModeChange={(event) => {
-            if (!event.nativeEvent.payload.followUserLocation) {
-              setFollowing(false);
-            }
-          }}
-        /> */}
         <Camera
           ref={cameraRef}
           followUserLocation={true}
           followZoomLevel={followZoom}
+          // onUserTrackingModeChange={(event) => {
+          //   if (!event.nativeEvent.payload.followUserLocation) {
+          //     setFollowing(false);
+          //   }
+          // }}
         />
         <UserLocation
           androidRenderMode={"compass"}
