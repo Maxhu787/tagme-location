@@ -46,12 +46,12 @@ export default function Settings() {
             </View>
             <Text style={styles.rowLabel}>Dark Mode</Text>
             <View style={styles.rowSpacer} />
-            <Switch
+            {/* <Switch
               trackColor={{ false: "#ccc", true: "#999" }}
               thumbColor={darkMode ? "#fff" : "#fff"}
               onValueChange={(darkMode) => setDarkMode(darkMode)}
               value={darkMode}
-            />
+            /> */}
           </AnimatedButton>
           <AnimatedButton
             buttonScale={0.9}
@@ -65,7 +65,7 @@ export default function Settings() {
             <View style={styles.rowSpacer} />
             <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
           </AnimatedButton>
-          <AnimatedButton
+          {/* <AnimatedButton
             buttonScale={0.9}
             onPress={() => {
               setEmailNotifications(!emailNotifications);
@@ -85,8 +85,8 @@ export default function Settings() {
               }
               value={emailNotifications}
             />
-          </AnimatedButton>
-          <AnimatedButton
+          </AnimatedButton> */}
+          {/* <AnimatedButton
             buttonScale={0.9}
             onPress={() => {
               setPushNotifications(!pushNotifications);
@@ -106,7 +106,7 @@ export default function Settings() {
               }
               value={pushNotifications}
             />
-          </AnimatedButton>
+          </AnimatedButton>*/}
         </View>
         <View style={[styles.section, { paddingBottom: 40 }]}>
           <Text style={styles.sectionTitle}>Resources</Text>
