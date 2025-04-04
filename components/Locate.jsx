@@ -39,7 +39,7 @@ export default TopNav = ({ setFollowing, cameraRef }) => {
           padding: 22,
           borderRadius: 18,
           shadowColor: "#000",
-          elevation: 15,
+          elevation: 4,
         }}
         text="Settings"
         onPress={moveToCurrentLocation}
