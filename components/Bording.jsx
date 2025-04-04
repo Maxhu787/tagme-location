@@ -18,21 +18,21 @@ const { width, height } = Dimensions.get("window");
 const slides = [
   {
     id: "1",
-    title: "Screen 1",
+    title: "One",
     description: "lorem ipsum dolor sit amet",
     // image: "https://picsum.photos/id/664/1920/1080",
     image: "https://placehold.co/1920x1080",
   },
   {
     id: "2",
-    title: "Screen 2",
+    title: "Two",
     description: "lorem ipsum dolor sit amet",
     // image: "https://picsum.photos/id/664/1920/1080",
     image: "https://placehold.co/1920x1080",
   },
   {
     id: "3",
-    title: "Screen 3",
+    title: "Three",
     description: "lore ipsum dolor sit amet",
     // image: "https://picsum.photos/id/664/1920/1080",
     image: "https://placehold.co/1920x1080",
@@ -48,7 +48,7 @@ const OnboardingItem = ({ item }) => {
         width,
         alignItems: "center",
         padding: 35,
-        backgroundColor: "Red",
+        backgroundColor: "#fff",
         flex: 1,
       }}
     >
@@ -64,10 +64,25 @@ const OnboardingItem = ({ item }) => {
           marginTop: -20,
         }}
       />
-      <Text style={{ fontSize: 24, fontWeight: "bold", marginTop: 20 }}>
+      <Text
+        style={{
+          fontSize: 28,
+          fontWeight: "bold",
+          marginTop: 20,
+          color: "#000",
+        }}
+      >
         {item.title}
       </Text>
-      <Text style={{ fontSize: 16, textAlign: "center", marginTop: 10 }}>
+      <Text
+        style={{
+          fontSize: 18,
+          textAlign: "center",
+          marginTop: 10,
+          color: "#000",
+          fontWeight: "bold",
+        }}
+      >
         {item.description}
       </Text>
     </View>
@@ -116,7 +131,14 @@ const Bording = () => {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#fff",
+      }}
+    >
       <FlashList
         ref={flashListRef}
         data={slides}
@@ -147,7 +169,7 @@ const Bording = () => {
               width: indicators[i],
               height: 10,
               borderRadius: 5,
-              backgroundColor: i === currentIndex ? "#ffa500" : "#aaa",
+              backgroundColor: i === currentIndex ? "#ffa500" : "#ccc",
               margin: 5,
             }}
           />

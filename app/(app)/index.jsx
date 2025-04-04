@@ -157,7 +157,7 @@ export default Home = () => {
         <AnimatedButton
           style={{
             width: 72,
-            backgroundColor: "#fff",
+            backgroundColor: "#000",
             padding: 22,
             borderRadius: 18,
             shadowColor: "#000",
@@ -167,7 +167,7 @@ export default Home = () => {
             setFetchUsers(true);
           }}
         >
-          <FontAwesome name="refresh" size={32} color="black" />
+          <FontAwesome name="refresh" size={32} color="#ffa500" />
         </AnimatedButton>
       </View>
       <TopNav />

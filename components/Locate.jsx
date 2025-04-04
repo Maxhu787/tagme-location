@@ -35,7 +35,7 @@ export default TopNav = ({ setFollowing, cameraRef }) => {
       <AnimatedButton
         style={{
           width: 75,
-          backgroundColor: "#fff",
+          backgroundColor: "#000",
           padding: 22,
           borderRadius: 18,
           shadowColor: "#000",
@@ -44,7 +44,7 @@ export default TopNav = ({ setFollowing, cameraRef }) => {
         text="Settings"
         onPress={moveToCurrentLocation}
       >
-        <FontAwesome6 name="location-crosshairs" size={32} color="black" />
+        <FontAwesome6 name="location-crosshairs" size={32} color="#ffa500" />
       </AnimatedButton>
     </View>
   );

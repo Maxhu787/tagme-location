@@ -11,6 +11,7 @@ export default function AnimatedButton({
   onPress,
   buttonScale = 0.75,
   children,
+  textColor = "#fff",
 }) {
   const scaleButton = useSharedValue(1);
 
@@ -40,7 +41,9 @@ export default function AnimatedButton({
         {children ? (
           children
         ) : (
-          <Text style={{ fontWeight: 600, fontSize: 16 }}>{text}</Text>
+          <Text style={{ fontWeight: 600, fontSize: 16, color: textColor }}>
+            {text}
+          </Text>
         )}
       </TouchableOpacity>
     </Animated.View>
