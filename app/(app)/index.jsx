@@ -117,7 +117,7 @@ export default Home = () => {
       >
         <Camera
           ref={cameraRef}
-          followUserLocation={following}
+          followUserLocation={true}
           followZoomLevel={followZoom}
           // onUserTrackingModeChange={(event) => {
           //   if (!event.nativeEvent.payload.followUserLocation) {

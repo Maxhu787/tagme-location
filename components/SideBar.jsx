@@ -39,7 +39,7 @@ export default SideBar = ({
         style={styles.zoomButton}
         text="3x"
         onPress={() => {
-          handleZoom(14);
+          handleZoom(12);
         }}
       />
       <AnimatedButton
