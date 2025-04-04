@@ -83,12 +83,12 @@ export default function Auth() {
             name="google"
             style={{ marginRight: 0 }}
             size={30}
-            color="#fff"
+            color="#ffa500"
           />
           <Text
             style={{
-              fontSize: 16,
-              color: "#fff",
+              fontSize: 20,
+              color: "#ffa500",
               fontWeight: "bold",
               marginBottom: 1,
             }}

@@ -147,7 +147,7 @@ const Bording = () => {
               width: indicators[i],
               height: 10,
               borderRadius: 5,
-              backgroundColor: i === currentIndex ? "black" : "gray",
+              backgroundColor: i === currentIndex ? "#ffa500" : "#aaa",
               margin: 5,
             }}
           />
@@ -158,14 +158,14 @@ const Bording = () => {
         style={{
           width: width - 40,
           paddingVertical: 10,
-          backgroundColor: "#000",
+          backgroundColor: "#ffa500",
           borderRadius: 5,
           alignItems: "center",
           bottom: Platform.OS === "ios" ? 60 : 50,
         }}
         buttonScale={0.85}
       >
-        <Text style={{ color: "white", fontSize: 16 }}>
+        <Text style={{ color: "#fff", fontSize: 24, fontWeight: "bold" }}>
           {currentIndex == 2 ? "Get Started!" : "Next"}
         </Text>
       </AnimatedButton>
