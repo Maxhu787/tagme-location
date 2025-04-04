@@ -243,8 +243,8 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
   },
   profileAvatar: {
-    width: 110,
-    height: 110,
+    width: 100,
+    height: 100,
     borderRadius: 9999,
   },
   profileAvatarWrapper: {

@@ -38,6 +38,7 @@ https://www.youtube.com/watch?v=UAQogFwyna0
 https://maplibre.org/maplibre-react-native/docs/setup/expo/
 https://openfreemap.org/
 https://www.maptiler.com/
+https://protomaps.com/
 
 ### auth
 
@@ -115,15 +116,11 @@ https://www.youtube.com/watch?v=U5qSNhUXASE
 
 ## tomorrow
 
-https://protomaps.com/
-#fd572e
 https://muffingroup.com/blog/orange-color-palette/
+#fd572e
 rgb(240, 150, 91)
-supabase insert data setup tested
 add bording profile info fill page
-display friends data on map point annotation
 https://console.cloud.google.com/auth/audience
-https://www.svgator.com/
 
 bording -> login -> check if profile exists
 -> fetch profile data
@@ -134,9 +131,9 @@ https://medium.com/@yildizfatma/handling-user-input-in-react-native-expo-text-in
 
 add toast message when profile created or error
 setup handle error and error page
-set private profile logic
 setup expo battery
 add theme
 refine profile page
+set seperate edit profile page
 setup friend
 setup friend location
