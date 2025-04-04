@@ -133,7 +133,8 @@ add toast message when profile created or error
 setup handle error and error page
 setup expo battery
 add theme
+
 refine profile page
 set seperate edit profile page
-setup friend
-setup friend location
+
+setup add friends

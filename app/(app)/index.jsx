@@ -106,6 +106,7 @@ export default Home = () => {
         style={{ flex: 1 }}
         // mapStyle="https://tiles.openfreemap.org/styles/bright"
         mapStyle="https://tiles.openfreemap.org/styles/positron"
+        // mapStyle="https://api.maptiler.com/maps/topo-v2/style.json?key=OKl8m7wrDzahTfa30DpT"
         rotateEnabled={false}
         logoEnabled={false}
         attributionEnabled={false}
