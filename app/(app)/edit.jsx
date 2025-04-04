@@ -1,5 +1,5 @@
 import { router, Stack, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -7,26 +7,25 @@ import {
   View,
   Text,
   Image,
-  Linking,
-  TouchableOpacity,
 } from "react-native";
-import AnimatedButton from "../../../components/AnimatedButton";
+import AnimatedButton from "../../components/AnimatedButton";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import { supabase } from "../../../utils/supabase";
-import Loading from "../../../components/Loading";
+import { supabase } from "../../utils/supabase";
+import Loading from "../../components/Loading";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { UserContext } from "../../contexts/UserContext";
 
 export default function Profile() {
+  const { user } = useContext(UserContext);
   const [fetchData, setFetchData] = useState(null);
-  const local = useLocalSearchParams();
 
   useEffect(() => {
     const fetch = async () => {
       const { data, error } = await supabase
         .from("profiles")
         .select("*")
-        // .eq("id", "81a2b721-1811-469f-a02d-250821bb3612")
-        .eq("id", local.user)
+        .eq("id", user.id)
         .single();
 
       if (error) {
@@ -42,6 +41,10 @@ export default function Profile() {
     fetch();
   }, []);
   // !refetch data here again
+
+  const handleEdit = () => {
+    // console.log("Edit profile");
+  };
 
   if (fetchData === false) {
     return (
@@ -62,7 +65,7 @@ export default function Profile() {
             paddingHorizontal: 20,
           }}
         >
-          This profile doesn't exist or couldn't be loaded.
+          Something went wrong while fetching your profile data.
         </Text>
       </View>
     );
@@ -107,72 +110,115 @@ export default function Profile() {
           }}
         />
         <ScrollView>
-          <View style={styles.profile}>
-            <AnimatedButton buttonScale={0.8} onPress={() => {}}>
-              <View style={styles.profileAvatarWrapper}>
-                <Image
-                  alt=""
-                  // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
-                  source={{ uri: fetchData.profile_picture }}
-                  // source={require("../../../assets/hi.png")}
-                  style={styles.profileAvatar}
-                />
-              </View>
-            </AnimatedButton>
-            <View style={styles.profileText}>
-              <Text style={styles.profileUserName}>{fetchData.username}</Text>
-              <Text style={styles.profileName}>
-                {fetchData.name} | {fetchData.country}
-              </Text>
-              <Text style={styles.profileBio}>{fetchData.bio}</Text>
-              <TouchableOpacity
-                activeOpacity={0.5}
-                // onPress={() => Linking.openURL(fetchData.website)}
-              >
-                <Text style={[styles.profileBio, { color: "#4287f5" }]}>
-                  {fetchData.website}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-
+          {/*
+            username varchar(32) unique not null,
+            name varchar(50),
+            bio varchar(150),
+            profile_picture varchar(150),
+            website varchar(150),
+            country char(2),
+          */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Settings</Text>
+            <Text style={styles.sectionTitle}>Profile Information</Text>
+
             <AnimatedButton
               buttonScale={0.9}
-              onPress={() => router.push("/(app)/edit")}
+              onPress={handleEdit}
               style={styles.row}
             >
-              <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
-                <FeatherIcon color="#fff" name="edit" size={20} />
-                {/* <Image
-                  alt=""
-                  // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
-                  source={require("../../../assets/5.png")}
-                  style={{ height: 50, width: 50 }}
-                /> */}
-              </View>
-              <Text style={styles.rowLabel}>Edit Profile</Text>
-              <View style={styles.rowSpacer} />
-              <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
-            </AnimatedButton>
-            <AnimatedButton
-              buttonScale={0.9}
-              onPress={() => router.push("/(app)/test")}
-              style={styles.row}
-            >
-              <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
-                {/* <FeatherIcon color="#fff" name="edit" size={20} /> */}
+              <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
                 <Image
                   alt=""
                   // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
-                  source={require("../../../assets/5.png")}
+                  // source={require("../../assets/4.png")}
+                  source={{ uri: fetchData.profile_picture }}
+                  style={{ height: 40, width: 40, borderRadius: 100 }}
+                />
+              </View>
+              <Text style={styles.rowLabel}>Profile picture</Text>
+              <View style={styles.rowSpacer} />
+              <Text style={styles.rowValue}>
+                {fetchData.profile_picture.length > 25
+                  ? fetchData.profile_picture.substring(0, 25 - 3) + "..."
+                  : mytextvar}
+              </Text>
+            </AnimatedButton>
+
+            <AnimatedButton
+              buttonScale={0.9}
+              onPress={handleEdit}
+              style={styles.row}
+            >
+              <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
+                <FeatherIcon color="#fff" name="user" size={20} />
+              </View>
+              <Text style={styles.rowLabel}>Username</Text>
+              <View style={styles.rowSpacer} />
+              <Text style={styles.rowValue}>{fetchData.username}</Text>
+            </AnimatedButton>
+
+            <AnimatedButton
+              buttonScale={0.9}
+              onPress={handleEdit}
+              style={styles.row}
+            >
+              <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
+                {/* <FeatherIcon color="#fff" name="user" size={20} /> */}
+                <Image
+                  alt=""
+                  // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+                  source={require("../../assets/4.png")}
                   style={{ height: 50, width: 50 }}
                 />
               </View>
-              <Text style={styles.rowLabel}>Test Route</Text>
+              <Text style={styles.rowLabel}>Name</Text>
               <View style={styles.rowSpacer} />
-              <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
+              <Text style={styles.rowValue}>{fetchData.name}</Text>
+            </AnimatedButton>
+
+            <AnimatedButton
+              buttonScale={0.9}
+              onPress={handleEdit}
+              style={styles.row}
+            >
+              <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
+                {/* <FeatherIcon color="#fff" name="user" size={20} /> */}
+                <Image
+                  alt=""
+                  // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
+                  source={require("../../assets/1.png")}
+                  style={{ height: 50, width: 50 }}
+                />
+              </View>
+              <Text style={styles.rowLabel}>Bio</Text>
+              <View style={styles.rowSpacer} />
+              <Text style={styles.rowValue}>{fetchData.bio}</Text>
+            </AnimatedButton>
+
+            <AnimatedButton
+              buttonScale={0.9}
+              onPress={handleEdit}
+              style={styles.row}
+            >
+              <View style={[styles.rowIcon, { backgroundColor: "#fe9400" }]}>
+                <MaterialCommunityIcons name="web" size={20} color="#fff" />
+              </View>
+              <Text style={styles.rowLabel}>Website</Text>
+              <View style={styles.rowSpacer} />
+              <Text style={styles.rowValue}>{fetchData.website}</Text>
+            </AnimatedButton>
+
+            <AnimatedButton
+              buttonScale={0.9}
+              onPress={handleEdit}
+              style={styles.row}
+            >
+              <View style={[styles.rowIcon, { backgroundColor: "#32c759" }]}>
+                <FeatherIcon color="#fff" name="map-pin" size={20} />
+              </View>
+              <Text style={styles.rowLabel}>Country</Text>
+              <View style={styles.rowSpacer} />
+              <Text style={styles.rowValue}>{fetchData.country}</Text>
             </AnimatedButton>
           </View>
         </ScrollView>
@@ -182,50 +228,9 @@ export default function Profile() {
 }
 
 const styles = StyleSheet.create({
-  profile: {
-    paddingTop: 24,
-    paddingLeft: 24,
-    paddingRight: 10,
-    backgroundColor: "#fff",
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  profileText: {
-    marginLeft: 8,
-    flex: 1,
-    paddingHorizontal: 12,
-    paddingBottom: 12,
-  },
-  profileAvatar: {
-    width: 110,
-    height: 110,
-    borderRadius: 9999,
-  },
-  profileAvatarWrapper: {
-    position: "relative",
-  },
-  profileUserName: {
-    marginTop: 12,
-    fontSize: 24,
-    fontWeight: "600",
-    color: "#414d63",
-    textAlign: "left",
-  },
-  profileName: {
-    marginTop: 5,
-    fontSize: 13,
-    color: "#989898",
-    textAlign: "left",
-  },
-  profileBio: {
-    marginTop: 2,
-    fontSize: 16,
-    color: "#989898",
-    textAlign: "left",
-  },
   section: {
+    marginTop: 12,
     paddingHorizontal: 12,
-    // 24
   },
   sectionTitle: {
     padding: 12,
@@ -239,10 +244,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 50,
-    // backgroundColor: "#f2f2f2",
     backgroundColor: "#fff",
-    // borderWidth: 1,
-    // borderColor: "#f2f2f2",
     borderRadius: 8,
     marginBottom: 5,
     paddingHorizontal: 12,

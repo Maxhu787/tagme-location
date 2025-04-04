@@ -156,7 +156,7 @@ export default Home = () => {
       >
         <AnimatedButton
           style={{
-            width: 75,
+            width: 72,
             backgroundColor: "#fff",
             padding: 22,
             borderRadius: 18,
