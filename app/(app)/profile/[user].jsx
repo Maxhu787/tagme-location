@@ -191,10 +191,7 @@ export default function Profile() {
                 key={friend.id}
                 buttonScale={0.9}
                 onPress={() => {
-                  router.push({
-                    pathname: `/profile/${friend.id}`,
-                    params: { timestamp: Date.now() },
-                  });
+                  router.push(`/profile/${friend.id}?timestamp=${Date.now()}`); // Add a unique query parameter
                 }}
                 style={styles.row}
               >
