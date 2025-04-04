@@ -132,9 +132,7 @@ https://medium.com/@yildizfatma/handling-user-input-in-react-native-expo-text-in
 add toast message when profile created or error
 setup handle error and error page
 setup expo battery
+
 add theme
-
-refine profile page
-set seperate edit profile page
-
+add edit functinality
 setup add friends

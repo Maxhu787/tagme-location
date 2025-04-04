@@ -127,7 +127,7 @@ export default function Profile() {
               <Text style={styles.profileBio}>{fetchData.bio}</Text>
               <TouchableOpacity
                 activeOpacity={0.5}
-                // onPress={() => Linking.openURL(fetchData.website)}
+                onPress={() => Linking.openURL(fetchData.website)}
               >
                 <Text style={[styles.profileBio, { color: "#4287f5" }]}>
                   {fetchData.website}
