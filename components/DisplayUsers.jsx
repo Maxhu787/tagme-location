@@ -2,7 +2,7 @@ import { PointAnnotation } from "@maplibre/maplibre-react-native";
 import React, { useRef, useState, useEffect } from "react";
 import { View, Image, StyleSheet } from "react-native";
 
-const DisplayUsers = ({ fetchUsers, setFetchUsers }) => {
+const DisplayUsers = ({ setFollowing, fetchUsers, setFetchUsers }) => {
   const test = [
     {
       id: 1,
@@ -36,6 +36,7 @@ const DisplayUsers = ({ fetchUsers, setFetchUsers }) => {
   useEffect(() => {
     if (fetchUsers) {
       // console.log("fetchUserLocations");
+      setFollowing(false);
       setCoordinates((prevCoordinates) => {
         return prevCoordinates.map((item) => {
           const newCoordinates = [
@@ -45,6 +46,7 @@ const DisplayUsers = ({ fetchUsers, setFetchUsers }) => {
           return { ...item, coordinates: newCoordinates };
         });
       });
+      setFollowing(true);
       setFetchUsers(false);
     }
   }, [fetchUsers]);

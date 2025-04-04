@@ -11,12 +11,12 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import TopNav from "../../components/TopNav";
 import Locate from "../../components/Locate";
 import DisplayUsers from "../../components/DisplayUsers";
-// import Loading from "../../components/Loading";
 import SideBar from "../../components/SideBar";
 import * as Location from "expo-location";
 import { UserContext } from "../../contexts/UserContext";
 import { supabase } from "../../utils/supabase";
 import AnimatedButton from "../../components/AnimatedButton";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -96,7 +96,7 @@ export default Home = () => {
         paddingTop: Platform.OS === "ios" ? 0 : insets.top,
       }}
     >
-      <Text>{fetchUsers ? "true" : "false"}</Text>
+      {/* <Text>{following ? "true" : "false"}</Text> */}
       <MapView
         // onRegionDidChange={(event) => {
         //   if (following && event.properties.isUserInteraction) {
@@ -117,7 +117,7 @@ export default Home = () => {
       >
         <Camera
           ref={cameraRef}
-          followUserLocation={true}
+          followUserLocation={following}
           followZoomLevel={followZoom}
           // onUserTrackingModeChange={(event) => {
           //   if (!event.nativeEvent.payload.followUserLocation) {
@@ -134,32 +134,48 @@ export default Home = () => {
           minDisplacement={1}
           animated={true}
         />
-        <DisplayUsers fetchUsers={fetchUsers} setFetchUsers={setFetchUsers} />
+        <DisplayUsers
+          setFollowing={setFollowing}
+          fetchUsers={fetchUsers}
+          setFetchUsers={setFetchUsers}
+        />
       </MapView>
-      <AnimatedButton
+      <View
         style={{
-          width: 100,
-          backgroundColor: "#fff",
-          padding: 22,
-          borderRadius: 18,
-          shadowColor: "#000",
-          bottom: 30,
-          left: 30,
-          elevation: 2,
+          display: "flex",
+          position: "absolute",
+          bottom: 0,
+          right: 115,
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "row",
+          padding: Platform.OS === "ios" ? 42 : 32,
         }}
-        buttonScale={0.9}
-        text="refresh"
-        onPress={() => {
-          setFetchUsers(true);
-        }}
-      />
+      >
+        <AnimatedButton
+          style={{
+            width: 75,
+            backgroundColor: "#fff",
+            padding: 22,
+            borderRadius: 18,
+            shadowColor: "#000",
+            elevation: 4,
+          }}
+          onPress={() => {
+            setFetchUsers(true);
+          }}
+        >
+          <FontAwesome name="refresh" size={32} color="black" />
+        </AnimatedButton>
+      </View>
       <TopNav />
-      {/* <SideBar
+      <SideBar
         following={following}
         setFollowing={setFollowing}
         setFollowZoom={setFollowZoom}
         cameraRef={cameraRef}
-      /> */}
+      />
       <Locate setFollowing={setFollowing} cameraRef={cameraRef} />
     </View>
   );
