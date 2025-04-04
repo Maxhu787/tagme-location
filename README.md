@@ -135,4 +135,4 @@ setup expo battery
 
 add theme
 add edit functinality
-setup add friends
+setup add friends page
