@@ -16,6 +16,27 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { supabase } from "../../../utils/supabase";
 import Loading from "../../../components/Loading";
 
+const dummyFriends = [
+  {
+    id: "a76236b8-947d-447b-91ed-883a6d828c51",
+    username: "johndoe",
+    name: "John Doe",
+    profile_picture: "https://picsum.photos/100",
+  },
+  {
+    id: "2",
+    username: "janesmith",
+    name: "Jane Smith",
+    profile_picture: "https://picsum.photos/101",
+  },
+  {
+    id: "3",
+    username: "alicej",
+    name: "Alice Johnson",
+    profile_picture: "https://picsum.photos/102",
+  },
+];
+
 export default function Profile() {
   const [fetchData, setFetchData] = useState(null);
   const local = useLocalSearchParams();
@@ -25,7 +46,6 @@ export default function Profile() {
       const { data, error } = await supabase
         .from("profiles")
         .select("*")
-        // .eq("id", "81a2b721-1811-469f-a02d-250821bb3612")
         .eq("id", local.user)
         .single();
 
@@ -40,7 +60,7 @@ export default function Profile() {
       }
     };
     fetch();
-  }, []);
+  }, [local.user]);
   // !refetch data here again
 
   if (fetchData === false) {
@@ -82,19 +102,17 @@ export default function Profile() {
       <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
         <Stack.Screen
           options={{
-            title: `${fetchData.username}`,
+            title: fetchData ? `${fetchData.username}` : "Profile",
             headerShown: true,
             headerShadowVisible: true,
             headerRight: () => (
               <AnimatedButton
                 style={{
-                  // marginRight: -12,
                   height: 55,
                   width: 40,
                   borderRadius: 10,
                   justifyContent: "center",
                   alignItems: "center",
-                  // backgroundColor: "red",
                 }}
                 text="Settings"
                 onPress={() => {
@@ -108,17 +126,15 @@ export default function Profile() {
         />
         <ScrollView>
           <View style={styles.profile}>
-            <AnimatedButton buttonScale={0.8} onPress={() => {}}>
-              <View style={styles.profileAvatarWrapper}>
-                <Image
-                  alt=""
-                  // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
-                  source={{ uri: fetchData.profile_picture }}
-                  // source={require("../../../assets/hi.png")}
-                  style={styles.profileAvatar}
-                />
-              </View>
-            </AnimatedButton>
+            {/* <AnimatedButton buttonScale={0.8} onPress={() => {}}> */}
+            <View style={styles.profileAvatarWrapper}>
+              <Image
+                alt=""
+                source={{ uri: fetchData.profile_picture }}
+                style={styles.profileAvatar}
+              />
+            </View>
+            {/* </AnimatedButton> */}
             <View style={styles.profileText}>
               <Text style={styles.profileUserName}>{fetchData.username}</Text>
               <Text style={styles.profileName}>
@@ -145,12 +161,6 @@ export default function Profile() {
             >
               <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
                 <FeatherIcon color="#fff" name="edit" size={20} />
-                {/* <Image
-                  alt=""
-                  // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
-                  source={require("../../../assets/5.png")}
-                  style={{ height: 50, width: 50 }}
-                /> */}
               </View>
               <Text style={styles.rowLabel}>Edit Profile</Text>
               <View style={styles.rowSpacer} />
@@ -162,15 +172,53 @@ export default function Profile() {
               style={styles.row}
             >
               <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
-                {/* <FeatherIcon color="#fff" name="edit" size={20} /> */}
                 <Image
                   alt=""
-                  // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
                   source={require("../../../assets/5.png")}
                   style={{ height: 50, width: 50 }}
                 />
               </View>
               <Text style={styles.rowLabel}>Test Route</Text>
+              <View style={styles.rowSpacer} />
+              <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
+            </AnimatedButton>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Friends</Text>
+            {dummyFriends.map((friend) => (
+              <AnimatedButton
+                key={friend.id}
+                buttonScale={0.9}
+                onPress={() => {
+                  router.push({
+                    pathname: `/profile/${friend.id}`,
+                    params: { timestamp: Date.now() },
+                  });
+                }}
+                style={styles.row}
+              >
+                <View style={[styles.rowIcon, { backgroundColor: "#4287f5" }]}>
+                  <Image
+                    alt=""
+                    source={{ uri: friend.profile_picture }}
+                    style={{ width: 32, height: 32, borderRadius: 9999 }}
+                  />
+                </View>
+                <Text style={styles.rowLabel}>{friend.username}</Text>
+                <View style={styles.rowSpacer} />
+                <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
+              </AnimatedButton>
+            ))}
+            <AnimatedButton
+              buttonScale={0.9}
+              onPress={() => router.push("/(app)/add-friend")}
+              style={[styles.row, { marginTop: 10 }]}
+            >
+              <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
+                <FeatherIcon color="#fff" name="user-plus" size={20} />
+              </View>
+              <Text style={styles.rowLabel}>Add New Friend</Text>
               <View style={styles.rowSpacer} />
               <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
             </AnimatedButton>
@@ -225,7 +273,6 @@ const styles = StyleSheet.create({
   },
   section: {
     paddingHorizontal: 12,
-    // 24
   },
   sectionTitle: {
     padding: 12,
@@ -239,10 +286,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 50,
-    // backgroundColor: "#f2f2f2",
     backgroundColor: "#fff",
-    // borderWidth: 1,
-    // borderColor: "#f2f2f2",
     borderRadius: 8,
     marginBottom: 5,
     paddingHorizontal: 12,
