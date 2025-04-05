@@ -28,10 +28,29 @@ export default function AddFriend() {
     fetchUsers();
   }, []);
 
+  // user_id uuid references auth.users on delete cascade not null,
+  // friend_id uuid references auth.users on delete cascade not null,
+  // status text check (status IN ('pending', 'accepted', 'blocked')) not null,
+
+  const handleAddFriend = async (id) => {
+    const { error } = await supabase
+      .from("friends")
+      .upsert(
+        { user_id: user.id, friend_id: id, status: "pending" },
+        { onConflict: ["user_id", "friend_id"] }
+      );
+
+    if (error) {
+      console.error("Error adding friend:", error);
+      // } else {
+      //   console.log("Friend request sent!");
+    }
+  };
+
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Loading...</Text>
+        <Text style={{ fontSize: 24, fontWeight: "bold" }}>Loading...</Text>
       </View>
     );
   }
@@ -67,9 +86,8 @@ export default function AddFriend() {
             <Text style={styles.rowLabel}>{user.username}</Text>
             <View style={styles.rowSpacer} />
             <AnimatedButton
-              onPress={() => {
-                // console.log(`Add friend: ${user.username}`);
-              }}
+              onPress={() => handleAddFriend(user.id)}
+              buttonScale={0.85}
             >
               <View
                 style={{
