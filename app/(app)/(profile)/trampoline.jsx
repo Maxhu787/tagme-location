@@ -7,5 +7,5 @@ export default function Trampoline() {
     return null;
   }
 
-  return <Redirect href={`/(app)/profile/${user}`} />;
+  return <Redirect href={`/(app)/(profile)/profile/${user}`} />;
 }

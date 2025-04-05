@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
-import { router } from "expo-router";
-import AnimatedButton from "../../components/AnimatedButton";
-import { supabase } from "../../utils/supabase";
-import { UserContext } from "../../contexts/UserContext";
+import { router, Stack } from "expo-router";
+import AnimatedButton from "../../../components/AnimatedButton";
+import { supabase } from "../../../utils/supabase";
+import { UserContext } from "../../../contexts/UserContext";
 
 export default function AddFriend() {
   const [users, setUsers] = useState([]);
@@ -38,6 +38,11 @@ export default function AddFriend() {
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <Stack.Screen
+        options={{
+          headerShadowVisible: true,
+        }}
+      />
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Add Friends</Text>
         {users.map((user) => (

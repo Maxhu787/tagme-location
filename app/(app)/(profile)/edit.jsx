@@ -8,13 +8,13 @@ import {
   Text,
   Image,
 } from "react-native";
-import AnimatedButton from "../../components/AnimatedButton";
+import AnimatedButton from "../../../components/AnimatedButton";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import { supabase } from "../../utils/supabase";
-import Loading from "../../components/Loading";
+import { supabase } from "../../../utils/supabase";
+import Loading from "../../../components/Loading";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { UserContext } from "../../contexts/UserContext";
+import { UserContext } from "../../../contexts/UserContext";
 
 export default function Profile() {
   const { user } = useContext(UserContext);
@@ -85,28 +85,8 @@ export default function Profile() {
       <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
         <Stack.Screen
           options={{
-            title: `${fetchData.username}`,
             headerShown: true,
             headerShadowVisible: true,
-            headerRight: () => (
-              <AnimatedButton
-                style={{
-                  // marginRight: -12,
-                  height: 55,
-                  width: 40,
-                  borderRadius: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  // backgroundColor: "red",
-                }}
-                text="Settings"
-                onPress={() => {
-                  router.push("/(app)/settings");
-                }}
-              >
-                <FontAwesome6 name="gear" size={24} color="black" />
-              </AnimatedButton>
-            ),
           }}
         />
         <ScrollView>
@@ -130,7 +110,7 @@ export default function Profile() {
                 <Image
                   alt=""
                   // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
-                  // source={require("../../assets/4.png")}
+                  // source={require("../../../assets/4.png")}
                   source={{ uri: fetchData.profile_picture }}
                   style={{ height: 40, width: 40, borderRadius: 100 }}
                 />
@@ -167,7 +147,7 @@ export default function Profile() {
                 <Image
                   alt=""
                   // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
-                  source={require("../../assets/4.png")}
+                  source={require("../../../assets/4.png")}
                   style={{ height: 50, width: 50 }}
                 />
               </View>
@@ -186,7 +166,7 @@ export default function Profile() {
                 <Image
                   alt=""
                   // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
-                  source={require("../../assets/1.png")}
+                  source={require("../../../assets/1.png")}
                   style={{ height: 50, width: 50 }}
                 />
               </View>

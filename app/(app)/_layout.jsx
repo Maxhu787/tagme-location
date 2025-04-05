@@ -9,15 +9,9 @@ export default Layout = () => {
     >
       <Stack.Screen name="index" />
       <Stack.Screen
-        name="settings"
-        options={{ headerShown: true, headerTitle: "Settings" }}
+        name="(profile)"
+        options={{ headerShown: false, headerTitle: "Settings" }}
       />
-      <Stack.Screen name="edit" />
-      <Stack.Screen
-        name="addfriend"
-        options={{ headerShown: true, headerTitle: "Add Friend" }}
-      />
-      <Stack.Screen name="trampoline" />
       <Stack.Screen name="test" />
       <Stack.Screen name="maptest" />
     </Stack>

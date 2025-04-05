@@ -9,7 +9,7 @@ import {
   Switch,
 } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import AnimatedButton from "../../components/AnimatedButton";
+import AnimatedButton from "../../../components/AnimatedButton";
 
 export default function Settings() {
   const [darkMode, setDarkMode] = useState(false);
@@ -18,7 +18,12 @@ export default function Settings() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-      <Stack.Screen options={{ headerShadowVisible: false }} />
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          headerShadowVisible: false,
+        }}
+      />
       <ScrollView>
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Preferences</Text>
