@@ -96,7 +96,13 @@ export default function TopNav() {
       <AnimatedButton
         // onPress={toggleNav}
         // onPress={() => {}}
-        onPress={() => router.push(`/profile/${profile.id}`)}
+        // onPress={() => router.push(`/profile/${profile.id}`)}
+        onPress={() => {
+          router.push({
+            pathname: "/(app)/profile/[user]",
+            params: { user: profile.id },
+          });
+        }}
         style={styles.animatedButton}
       >
         <Image
