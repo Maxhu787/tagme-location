@@ -6,7 +6,6 @@
 - zoom scrollbar
 - cache map for offline viewing
 - add themes context
-- refine settings page
 - Categorizing Locations
 - public location mode (strangers see where you are (optional))
 - add widgets
@@ -15,6 +14,8 @@
 - add smooth animation
 - get better app performence
 - setup login with apple
+- ~~fixed cant get friend location because of broken rls~~
+- ~~add friend ✅ -> confirm friend ✅ -> get friends ✅ -> get friends location ✅~~
 - ~~store location to supabase~~
 - ~~fix friend route not stacking properly~~
 - ~~setup db schema design tables~~
@@ -128,20 +129,14 @@ bording -> login -> check if profile exists
 -> enter set username page
 
 add toast message when profile created or error
-setup handle error and error page
-setup expo battery
 
+setup expo battery
 add theme
 add edit functinality
 
 setup map caching
-
 in the end setup only refetch data when user drags down refreshing page
 
-add friend ✅ -> confirm friend ✅ -> get friends ✅ -> get friends location
-
+better error handling & page
 fix prevent multiple pressing result in redirect multiple times
-
 clean up the profileContext
-
-fixed cant get friend location because of broken rls

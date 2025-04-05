@@ -13,6 +13,7 @@ import {
 import AnimatedButton from "../../../components/AnimatedButton";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import Fontisto from "@expo/vector-icons/Fontisto";
 import { supabase } from "../../../utils/supabase";
 import Loading from "../../../components/Loading";
 import { UserContext } from "../../../contexts/UserContext";
@@ -192,12 +193,8 @@ export default function Profile() {
                 onPress={() => router.push("/(app)/(profile)/notifications")}
                 style={styles.row}
               >
-                <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
-                  <Image
-                    alt=""
-                    source={require("../../../assets/3.png")}
-                    style={{ height: 56, width: 56 }}
-                  />
+                <View style={[styles.rowIcon, { backgroundColor: "#000" }]}>
+                  <Fontisto name="bell" size={20} color="#fff" />
                 </View>
                 <Text style={styles.rowLabel}>Notifications</Text>
                 <View style={styles.rowSpacer} />
@@ -211,7 +208,7 @@ export default function Profile() {
                 <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
                   <Image
                     alt=""
-                    source={require("../../../assets/5.png")}
+                    source={require("../../../assets/4.png")}
                     style={{ height: 56, width: 56 }}
                   />
                 </View>
