@@ -140,3 +140,5 @@ in the end setup only refetch data when user drags down refreshing page
 better error handling & page
 fix prevent multiple pressing result in redirect multiple times
 clean up the profileContext
+
+add setup profile init page

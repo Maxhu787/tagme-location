@@ -106,7 +106,7 @@ export default function Profile() {
               onPress={handleEdit}
               style={styles.row}
             >
-              <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
+              <View style={[styles.rowIcon, { backgroundColor: "#fff" }]}>
                 <Image
                   alt=""
                   // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { UserContext } from "../../contexts/UserContext";
 import AnimatedButton from "../../components/AnimatedButton";
@@ -7,6 +7,11 @@ import { supabase } from "../../utils/supabase";
 
 export default function Test() {
   const { user, setUser } = useContext(UserContext);
+  // useEffect(() => {
+  //   console.log(JSON.stringify(user.user_metadata, null, 2));
+  //   console.log(user.user_metadata.avatar_url);
+  //   console.log(user.user_metadata.name);
+  // }, []);
   const test_insert_location = async () => {
     const { data, error } = await supabase.from("user_location").upsert(
       [
@@ -57,9 +62,9 @@ export default function Test() {
       const { data, error } = await supabase.from("profiles").upsert([
         {
           id: user.id,
-          username: "test_user",
+          username: "test_user1",
           name: user.user_metadata.full_name,
-          website: "https://maxhu787.github.io/",
+          website: "https://example.com/",
           bio: "This is a test bio.",
           profile_picture: user.user_metadata.avatar_url,
           country: "TW",

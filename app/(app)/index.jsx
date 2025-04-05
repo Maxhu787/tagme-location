@@ -82,8 +82,8 @@ export default Home = () => {
     };
 
     requestPermissions();
-    const interval = setInterval(getCurrentLocation, 5000);
-    // insert location data to supabase every 5 seconds
+    const interval = setInterval(getCurrentLocation, 1000 * 60 * 5);
+    // insert location data to supabase every 5 minutes
 
     return () => clearInterval(interval);
   }, []);
