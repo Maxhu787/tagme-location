@@ -1,68 +1,62 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
-import { router, Stack } from "expo-router";
+import { Stack } from "expo-router";
 import AnimatedButton from "../../../components/AnimatedButton";
 import { supabase } from "../../../utils/supabase";
 import { UserContext } from "../../../contexts/UserContext";
 import Loading from "../../../components/Loading";
 
 export default function Notifications() {
-  const [users, setUsers] = useState([]);
+  const [pendingRequests, setPendingRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
-  const [pendingRequests, setPendingRequests] = useState([]);
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchPendingRequests = async () => {
       try {
-        const { data: usersData, error: usersError } = await supabase
-          .from("profiles")
-          .select("id, username, profile_picture")
-          .neq("id", user.id);
-
-        if (usersError) {
-          console.error("Error fetching users:", usersError);
-        } else {
-          setUsers(usersData);
-        }
-
-        const { data: pendingData, error: pendingError } = await supabase
+        const { data, error } = await supabase
           .from("friends")
-          .select("friend_id")
-          .eq("user_id", user.id)
+          .select(
+            `
+            user_id,
+            profiles:user_id(username, profile_picture)
+          `
+          )
+          .eq("friend_id", user.id)
           .eq("status", "pending");
 
-        if (pendingError) {
-          console.error("Error fetching pending requests:", pendingError);
+        if (error) {
+          console.error("Error fetching pending requests:", error);
         } else {
-          setPendingRequests(pendingData.map((request) => request.friend_id));
+          setPendingRequests(data);
         }
       } catch (error) {
-        console.error("Error in fetchUsers:", error);
+        console.error("Error in fetchPendingRequests:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUsers();
+    fetchPendingRequests();
   }, []);
 
-  // user_id uuid references auth.users on delete cascade not null,
-  // friend_id uuid references auth.users on delete cascade not null,
-  // status text check (status IN ('pending', 'accepted', 'blocked')) not null,
+  const handleAcceptRequest = async (requesterId) => {
+    try {
+      const { error } = await supabase
+        .from("friends")
+        .update({ status: "accepted" })
+        .eq("user_id", requesterId)
+        .eq("friend_id", user.id);
 
-  const handleAddFriend = async (id) => {
-    const { error } = await supabase
-      .from("friends")
-      .upsert(
-        { user_id: user.id, friend_id: id, status: "pending" },
-        { onConflict: ["user_id", "friend_id"] }
-      );
-
-    if (error) {
-      console.error("Error adding friend:", error);
-    } else {
-      setPendingRequests((prev) => [...prev, id]); // Add the user ID to pending requests
+      if (error) {
+        console.error("Error accepting friend request:", error);
+      } else {
+        setPendingRequests((prev) =>
+          prev.filter((request) => request.user_id !== requesterId)
+        );
+      }
+    } catch (error) {
+      console.error("Error in handleAcceptRequest:", error);
     }
   };
 
@@ -88,48 +82,37 @@ export default function Notifications() {
         }}
       />
       <View style={[styles.section, { marginTop: 8 }]}>
-        <Text style={styles.sectionTitle}>Add Friends</Text>
-        {users.map((user) => (
+        <Text style={styles.sectionTitle}>Pending Friend Requests</Text>
+        {pendingRequests.map((request) => (
           <AnimatedButton
-            onPress={() => {
-              router.push({
-                pathname: `/(app)/trampoline`,
-                params: { user: user.id },
-              });
-            }}
-            buttonScale={0.9}
-            key={user.id}
+            key={request.user_id}
             style={styles.row}
+            buttonScale={0.9}
           >
             <View style={[styles.rowIcon, { backgroundColor: "#fff" }]}>
               <Image
                 alt="profile picture"
-                source={{ uri: user.profile_picture }}
+                source={{ uri: request.profiles.profile_picture }}
                 style={{ width: 42, height: 42, borderRadius: 9999 }}
               />
             </View>
-            <Text style={styles.rowLabel}>{user.username}</Text>
+            <Text style={styles.rowLabel}>{request.profiles.username}</Text>
             <View style={styles.rowSpacer} />
             <AnimatedButton
-              onPress={() => handleAddFriend(user.id)}
-              buttonScale={pendingRequests.includes(user.id) ? 1 : 0.85}
-              disabled={pendingRequests.includes(user.id)}
+              onPress={() => handleAcceptRequest(request.user_id)}
+              buttonScale={0.85}
             >
               <View
                 style={{
                   height: 40,
                   width: 100,
                   borderRadius: 100,
-                  backgroundColor: pendingRequests.includes(user.id)
-                    ? "#888"
-                    : "#000",
+                  backgroundColor: "#28603d",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
               >
-                <Text style={{ color: "#fff" }}>
-                  {pendingRequests.includes(user.id) ? "Pending" : "Add Friend"}
-                </Text>
+                <Text style={{ color: "#fff" }}>Accept</Text>
               </View>
             </AnimatedButton>
           </AnimatedButton>

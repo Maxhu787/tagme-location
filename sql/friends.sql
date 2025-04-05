@@ -21,3 +21,7 @@ create policy "Users can update their own friend request status" on friends
 
 create policy "Users can delete friend relationships" on friends
     for delete using (auth.uid() = user_id OR auth.uid() = friend_id);
+
+alter table friends
+add constraint fk_user_id_profiles
+foreign key (user_id) references profiles(id);
