@@ -43,7 +43,7 @@ export default function AddFriend() {
           headerShadowVisible: true,
         }}
       />
-      <View style={styles.section}>
+      <View style={[styles.section, { marginTop: 8 }]}>
         <Text style={styles.sectionTitle}>Add Friends</Text>
         {users.map((user) => (
           <AnimatedButton
