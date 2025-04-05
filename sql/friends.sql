@@ -25,3 +25,7 @@ create policy "Users can delete friend relationships" on friends
 alter table friends
 add constraint fk_user_id_profiles
 foreign key (user_id) references profiles(id);
+
+alter table friends
+add constraint fk_friend_id_profiles
+foreign key (friend_id) references profiles(id);

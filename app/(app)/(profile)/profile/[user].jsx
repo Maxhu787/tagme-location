@@ -1,5 +1,5 @@
-import { router, Stack, useLocalSearchParams } from "expo-router";
 import React, { useContext, useEffect, useState } from "react";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import {
   StyleSheet,
   SafeAreaView,
@@ -7,8 +7,8 @@ import {
   View,
   Text,
   Image,
-  Linking,
   TouchableOpacity,
+  Linking,
 } from "react-native";
 import AnimatedButton from "../../../../components/AnimatedButton";
 import FeatherIcon from "react-native-vector-icons/Feather";
@@ -17,64 +17,14 @@ import { supabase } from "../../../../utils/supabase";
 import Loading from "../../../../components/Loading";
 import { UserContext } from "../../../../contexts/UserContext";
 
-const dummyFriends = [
-  {
-    id: "a76236b8-947d-447b-91ed-883a6d828c51",
-    username: "4wef35h",
-    name: "John Doe",
-    profile_picture: "https://picsum.photos/100",
-  },
-  {
-    id: "2",
-    username: "435ht",
-    name: "Jane Smith",
-    profile_picture: "https://picsum.photos/101",
-  },
-  {
-    id: "3",
-    username: "wer45",
-    name: "Alice Johnson",
-    profile_picture: "https://picsum.photos/102",
-  },
-  {
-    id: "4",
-    username: "efwefsa",
-    name: "Alice Johnson",
-    profile_picture: "https://picsum.photos/103",
-  },
-  {
-    id: "5",
-    username: "ebwef",
-    name: "Alice Johnson",
-    profile_picture: "https://picsum.photos/104",
-  },
-  {
-    id: "6",
-    username: "qe12e",
-    name: "Alice Johnson",
-    profile_picture: "https://picsum.photos/105",
-  },
-  {
-    id: "7",
-    username: "324ge",
-    name: "Alice Johnson",
-    profile_picture: "https://picsum.photos/33",
-  },
-  {
-    id: "8",
-    username: "wr6h",
-    name: "Alice Johnson",
-    profile_picture: "https://picsum.photos/99",
-  },
-];
-
 export default function Profile() {
   const [fetchData, setFetchData] = useState(null);
+  const [friends, setFriends] = useState([]); // State for friends
   const local = useLocalSearchParams();
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    const fetch = async () => {
+    const fetchProfile = async () => {
       const { data, error } = await supabase
         .from("profiles")
         .select("*")
@@ -91,9 +41,49 @@ export default function Profile() {
         setFetchData(data);
       }
     };
-    fetch();
+
+    const fetchFriends = async () => {
+      try {
+        // Friends where user is the sender
+        const { data: sentData, error: sentError } = await supabase
+          .from("friends")
+          .select(
+            `
+        friend_id,
+        profiles:friend_id(id, username, profile_picture)
+      `
+          )
+          .eq("user_id", local.user)
+          .eq("status", "accepted");
+
+        if (sentError) throw sentError;
+
+        // Friends where user is the receiver
+        const { data: receivedData, error: receivedError } = await supabase
+          .from("friends")
+          .select(
+            `
+        user_id,
+        profiles:user_id(id, username, profile_picture)
+      `
+          )
+          .eq("friend_id", local.user)
+          .eq("status", "accepted");
+
+        if (receivedError) throw receivedError;
+
+        const sentProfiles = sentData.map((f) => f.profiles);
+        const receivedProfiles = receivedData.map((f) => f.profiles);
+
+        setFriends([...sentProfiles, ...receivedProfiles]);
+      } catch (error) {
+        console.error("Error fetching friends:", error);
+      }
+    };
+
+    fetchProfile();
+    fetchFriends();
   }, [local.user]);
-  // !refetch data here again
 
   if (fetchData === false) {
     return (
@@ -158,7 +148,6 @@ export default function Profile() {
         />
         <ScrollView>
           <View style={styles.profile}>
-            {/* <AnimatedButton buttonScale={0.8} onPress={() => {}}> */}
             <View style={styles.profileAvatarWrapper}>
               <Image
                 alt=""
@@ -166,7 +155,6 @@ export default function Profile() {
                 style={styles.profileAvatar}
               />
             </View>
-            {/* </AnimatedButton> */}
             <View style={styles.profileText}>
               <Text style={styles.profileUserName}>{fetchData.username}</Text>
               <Text style={styles.profileName}>
@@ -250,7 +238,7 @@ export default function Profile() {
                 <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
               </AnimatedButton>
             )}
-            {dummyFriends.map((friend) => (
+            {friends.map((friend) => (
               <AnimatedButton
                 key={friend.id}
                 buttonScale={0.9}
@@ -357,11 +345,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "400",
     color: "#0c0c0c",
-  },
-  rowValue: {
-    fontSize: 16,
-    fontWeight: "300",
-    color: "#616161",
   },
   rowSpacer: {
     flexGrow: 1,
