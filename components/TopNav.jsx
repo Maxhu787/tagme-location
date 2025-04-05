@@ -98,8 +98,12 @@ export default function TopNav() {
         // onPress={() => {}}
         // onPress={() => router.push(`/profile/${profile.id}`)}
         onPress={() => {
+          // router.push({
+          //   pathname: "/(app)/(profile)/profile/[user]",
+          //   params: { user: profile.id },
+          // });
           router.push({
-            pathname: "/(app)/profile/[user]",
+            pathname: `/(app)/trampoline`,
             params: { user: profile.id },
           });
         }}

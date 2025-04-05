@@ -10,12 +10,12 @@ import {
   TouchableOpacity,
   Linking,
 } from "react-native";
-import AnimatedButton from "../../../../components/AnimatedButton";
+import AnimatedButton from "../../../components/AnimatedButton";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import { supabase } from "../../../../utils/supabase";
-import Loading from "../../../../components/Loading";
-import { UserContext } from "../../../../contexts/UserContext";
+import { supabase } from "../../../utils/supabase";
+import Loading from "../../../components/Loading";
+import { UserContext } from "../../../contexts/UserContext";
 
 export default function Profile() {
   const [fetchData, setFetchData] = useState(null);
@@ -195,7 +195,7 @@ export default function Profile() {
                 <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
                   <Image
                     alt=""
-                    source={require("../../../../assets/3.png")}
+                    source={require("../../../assets/3.png")}
                     style={{ height: 56, width: 56 }}
                   />
                 </View>
@@ -211,7 +211,7 @@ export default function Profile() {
                 <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
                   <Image
                     alt=""
-                    source={require("../../../../assets/5.png")}
+                    source={require("../../../assets/5.png")}
                     style={{ height: 56, width: 56 }}
                   />
                 </View>
