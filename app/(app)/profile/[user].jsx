@@ -36,6 +36,36 @@ const dummyFriends = [
     name: "Alice Johnson",
     profile_picture: "https://picsum.photos/102",
   },
+  {
+    id: "4",
+    username: "alicej",
+    name: "Alice Johnson",
+    profile_picture: "https://picsum.photos/103",
+  },
+  {
+    id: "5",
+    username: "alicej",
+    name: "Alice Johnson",
+    profile_picture: "https://picsum.photos/104",
+  },
+  {
+    id: "6",
+    username: "alicej",
+    name: "Alice Johnson",
+    profile_picture: "https://picsum.photos/105",
+  },
+  {
+    id: "7",
+    username: "alicej",
+    name: "Alice Johnson",
+    profile_picture: "https://picsum.photos/33",
+  },
+  {
+    id: "8",
+    username: "alicej",
+    name: "Alice Johnson",
+    profile_picture: "https://picsum.photos/99",
+  },
 ];
 
 export default function Profile() {
@@ -162,7 +192,7 @@ export default function Profile() {
                 onPress={() => router.push("/(app)/edit")}
                 style={styles.row}
               >
-                <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
+                <View style={[styles.rowIcon, { backgroundColor: "#ffa500" }]}>
                   <FeatherIcon color="#fff" name="edit" size={20} />
                 </View>
                 <Text style={styles.rowLabel}>Edit Profile</Text>
@@ -190,14 +220,25 @@ export default function Profile() {
 
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Friends</Text>
+            <AnimatedButton
+              buttonScale={0.9}
+              onPress={() => router.push("/(app)/add-friend")}
+              style={styles.row}
+            >
+              <View style={[styles.rowIcon, { backgroundColor: "#ffa500" }]}>
+                <FeatherIcon color="#fff" name="user-plus" size={20} />
+              </View>
+              <Text style={styles.rowLabel}>Add New Friend</Text>
+              <View style={styles.rowSpacer} />
+              <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
+            </AnimatedButton>
             {dummyFriends.map((friend) => (
               <AnimatedButton
                 key={friend.id}
                 buttonScale={0.9}
                 onPress={() => {
-                  // router.push(`/profile/${friend.id}`);
                   router.push({
-                    pathname: "/(app)/profile/[user]",
+                    pathname: `/(app)/trampoline`,
                     params: { user: friend.id },
                   });
                 }}
@@ -205,28 +246,18 @@ export default function Profile() {
               >
                 <View style={[styles.rowIcon, { backgroundColor: "#4287f5" }]}>
                   <Image
-                    alt=""
+                    alt="profile picture"
                     source={{ uri: friend.profile_picture }}
-                    style={{ width: 32, height: 32, borderRadius: 9999 }}
+                    style={{ width: 42, height: 42, borderRadius: 9999 }}
                   />
                 </View>
-                <Text style={styles.rowLabel}>{friend.username}</Text>
+                <Text style={[styles.rowLabel, { marginLeft: 6 }]}>
+                  {friend.username}
+                </Text>
                 <View style={styles.rowSpacer} />
                 <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
               </AnimatedButton>
             ))}
-            <AnimatedButton
-              buttonScale={0.9}
-              onPress={() => router.push("/(app)/add-friend")}
-              style={[styles.row, { marginTop: 10 }]}
-            >
-              <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
-                <FeatherIcon color="#fff" name="user-plus" size={20} />
-              </View>
-              <Text style={styles.rowLabel}>Add New Friend</Text>
-              <View style={styles.rowSpacer} />
-              <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
-            </AnimatedButton>
           </View>
         </ScrollView>
       </SafeAreaView>

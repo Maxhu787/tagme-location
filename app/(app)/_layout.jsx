@@ -13,6 +13,7 @@ export default Layout = () => {
         options={{ headerShown: true, headerTitle: "Settings" }}
       />
       <Stack.Screen name="edit" />
+      <Stack.Screen name="trampoline" />
       <Stack.Screen name="test" />
       <Stack.Screen name="maptest" />
     </Stack>
