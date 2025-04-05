@@ -127,22 +127,19 @@ bording -> login -> check if profile exists
 -> fetch profile data
 -> enter set username page
 
-https://chatgpt.com/c/67c174a3-cf94-8004-8662-dcdc92ae4e15
-https://medium.com/@yildizfatma/handling-user-input-in-react-native-expo-text-input-buttons-6e7931bc227a
-
 add toast message when profile created or error
 setup handle error and error page
 setup expo battery
 
 add theme
 add edit functinality
-add add friends functinality
 
 setup map caching
-add notifications route for accepting friend requests
 
 in the end setup only refetch data when user drags down refreshing page
 
 add friend ✅ -> confirm friend ✅ -> get friends ✅ -> get friends location
 
 fix prevent multiple pressing result in redirect multiple times
+
+clean up the profileContext
