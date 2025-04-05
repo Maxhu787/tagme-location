@@ -4,25 +4,44 @@ import { router, Stack } from "expo-router";
 import AnimatedButton from "../../../components/AnimatedButton";
 import { supabase } from "../../../utils/supabase";
 import { UserContext } from "../../../contexts/UserContext";
+import Loading from "../../../components/Loading";
 
 export default function AddFriend() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
+  const [pendingRequests, setPendingRequests] = useState([]);
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("id, username, profile_picture")
-        .neq("id", user.id);
+      try {
+        const { data: usersData, error: usersError } = await supabase
+          .from("profiles")
+          .select("id, username, profile_picture")
+          .neq("id", user.id);
 
-      if (error) {
-        console.error("Error fetching users:", error);
-      } else {
-        setUsers(data);
+        if (usersError) {
+          console.error("Error fetching users:", usersError);
+        } else {
+          setUsers(usersData);
+        }
+
+        const { data: pendingData, error: pendingError } = await supabase
+          .from("friends")
+          .select("friend_id")
+          .eq("user_id", user.id)
+          .eq("status", "pending");
+
+        if (pendingError) {
+          console.error("Error fetching pending requests:", pendingError);
+        } else {
+          setPendingRequests(pendingData.map((request) => request.friend_id));
+        }
+      } catch (error) {
+        console.error("Error in fetchUsers:", error);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchUsers();
@@ -42,16 +61,21 @@ export default function AddFriend() {
 
     if (error) {
       console.error("Error adding friend:", error);
-      // } else {
-      //   console.log("Friend request sent!");
+    } else {
+      setPendingRequests((prev) => [...prev, id]); // Add the user ID to pending requests
     }
   };
 
   if (loading) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text style={{ fontSize: 24, fontWeight: "bold" }}>Loading...</Text>
-      </View>
+      <>
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Loading />
+      </>
     );
   }
 
@@ -60,6 +84,7 @@ export default function AddFriend() {
       <Stack.Screen
         options={{
           headerShadowVisible: true,
+          headerShown: true,
         }}
       />
       <View style={[styles.section, { marginTop: 8 }]}>
@@ -87,19 +112,24 @@ export default function AddFriend() {
             <View style={styles.rowSpacer} />
             <AnimatedButton
               onPress={() => handleAddFriend(user.id)}
-              buttonScale={0.85}
+              buttonScale={pendingRequests.includes(user.id) ? 1 : 0.85}
+              disabled={pendingRequests.includes(user.id)}
             >
               <View
                 style={{
                   height: 40,
                   width: 100,
                   borderRadius: 100,
-                  backgroundColor: "#000",
+                  backgroundColor: pendingRequests.includes(user.id)
+                    ? "#888"
+                    : "#000",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
               >
-                <Text style={{ color: "#fff" }}>Add Friend</Text>
+                <Text style={{ color: "#fff" }}>
+                  {pendingRequests.includes(user.id) ? "Pending" : "Add Friend"}
+                </Text>
               </View>
             </AnimatedButton>
           </AnimatedButton>
