@@ -38,7 +38,7 @@ export default Home = () => {
   const [following, setFollowing] = useState(true); // android
   const [followZoom, setFollowZoom] = useState(16); // ios
   const { user } = useContext(UserContext);
-  const [fetchUsers, setFetchUsers] = useState(false);
+  const [fetchUsers, setFetchUsers] = useState(true);
 
   useEffect(() => {
     const requestPermissions = async () => {
