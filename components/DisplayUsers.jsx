@@ -3,6 +3,7 @@ import React, { useRef, useState, useEffect, useContext } from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { UserContext } from "../contexts/UserContext";
 import { supabase } from "../utils/supabase";
+import { router } from "expo-router";
 
 const DisplayUsers = ({ setFollowing, fetchUsers, setFetchUsers }) => {
   const [friendsData, setFriendsData] = useState([]); // State to store friends' data
@@ -98,7 +99,18 @@ const DisplayUsers = ({ setFollowing, fetchUsers, setFetchUsers }) => {
           key={item.id}
           ref={(ref) => (markerRefs.current[item.id] = ref)}
           coordinate={item.coordinates}
-          // onSelected={() => console.log("onSelected")}
+          onSelected={() => {
+            router.push({
+              pathname: `/(app)/trampoline`,
+              params: { user: item.id },
+            });
+          }}
+          onDeselected={() => {
+            router.push({
+              pathname: `/(app)/trampoline`,
+              params: { user: item.id },
+            });
+          }}
         >
           <View style={styles.markerContainer}>
             <Image
@@ -121,7 +133,12 @@ const styles = StyleSheet.create({
     height: 54,
     width: 54,
   },
-  image: { height: 54, width: 54, borderRadius: 1000 },
+  image: {
+    height: 50,
+    width: 50,
+    borderRadius: 1000,
+    backgroundColor: "#fff",
+  },
 });
 
 export default DisplayUsers;
