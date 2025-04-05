@@ -85,6 +85,7 @@ shift + i change phone ios simulator
 
 ### useful && bugs
 
+https://www.reddit.com/r/reactnative/comments/1b3ze9x/expo_router_push_to_same_screen/
 https://github.com/maplibre/maplibre-react-native/tree/main/examples/shared/src/examples
 https://stackoverflow.com/questions/76720049/how-to-utilize-usecontext-in-expo-router
 https://stackoverflow.com/questions/1196415/what-datatype-to-use-when-storing-latitude-and-longitude-data-in-sql-databases
@@ -139,3 +140,5 @@ add add friends functinality
 
 setup map caching
 add notifications route for accepting friend requests
+
+in the end setup only refetch data when user drags down refreshing page
