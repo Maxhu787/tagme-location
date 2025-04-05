@@ -19,7 +19,7 @@ import { UserContext } from "../../../../contexts/UserContext";
 
 export default function Profile() {
   const [fetchData, setFetchData] = useState(null);
-  const [friends, setFriends] = useState([]); // State for friends
+  const [friends, setFriends] = useState([]);
   const local = useLocalSearchParams();
   const { user } = useContext(UserContext);
 
