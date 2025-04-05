@@ -1,50 +1,91 @@
 import { PointAnnotation } from "@maplibre/maplibre-react-native";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { View, Image, StyleSheet } from "react-native";
+import { UserContext } from "../contexts/UserContext";
+import { supabase } from "../utils/supabase";
 
 const DisplayUsers = ({ setFollowing, fetchUsers, setFetchUsers }) => {
-  const test = [
-    {
-      id: 1,
-      coordinates: [120.492021, 22.783503],
-      image: "https://picsum.photos/id/664/1920/1080",
-    },
-    {
-      id: 2,
-      coordinates: [120.494519, 22.782503],
-      image: "https://picsum.photos/id/664/1920/1080",
-    },
-    {
-      id: 3,
-      coordinates: [120.492319, 22.779233],
-      image: "https://picsum.photos/id/664/1920/1080",
-    },
-    {
-      id: 4,
-      coordinates: [120.502319, 22.779233],
-      image: "https://picsum.photos/id/664/1920/1080",
-    },
-    {
-      id: 5,
-      coordinates: [120.488521, 22.686551],
-      image: "https://picsum.photos/id/664/1920/1080",
-    },
-  ];
-  const [coordinates, setCoordinates] = useState(test);
+  const [friendsData, setFriendsData] = useState([]); // State to store friends' data
   const markerRefs = useRef({});
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
+    const fetchFriends = async () => {
+      // First query to get all friend_ids where user_id is the current user's ID
+      const { data: friendIdsData, error: friendIdsError } = await supabase
+        .from("friends")
+        .select("friend_id")
+        .eq("user_id", user.id)
+        .eq("status", "accepted");
+
+      if (friendIdsError) {
+        console.error("Error fetching friend IDs (user_id):", friendIdsError);
+        return;
+      }
+
+      // Second query to get all user_ids where friend_id is the current user's ID
+      const { data: userIdsData, error: userIdsError } = await supabase
+        .from("friends")
+        .select("user_id")
+        .eq("friend_id", user.id)
+        .eq("status", "accepted");
+
+      if (userIdsError) {
+        console.error("Error fetching user IDs (friend_id):", userIdsError);
+        return;
+      }
+
+      // Combine both friendIds and userIds to get all relevant friends' user_ids
+      const allFriendIds = [
+        ...friendIdsData.map((friend) => friend.friend_id),
+        ...userIdsData.map((friend) => friend.user_id),
+      ];
+
+      // Fetch profiles and location data for all friend_ids
+      const { data: profilesAndLocationData, error: profilesAndLocationError } =
+        await supabase
+          .from("profiles")
+          .select("id, username, profile_picture")
+          .in("id", allFriendIds);
+
+      if (profilesAndLocationError) {
+        console.error(
+          "Error fetching profiles and location data:",
+          profilesAndLocationError
+        );
+        return;
+      }
+
+      // Fetch the location data for all the friends
+      const { data: locationData, error: locationError } = await supabase
+        .from("user_location")
+        .select("id, latitude, longitude")
+        .in("id", allFriendIds);
+
+      if (locationError) {
+        console.error("Error fetching location data:", locationError);
+        return;
+      }
+
+      // Map and combine the profile and location data
+      const formattedData = profilesAndLocationData.map((profile) => {
+        const location = locationData.find((loc) => loc.id === profile.id);
+        return {
+          id: profile.id,
+          username: profile.username,
+          coordinates: location
+            ? [parseFloat(location.longitude), parseFloat(location.latitude)]
+            : [0, 0],
+          profile_picture: profile.profile_picture,
+        };
+      });
+
+      setFriendsData(formattedData);
+    };
+
     if (fetchUsers) {
       setFollowing(false);
-      setCoordinates((prevCoordinates) => {
-        return prevCoordinates.map((item) => {
-          const newCoordinates = [
-            item.coordinates[0] + (Math.random() - 0.5) * 0.001,
-            item.coordinates[1] + (Math.random() - 0.5) * 0.001,
-          ];
-          return { ...item, coordinates: newCoordinates };
-        });
-      });
+      fetchFriends();
       setFollowing(true);
       setFetchUsers(false);
     }
@@ -52,17 +93,16 @@ const DisplayUsers = ({ setFollowing, fetchUsers, setFetchUsers }) => {
 
   return (
     <>
-      {coordinates.map((item) => (
+      {friendsData.map((item) => (
         <PointAnnotation
           key={item.id}
           ref={(ref) => (markerRefs.current[item.id] = ref)}
           coordinate={item.coordinates}
-          onSelected={() => console.log("onSelected")}
+          // onSelected={() => console.log("onSelected")}
         >
           <View style={styles.markerContainer}>
             <Image
-              source={require("../assets/hi.png")}
-              // source={{ uri: item.image }}
+              source={{ uri: item.profile_picture }}
               style={styles.image}
               onLoad={() => markerRefs.current?.[item.id]?.refresh()}
               fadeDuration={0}

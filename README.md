@@ -143,3 +143,5 @@ add friend ✅ -> confirm friend ✅ -> get friends ✅ -> get friends location
 fix prevent multiple pressing result in redirect multiple times
 
 clean up the profileContext
+
+fixed cant get friend location because of broken rls

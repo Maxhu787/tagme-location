@@ -12,9 +12,10 @@ alter table user_location
 create policy "Users can view their own or friends' locations" on user_location 
     for select using (
         auth.uid() = id OR
-        auth.uid() IN (SELECT friend_id FROM friends WHERE user_id = auth.uid()) OR 
-        auth.uid() IN (SELECT user_id FROM friends WHERE friend_id = auth.uid())
+        id IN (SELECT friend_id FROM friends WHERE user_id = auth.uid()) OR 
+        id IN (SELECT user_id FROM friends WHERE friend_id = auth.uid())
     );
+
 
 create policy "Users can insert their own location" on user_location
     for insert with check (auth.uid() = id);
