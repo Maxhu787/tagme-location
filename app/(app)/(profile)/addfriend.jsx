@@ -15,10 +15,23 @@ export default function AddFriend() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        // 1. Get all accepted friend IDs (bidirectional)
+        const { data: friendsData, error: friendsError } = await supabase
+          .from("friends")
+          .select("user_id, friend_id")
+          .or(`user_id.eq.${user.id},friend_id.eq.${user.id}`)
+          .eq("status", "accepted");
+
+        const friendIds =
+          friendsData?.map((f) =>
+            f.user_id === user.id ? f.friend_id : f.user_id
+          ) ?? [];
+
+        // 2. Get all users excluding self and friends
         const { data: usersData, error: usersError } = await supabase
           .from("profiles")
           .select("id, username, profile_picture")
-          .neq("id", user.id);
+          .not("id", "in", `(${[...friendIds, user.id].join(",")})`);
 
         if (usersError) {
           console.error("Error fetching users:", usersError);
@@ -26,6 +39,7 @@ export default function AddFriend() {
           setUsers(usersData);
         }
 
+        // 3. Get pending friend requests
         const { data: pendingData, error: pendingError } = await supabase
           .from("friends")
           .select("friend_id")
