@@ -136,3 +136,6 @@ setup expo battery
 add theme
 add edit functinality
 setup add friends page
+
+fix friend route not stacking properly
+back button not working

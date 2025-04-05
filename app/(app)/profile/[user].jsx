@@ -1,5 +1,5 @@
 import { router, Stack, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -15,6 +15,7 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { supabase } from "../../../utils/supabase";
 import Loading from "../../../components/Loading";
+import { UserContext } from "../../../contexts/UserContext";
 
 const dummyFriends = [
   {
@@ -40,6 +41,7 @@ const dummyFriends = [
 export default function Profile() {
   const [fetchData, setFetchData] = useState(null);
   const local = useLocalSearchParams();
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     const fetch = async () => {
@@ -152,37 +154,39 @@ export default function Profile() {
             </View>
           </View>
 
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Settings</Text>
-            <AnimatedButton
-              buttonScale={0.9}
-              onPress={() => router.push("/(app)/edit")}
-              style={styles.row}
-            >
-              <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
-                <FeatherIcon color="#fff" name="edit" size={20} />
-              </View>
-              <Text style={styles.rowLabel}>Edit Profile</Text>
-              <View style={styles.rowSpacer} />
-              <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
-            </AnimatedButton>
-            <AnimatedButton
-              buttonScale={0.9}
-              onPress={() => router.push("/(app)/test")}
-              style={styles.row}
-            >
-              <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
-                <Image
-                  alt=""
-                  source={require("../../../assets/5.png")}
-                  style={{ height: 50, width: 50 }}
-                />
-              </View>
-              <Text style={styles.rowLabel}>Test Route</Text>
-              <View style={styles.rowSpacer} />
-              <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
-            </AnimatedButton>
-          </View>
+          {fetchData.id === user.id && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Settings</Text>
+              <AnimatedButton
+                buttonScale={0.9}
+                onPress={() => router.push("/(app)/edit")}
+                style={styles.row}
+              >
+                <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
+                  <FeatherIcon color="#fff" name="edit" size={20} />
+                </View>
+                <Text style={styles.rowLabel}>Edit Profile</Text>
+                <View style={styles.rowSpacer} />
+                <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
+              </AnimatedButton>
+              <AnimatedButton
+                buttonScale={0.9}
+                onPress={() => router.push("/(app)/test")}
+                style={styles.row}
+              >
+                <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
+                  <Image
+                    alt=""
+                    source={require("../../../assets/5.png")}
+                    style={{ height: 50, width: 50 }}
+                  />
+                </View>
+                <Text style={styles.rowLabel}>Test Route</Text>
+                <View style={styles.rowSpacer} />
+                <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
+              </AnimatedButton>
+            </View>
+          )}
 
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Friends</Text>
@@ -191,7 +195,11 @@ export default function Profile() {
                 key={friend.id}
                 buttonScale={0.9}
                 onPress={() => {
-                  router.push(`/profile/${friend.id}?timestamp=${Date.now()}`); // Add a unique query parameter
+                  // router.push(`/profile/${friend.id}`);
+                  router.push({
+                    pathname: "/(app)/profile/[user]",
+                    params: { user: friend.id },
+                  });
                 }}
                 style={styles.row}
               >
