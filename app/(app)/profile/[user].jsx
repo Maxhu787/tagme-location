@@ -192,7 +192,7 @@ export default function Profile() {
                 onPress={() => router.push("/(app)/edit")}
                 style={styles.row}
               >
-                <View style={[styles.rowIcon, { backgroundColor: "#ffa500" }]}>
+                <View style={[styles.rowIcon, { backgroundColor: "#000" }]}>
                   <FeatherIcon color="#fff" name="edit" size={20} />
                 </View>
                 <Text style={styles.rowLabel}>Edit Profile</Text>
@@ -208,7 +208,7 @@ export default function Profile() {
                   <Image
                     alt=""
                     source={require("../../../assets/5.png")}
-                    style={{ height: 50, width: 50 }}
+                    style={{ height: 56, width: 56 }}
                   />
                 </View>
                 <Text style={styles.rowLabel}>Test Route</Text>
@@ -220,18 +220,20 @@ export default function Profile() {
 
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Friends</Text>
-            <AnimatedButton
-              buttonScale={0.9}
-              onPress={() => router.push("/(app)/add-friend")}
-              style={styles.row}
-            >
-              <View style={[styles.rowIcon, { backgroundColor: "#ffa500" }]}>
-                <FeatherIcon color="#fff" name="user-plus" size={20} />
-              </View>
-              <Text style={styles.rowLabel}>Add New Friend</Text>
-              <View style={styles.rowSpacer} />
-              <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
-            </AnimatedButton>
+            {fetchData.id === user.id && (
+              <AnimatedButton
+                buttonScale={0.9}
+                onPress={() => router.push("/(app)/addfriend")}
+                style={styles.row}
+              >
+                <View style={[styles.rowIcon, { backgroundColor: "#000" }]}>
+                  <FeatherIcon color="#fff" name="user-plus" size={20} />
+                </View>
+                <Text style={styles.rowLabel}>Add New Friend</Text>
+                <View style={styles.rowSpacer} />
+                <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
+              </AnimatedButton>
+            )}
             {dummyFriends.map((friend) => (
               <AnimatedButton
                 key={friend.id}
@@ -244,7 +246,7 @@ export default function Profile() {
                 }}
                 style={styles.row}
               >
-                <View style={[styles.rowIcon, { backgroundColor: "#4287f5" }]}>
+                <View style={[styles.rowIcon]}>
                   <Image
                     alt="profile picture"
                     source={{ uri: friend.profile_picture }}
@@ -328,8 +330,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   rowIcon: {
-    width: 32,
-    height: 32,
+    width: 38,
+    height: 38,
     borderRadius: 9999,
     marginRight: 12,
     alignItems: "center",

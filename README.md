@@ -2,21 +2,21 @@
 
 ## add
 
-- identify how the current locate button works
 - fix displayusers consider time interval location update (ex 5min)
 - zoom scrollbar
 - cache map for offline viewing
-- store location to supabase
 - add themes context
+- refine settings page
 - Categorizing Locations
 - public location mode (strangers see where you are (optional))
 - add widgets
 - add emoji like circles with eyes svg, and pay features
 - set safe areas where you wont be tracked (place marker set radius)
-- refine settings page
 - add smooth animation
 - get better app performence
 - setup login with apple
+- ~~store location to supabase~~
+- ~~fix friend route not stacking properly~~
 - ~~setup db schema design tables~~
 - ~~top navbar with profile~~
 - ~~fix detect when user panning~~
@@ -135,7 +135,7 @@ setup expo battery
 
 add theme
 add edit functinality
-setup add friends page
+add add friends functinality
 
-fix friend route not stacking properly
-back button not working
+setup map caching
+add notifications route for accepting friend requests

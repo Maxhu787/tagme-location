@@ -107,7 +107,9 @@ export default function TopNav() {
       >
         <Image
           // source={require("../assets/icon.png")}
-          source={{ uri: profile.profile_picture }}
+          source={{
+            uri: profile?.profile_picture,
+          }}
           // source={{ uri: "https://picsum.photos/id/664/500/500" }}
           style={styles.icon}
           resizeMode="contain"
