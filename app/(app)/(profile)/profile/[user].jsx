@@ -20,49 +20,49 @@ import { UserContext } from "../../../../contexts/UserContext";
 const dummyFriends = [
   {
     id: "a76236b8-947d-447b-91ed-883a6d828c51",
-    username: "johndoe",
+    username: "4wef35h",
     name: "John Doe",
     profile_picture: "https://picsum.photos/100",
   },
   {
     id: "2",
-    username: "janesmith",
+    username: "435ht",
     name: "Jane Smith",
     profile_picture: "https://picsum.photos/101",
   },
   {
     id: "3",
-    username: "alicej",
+    username: "wer45",
     name: "Alice Johnson",
     profile_picture: "https://picsum.photos/102",
   },
   {
     id: "4",
-    username: "alicej",
+    username: "efwefsa",
     name: "Alice Johnson",
     profile_picture: "https://picsum.photos/103",
   },
   {
     id: "5",
-    username: "alicej",
+    username: "ebwef",
     name: "Alice Johnson",
     profile_picture: "https://picsum.photos/104",
   },
   {
     id: "6",
-    username: "alicej",
+    username: "qe12e",
     name: "Alice Johnson",
     profile_picture: "https://picsum.photos/105",
   },
   {
     id: "7",
-    username: "alicej",
+    username: "324ge",
     name: "Alice Johnson",
     profile_picture: "https://picsum.photos/33",
   },
   {
     id: "8",
-    username: "alicej",
+    username: "wr6h",
     name: "Alice Johnson",
     profile_picture: "https://picsum.photos/99",
   },
@@ -148,7 +148,7 @@ export default function Profile() {
                 }}
                 text="Settings"
                 onPress={() => {
-                  router.push("/(app)/settings");
+                  router.push("/(app)/(profile)/settings");
                 }}
               >
                 <FontAwesome6 name="gear" size={24} color="black" />
@@ -196,6 +196,22 @@ export default function Profile() {
                   <FeatherIcon color="#fff" name="edit" size={20} />
                 </View>
                 <Text style={styles.rowLabel}>Edit Profile</Text>
+                <View style={styles.rowSpacer} />
+                <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
+              </AnimatedButton>
+              <AnimatedButton
+                buttonScale={0.9}
+                onPress={() => router.push("/(app)/(profile)/notifications")}
+                style={styles.row}
+              >
+                <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
+                  <Image
+                    alt=""
+                    source={require("../../../../assets/3.png")}
+                    style={{ height: 56, width: 56 }}
+                  />
+                </View>
+                <Text style={styles.rowLabel}>Notifications</Text>
                 <View style={styles.rowSpacer} />
                 <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
               </AnimatedButton>
