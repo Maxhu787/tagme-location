@@ -35,7 +35,6 @@ const DisplayUsers = ({ setFollowing, fetchUsers, setFetchUsers }) => {
 
   useEffect(() => {
     if (fetchUsers) {
-      // console.log("fetchUserLocations");
       setFollowing(false);
       setCoordinates((prevCoordinates) => {
         return prevCoordinates.map((item) => {
