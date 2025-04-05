@@ -144,3 +144,5 @@ add notifications route for accepting friend requests
 in the end setup only refetch data when user drags down refreshing page
 
 add friend -> confirm friend -> get friends -> get friends location
+
+fix prevent multiple pressing result in redirect multiple times

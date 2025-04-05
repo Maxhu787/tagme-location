@@ -8,10 +8,7 @@ export default Layout = () => {
       }}
     >
       <Stack.Screen name="index" />
-      <Stack.Screen
-        name="(profile)"
-        options={{ headerShown: false, headerTitle: "Settings" }}
-      />
+      <Stack.Screen name="(profile)" options={{ headerShown: false }} />
       <Stack.Screen name="test" />
       <Stack.Screen name="maptest" />
     </Stack>

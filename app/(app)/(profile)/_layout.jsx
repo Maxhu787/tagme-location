@@ -7,6 +7,7 @@ export default Layout = () => {
       <Stack.Screen name="edit" options={{ headerTitle: "Edit Profile" }} />
       <Stack.Screen name="addfriend" options={{ headerTitle: "Add Friend" }} />
       <Stack.Screen name="trampoline" />
+      <Stack.Screen name="profile" options={{ headerShown: false }} />
     </Stack>
   );
 };
