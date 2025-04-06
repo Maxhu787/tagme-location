@@ -1,15 +1,11 @@
 import { StyleSheet, Platform, Image, Animated } from "react-native";
 import { router } from "expo-router";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { ProfileContext } from "../contexts/ProfileContext";
 import AnimatedButton from "./AnimatedButton";
 
 export default function TopNav() {
   const { profile } = useContext(ProfileContext);
-
-  useEffect(() => {
-    console.log(profile);
-  }, []);
 
   return (
     <Animated.View style={styles.container}>

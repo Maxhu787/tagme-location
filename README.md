@@ -128,20 +128,17 @@ bording -> login -> check if profile exists
 -> fetch profile data
 -> enter set username page
 
-add toast message when profile created or error
-
 setup expo battery
 add theme
-add edit functinality
 
 setup map caching
 in the end setup only refetch data when user drags down refreshing page
 
-better error handling & page
-fix prevent multiple pressing result in redirect multiple times
-clean up the profileContext
+better error handling & page add toast message
+fix prevent multiple pressing result in redirect multiple timest
 
-add add friend to profile page
+add form validation editfield
+add add friend button to friends profile page
 
-add setup profile init page
 https://groups.google.com/g/tagme2
+https://support.google.com/cloud/answer/13463073

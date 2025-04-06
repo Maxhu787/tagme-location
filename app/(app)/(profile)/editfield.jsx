@@ -12,68 +12,38 @@ import {
 import * as Location from "expo-location";
 import { useContext, useState } from "react";
 import { UserContext } from "../../../contexts/UserContext";
-import { router, Stack } from "expo-router";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import { supabase } from "../../../utils/supabase";
 const { width } = Dimensions.get("window");
 
-export default function Signin() {
-  const [username, setUsername] = useState("");
+export default function EditField() {
+  const local = useLocalSearchParams();
+  const [input, setInput] = useState("");
   const { user } = useContext(UserContext);
 
-  const getCountryCode = async () => {
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== "granted") {
-      console.log("Permission not granted");
-      return null;
-    }
-
-    const location = await Location.getCurrentPositionAsync({});
-    const geocode = await Location.reverseGeocodeAsync(location.coords);
-
-    const countryCode = geocode[0]?.isoCountryCode;
-    return countryCode;
-  };
-
-  const upsertProfile = async () => {
+  const updateProfile = async () => {
     if (!user) {
       console.log("No user logged in");
-      return;
+      return { error: "No user logged in" };
     }
 
-    const country = await getCountryCode();
-    const email = user.user_metadata.email;
-    const username = email.split("@")[0];
-    const { data, error } = await supabase.from("profiles").upsert([
-      {
-        id: user.id,
-        username,
-        name: user.user_metadata.full_name,
-        website: "",
-        bio: "",
-        profile_picture: user.user_metadata.avatar_url,
-        country: country,
-        public: true,
-        created_at: new Date().toISOString(),
-      },
-    ]);
+    const { data, error } = await supabase
+      .from("profiles")
+      .update({ [local.field]: input })
+      .eq("id", user.id);
 
     if (error) {
       console.log("Error upserting profile:", error);
+      return { error };
     } else {
-      console.log("Profile upserted:", data);
-      router.push("/(app)");
+      console.log("Profile updated", data);
+      return { data };
     }
   };
 
-  const handleSubmit = () => {
-    if (username.length < 4 || username.length > 32) {
-      Alert.alert(
-        "Invalid Username",
-        "Username must be between 4 and 32 characters."
-      );
-      return;
-    }
-    upsertProfile();
+  const handleSubmit = async () => {
+    const { data, error } = await updateProfile();
+    router.back();
   };
 
   return (
@@ -82,7 +52,7 @@ export default function Signin() {
         <Stack.Screen
           options={{
             headerShown: true,
-            title: "text input",
+            title: local.field,
           }}
         />
         <TextInput
@@ -90,24 +60,23 @@ export default function Signin() {
             position: "absolute",
             top: 20,
             height: 50,
-            borderColor: "#999",
+            borderColor: "#ffa500",
             borderWidth: 2,
             width: "90%",
             fontSize: 18,
             paddingLeft: 20,
             borderRadius: 18,
           }}
-          placeholder="Enter username"
+          placeholder={`Enter your ${local.field}`}
           maxLength={32}
-          value={username}
-          onChangeText={setUsername}
+          value={input}
+          onChangeText={setInput}
         />
         <TouchableOpacity
-          onPress={() => {}}
-          // onPress={handleSubmit}
+          onPress={handleSubmit}
           style={{
             position: "absolute",
-            bottom: 20,
+            bottom: 40,
             width: width - 40,
             paddingVertical: 10,
             backgroundColor: "#ffa500",
@@ -131,5 +100,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff",
   },
-  submitButton: {},
 });

@@ -1,4 +1,4 @@
-import { router, Stack, useLocalSearchParams } from "expo-router";
+import { router, Stack } from "expo-router";
 import React, { useContext, useEffect, useState } from "react";
 import {
   StyleSheet,
@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import AnimatedButton from "../../../components/AnimatedButton";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { supabase } from "../../../utils/supabase";
 import Loading from "../../../components/Loading";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -42,8 +41,11 @@ export default function Profile() {
   }, []);
   // !refetch data here again
 
-  const handleEdit = () => {
-    // console.log("Edit profile");
+  const handleEdit = (field) => {
+    router.push({
+      pathname: `/(app)/(profile)/editfield`,
+      params: { field: field },
+    });
   };
 
   if (fetchData === false) {
@@ -90,20 +92,12 @@ export default function Profile() {
           }}
         />
         <ScrollView>
-          {/*
-            username varchar(32) unique not null,
-            name varchar(50),
-            bio varchar(150),
-            profile_picture varchar(150),
-            website varchar(150),
-            country char(2),
-          */}
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Profile Information</Text>
 
             <AnimatedButton
               buttonScale={0.9}
-              onPress={handleEdit}
+              onPress={() => handleEdit("profile_picture")}
               style={styles.row}
             >
               <View style={[styles.rowIcon, { backgroundColor: "#fff" }]}>
@@ -126,7 +120,7 @@ export default function Profile() {
 
             <AnimatedButton
               buttonScale={0.9}
-              onPress={handleEdit}
+              onPress={() => handleEdit("username")}
               style={styles.row}
             >
               <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
@@ -139,7 +133,7 @@ export default function Profile() {
 
             <AnimatedButton
               buttonScale={0.9}
-              onPress={handleEdit}
+              onPress={() => handleEdit("name")}
               style={styles.row}
             >
               <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
@@ -158,7 +152,7 @@ export default function Profile() {
 
             <AnimatedButton
               buttonScale={0.9}
-              onPress={handleEdit}
+              onPress={() => handleEdit("bio")}
               style={styles.row}
             >
               <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
@@ -177,7 +171,7 @@ export default function Profile() {
 
             <AnimatedButton
               buttonScale={0.9}
-              onPress={handleEdit}
+              onPress={() => handleEdit("website")}
               style={styles.row}
             >
               <View style={[styles.rowIcon, { backgroundColor: "#fe9400" }]}>
@@ -190,7 +184,7 @@ export default function Profile() {
 
             <AnimatedButton
               buttonScale={0.9}
-              onPress={handleEdit}
+              onPress={() => handleEdit("country")}
               style={styles.row}
             >
               <View style={[styles.rowIcon, { backgroundColor: "#32c759" }]}>
