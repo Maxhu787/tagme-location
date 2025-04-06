@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 import * as Location from "expo-location";
 import { useContext, useState } from "react";
@@ -84,21 +85,14 @@ export default function Signin() {
             title: "text input",
           }}
         />
-        <Text
-          style={{
-            fontSize: 40,
-            fontWeight: "bold",
-          }}
-        ></Text>
         <TextInput
           style={{
+            position: "absolute",
+            top: 20,
             height: 50,
             borderColor: "#999",
             borderWidth: 2,
-            marginTop: 20,
-            paddingHorizontal: 10,
             width: "90%",
-
             fontSize: 18,
             paddingLeft: 20,
             borderRadius: 18,
@@ -109,19 +103,21 @@ export default function Signin() {
           onChangeText={setUsername}
         />
         <AnimatedButton
-          onPress={handleSubmit}
+          onPress={() => {}}
+          // onPress={handleSubmit}
           style={{
+            position: "absolute",
+            bottom: 20,
             width: width - 40,
             paddingVertical: 10,
             backgroundColor: "#ffa500",
             borderRadius: 5,
             alignItems: "center",
-            bottom: -40,
           }}
-          buttonScale={0.85}
+          // buttonScale={0.85}
         >
           <Text style={{ color: "#fff", fontSize: 24, fontWeight: "bold" }}>
-            Confirm{" "}
+            Confirm
           </Text>
         </AnimatedButton>
       </View>

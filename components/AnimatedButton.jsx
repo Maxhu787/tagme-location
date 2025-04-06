@@ -20,9 +20,9 @@ export default function AnimatedButton({
   }));
 
   return (
-    <Animated.View style={animatedStyle}>
+    <Animated.View style={[animatedStyle, style]}>
       <TouchableOpacity
-        style={[styles.button, style]}
+        // style={style}
         activeOpacity={1}
         onPressIn={() =>
           (scaleButton.value = withSpring(buttonScale, {
