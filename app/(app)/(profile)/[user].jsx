@@ -209,7 +209,7 @@ export default function Profile() {
                 <View style={styles.rowSpacer} />
                 <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
               </AnimatedButton>
-              <AnimatedButton
+              {/* <AnimatedButton
                 buttonScale={0.9}
                 onPress={() => router.push("/(app)/test")}
                 style={styles.row}
@@ -224,7 +224,7 @@ export default function Profile() {
                 <Text style={styles.rowLabel}>Test Route</Text>
                 <View style={styles.rowSpacer} />
                 <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
-              </AnimatedButton>
+              </AnimatedButton> */}
             </View>
           )}
 
