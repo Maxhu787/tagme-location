@@ -86,6 +86,15 @@ export default function Profile() {
     fetchFriends();
   }, [local.user]);
 
+  const countryCodeToFlagEmoji = (code) => {
+    if (!code) return "null";
+    return code
+      .toUpperCase()
+      .replace(/./g, (char) =>
+        String.fromCodePoint(127397 + char.charCodeAt())
+      );
+  };
+
   if (fetchData === false) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -159,7 +168,7 @@ export default function Profile() {
             <View style={styles.profileText}>
               <Text style={styles.profileUserName}>{fetchData.username}</Text>
               <Text style={styles.profileName}>
-                {fetchData.name} | {fetchData.country}
+                {fetchData.name} | {countryCodeToFlagEmoji(fetchData.country)}
               </Text>
               <Text style={styles.profileBio}>{fetchData.bio}</Text>
               <TouchableOpacity
@@ -301,29 +310,33 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
   },
   profileAvatar: {
-    width: 110,
-    height: 110,
+    width: 115,
+    height: 115,
     borderRadius: 9999,
+    backgroundColor: "#fff",
+    borderWidth: 4,
+    borderColor: "#000",
+    borderStyle: "solid",
   },
   profileAvatarWrapper: {
     position: "relative",
   },
   profileUserName: {
     marginTop: 12,
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "600",
     color: "#414d63",
     textAlign: "left",
   },
   profileName: {
-    marginTop: 5,
-    fontSize: 13,
+    marginTop: 2,
+    fontSize: 17,
     color: "#989898",
     textAlign: "left",
   },
   profileBio: {
     marginTop: 2,
-    fontSize: 16,
+    fontSize: 17,
     color: "#989898",
     textAlign: "left",
   },
