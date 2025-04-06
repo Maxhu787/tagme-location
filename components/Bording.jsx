@@ -179,11 +179,12 @@ const Bording = () => {
         onPress={handleNext}
         style={{
           width: width - 40,
+          height: 55,
           paddingVertical: 10,
           backgroundColor: "#ffa500",
           borderRadius: 5,
           alignItems: "center",
-          bottom: Platform.OS === "ios" ? 60 : 50,
+          bottom: Platform.OS === "ios" ? 60 : 42,
         }}
         buttonScale={0.85}
       >

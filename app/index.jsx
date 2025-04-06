@@ -76,6 +76,7 @@ export default function App() {
     return <Bording />;
   }
 
-  // return <Redirect href={profileExists ? "/(app)" : "/(app)/test"} />;
-  return <Redirect href={"/(app)/(profile)/createprofile"} />;
+  return <Redirect href={profileExists ? "/(app)" : "/(app)/test"} />;
+  // return <Bording />;
+  // return <Redirect href={"/(app)/(profile)/createprofile"} />;
 }
