@@ -20,14 +20,9 @@ export default function AnimatedButton({
   }));
 
   return (
-    <Animated.View style={[animatedStyle, style]}>
+    <Animated.View style={animatedStyle}>
       <TouchableOpacity
-        style={{
-          width: "100%",
-          height: "100%",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
+        style={style}
         activeOpacity={1}
         onPressIn={() =>
           (scaleButton.value = withSpring(buttonScale, {

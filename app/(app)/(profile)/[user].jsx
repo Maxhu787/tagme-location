@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     borderRadius: 9999,
     backgroundColor: "#fff",
     borderWidth: 4,
-    borderColor: "#000",
+    borderColor: "#fff",
     borderStyle: "solid",
   },
   profileAvatarWrapper: {

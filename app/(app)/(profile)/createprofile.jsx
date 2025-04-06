@@ -14,7 +14,6 @@ import { useContext, useState } from "react";
 import { UserContext } from "../../../contexts/UserContext";
 import { router, Stack } from "expo-router";
 import { supabase } from "../../../utils/supabase";
-import AnimatedButton from "../../../components/AnimatedButton";
 const { width } = Dimensions.get("window");
 
 export default function Signin() {
@@ -102,7 +101,7 @@ export default function Signin() {
           value={username}
           onChangeText={setUsername}
         />
-        <AnimatedButton
+        <TouchableOpacity
           onPress={() => {}}
           // onPress={handleSubmit}
           style={{
@@ -114,12 +113,11 @@ export default function Signin() {
             borderRadius: 5,
             alignItems: "center",
           }}
-          // buttonScale={0.85}
         >
           <Text style={{ color: "#fff", fontSize: 24, fontWeight: "bold" }}>
             Confirm
           </Text>
-        </AnimatedButton>
+        </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>
   );

@@ -130,14 +130,16 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   map: { flex: 1 },
   markerContainer: {
-    height: 54,
-    width: 54,
+    height: 58,
+    width: 58,
   },
   image: {
-    height: 50,
-    width: 50,
+    height: 58,
+    width: 58,
     borderRadius: 1000,
     backgroundColor: "#fff",
+    borderWidth: 4,
+    borderColor: "#fff",
   },
 });
 
