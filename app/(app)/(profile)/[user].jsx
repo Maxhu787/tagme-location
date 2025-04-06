@@ -23,6 +23,8 @@ export default function Profile() {
   const [fetchData, setFetchData] = useState(null);
   const [friends, setFriends] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [pendingRequests, setPendingRequests] = useState([]);
+  const [friendshipStatus, setFriendshipStatus] = useState(null); // New state for friendship status
   const local = useLocalSearchParams();
   const { user } = useContext(UserContext);
 
@@ -83,9 +85,64 @@ export default function Profile() {
     }
   }, [local.user]);
 
+  const fetchPendingRequests = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from("friends")
+        .select("friend_id")
+        .eq("user_id", user.id)
+        .eq("status", "pending");
+
+      if (error) {
+        console.error("Error fetching pending requests:", error);
+      } else {
+        setPendingRequests(data.map((request) => request.friend_id));
+      }
+    } catch (error) {
+      console.error("Error in fetchPendingRequests:", error);
+    }
+  }, [user.id]);
+
+  const fetchFriendshipStatus = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from("friends")
+        .select("status")
+        .or(
+          `and(user_id.eq.${user.id},friend_id.eq.${local.user}),and(user_id.eq.${local.user},friend_id.eq.${user.id})`
+        )
+        .single();
+
+      if (error && error.code !== "PGRST116") {
+        console.error("Error fetching friendship status:", error);
+      } else {
+        setFriendshipStatus(data?.status || null); // Set status or null if no row exists
+      }
+    } catch (error) {
+      console.error("Error in fetchFriendshipStatus:", error);
+    }
+  }, [user.id, local.user]);
+
+  const handleAddFriend = async (id) => {
+    const { error } = await supabase
+      .from("friends")
+      .upsert(
+        { user_id: user.id, friend_id: id, status: "pending" },
+        { onConflict: ["user_id", "friend_id"] }
+      );
+
+    if (error) {
+      console.error("Error adding friend:", error);
+    } else {
+      setPendingRequests((prev) => [...prev, id]);
+    }
+  };
+
   useEffect(() => {
     fetchDataCallback();
-  }, [fetchDataCallback]);
+    fetchPendingRequests();
+    fetchFriendshipStatus();
+  }, [fetchDataCallback, fetchPendingRequests, fetchFriendshipStatus]);
 
   const countryCodeToFlagEmoji = (code) => {
     if (!code) return "null";
@@ -190,7 +247,7 @@ export default function Profile() {
             </View>
           </View>
 
-          {fetchData.id === user.id && (
+          {fetchData.id === user.id ? (
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>Settings</Text>
               <AnimatedButton
@@ -218,6 +275,33 @@ export default function Profile() {
                 <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
               </AnimatedButton>
             </View>
+          ) : friendshipStatus === "accepted" ? null : ( // Hide button if already friends
+            <AnimatedButton
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: 15,
+              }}
+              buttonScale={friendshipStatus === "pending" ? 1 : 0.85}
+              disabled={friendshipStatus === "pending"}
+              onPress={() => handleAddFriend(fetchData.id)}
+            >
+              <View
+                style={{
+                  height: 40,
+                  width: "90%",
+                  borderRadius: 100,
+                  backgroundColor:
+                    friendshipStatus === "pending" ? "#888" : "#000",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Text style={{ color: "#fff" }}>
+                  {friendshipStatus === "pending" ? "Pending" : "Add Friend"}
+                </Text>
+              </View>
+            </AnimatedButton>
           )}
 
           <View style={styles.section}>
