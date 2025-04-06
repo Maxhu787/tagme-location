@@ -1,6 +1,6 @@
 import { PointAnnotation } from "@maplibre/maplibre-react-native";
 import React, { useRef, useState, useEffect, useContext } from "react";
-import { View, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, Text } from "react-native";
 import { UserContext } from "../contexts/UserContext";
 import { supabase } from "../utils/supabase";
 import { router } from "expo-router";
@@ -96,7 +96,7 @@ const DisplayUsers = ({ setFollowing, fetchUsers, setFetchUsers }) => {
     <>
       {friendsData.map((item) => (
         <PointAnnotation
-          key={item.id}
+          key={`${item.id}-image`}
           ref={(ref) => (markerRefs.current[item.id] = ref)}
           coordinate={item.coordinates}
           onSelected={() => {
@@ -122,6 +122,21 @@ const DisplayUsers = ({ setFollowing, fetchUsers, setFetchUsers }) => {
           </View>
         </PointAnnotation>
       ))}
+      {friendsData.map((item) => (
+        <PointAnnotation
+          key={`${item.id}-timestamp`}
+          coordinate={[
+            item.coordinates[0],
+            item.coordinates[1] - 0.00045, // Slightly offset below the image
+          ]}
+        >
+          <View style={styles.timestampContainer}>
+            <Text style={styles.timestamp}>
+              {new Date(item.timestamp).toLocaleString()}
+            </Text>
+          </View>
+        </PointAnnotation>
+      ))}
     </>
   );
 };
@@ -140,6 +155,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderWidth: 4,
     borderColor: "#fff",
+  },
+  timestampContainer: {
+    alignItems: "center",
+  },
+  timestamp: {
+    fontSize: 15,
+    color: "#000",
+    textAlign: "center",
   },
 });
 
