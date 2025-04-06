@@ -23,8 +23,7 @@ export default function Profile() {
   const [fetchData, setFetchData] = useState(null);
   const [friends, setFriends] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-  const [pendingRequests, setPendingRequests] = useState([]);
-  const [friendshipStatus, setFriendshipStatus] = useState(null); // New state for friendship status
+  const [friendshipStatus, setFriendshipStatus] = useState(null); // Track friendship status
   const local = useLocalSearchParams();
   const { user } = useContext(UserContext);
 
@@ -85,24 +84,6 @@ export default function Profile() {
     }
   }, [local.user]);
 
-  const fetchPendingRequests = useCallback(async () => {
-    try {
-      const { data, error } = await supabase
-        .from("friends")
-        .select("friend_id")
-        .eq("user_id", user.id)
-        .eq("status", "pending");
-
-      if (error) {
-        console.error("Error fetching pending requests:", error);
-      } else {
-        setPendingRequests(data.map((request) => request.friend_id));
-      }
-    } catch (error) {
-      console.error("Error in fetchPendingRequests:", error);
-    }
-  }, [user.id]);
-
   const fetchFriendshipStatus = useCallback(async () => {
     try {
       const { data, error } = await supabase
@@ -124,25 +105,34 @@ export default function Profile() {
   }, [user.id, local.user]);
 
   const handleAddFriend = async (id) => {
-    const { error } = await supabase
-      .from("friends")
-      .upsert(
-        { user_id: user.id, friend_id: id, status: "pending" },
-        { onConflict: ["user_id", "friend_id"] }
-      );
+    try {
+      const { error } = await supabase
+        .from("friends")
+        .upsert(
+          { user_id: user.id, friend_id: id, status: "pending" },
+          { onConflict: ["user_id", "friend_id"] }
+        );
 
-    if (error) {
-      console.error("Error adding friend:", error);
-    } else {
-      setPendingRequests((prev) => [...prev, id]);
+      if (error) {
+        console.error("Error adding friend:", error);
+      } else {
+        setFriendshipStatus("pending"); // Update status to pending
+      }
+    } catch (error) {
+      console.error("Error in handleAddFriend:", error);
     }
+  };
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await Promise.all([fetchDataCallback(), fetchFriendshipStatus()]);
+    setRefreshing(false);
   };
 
   useEffect(() => {
     fetchDataCallback();
-    fetchPendingRequests();
     fetchFriendshipStatus();
-  }, [fetchDataCallback, fetchPendingRequests, fetchFriendshipStatus]);
+  }, [fetchDataCallback, fetchFriendshipStatus]);
 
   const countryCodeToFlagEmoji = (code) => {
     if (!code) return "null";
@@ -218,7 +208,7 @@ export default function Profile() {
           refreshControl={
             <RefreshControl
               refreshing={refreshing}
-              onRefresh={fetchDataCallback}
+              onRefresh={handleRefresh} // Ensure all data fetching functions are called
             />
           }
         >
@@ -275,7 +265,7 @@ export default function Profile() {
                 <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
               </AnimatedButton>
             </View>
-          ) : friendshipStatus === "accepted" ? null : ( // Hide button if already friends
+          ) : friendshipStatus === "accepted" ? null : (
             <AnimatedButton
               style={{
                 alignItems: "center",
@@ -284,7 +274,7 @@ export default function Profile() {
               }}
               buttonScale={friendshipStatus === "pending" ? 1 : 0.85}
               disabled={friendshipStatus === "pending"}
-              onPress={() => handleAddFriend(fetchData.id)}
+              onPress={() => handleAddFriend(fetchData.id)} // Ensure this function is called
             >
               <View
                 style={{

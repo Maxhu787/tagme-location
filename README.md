@@ -142,3 +142,5 @@ add add friend button to friends profile page
 
 https://groups.google.com/g/tagme2
 https://support.google.com/cloud/answer/13463073
+
+seperate componet for the add friend button
