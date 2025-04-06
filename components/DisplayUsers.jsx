@@ -60,7 +60,7 @@ const DisplayUsers = ({ setFollowing, fetchUsers, setFetchUsers }) => {
       // Fetch the location data for all the friends
       const { data: locationData, error: locationError } = await supabase
         .from("user_location")
-        .select("id, latitude, longitude")
+        .select("id, latitude, longitude, timestamp")
         .in("id", allFriendIds);
 
       if (locationError) {
@@ -77,10 +77,10 @@ const DisplayUsers = ({ setFollowing, fetchUsers, setFetchUsers }) => {
           coordinates: location
             ? [parseFloat(location.longitude), parseFloat(location.latitude)]
             : [0, 0],
+          timestamp: location.timestamp,
           profile_picture: profile.profile_picture,
         };
       });
-
       setFriendsData(formattedData);
     };
 
