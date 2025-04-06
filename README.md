@@ -131,16 +131,16 @@ bording -> login -> check if profile exists
 setup expo battery
 add theme
 
-setup map caching
-in the end setup only refetch data when user drags down refreshing page
+cache map
 
-better error handling & page add toast message
-fix prevent multiple pressing result in redirect multiple timest
+better error handling add toast message
+fix prevent multiple pressing result in redirect multiple times
 
 add form validation editfield
-add add friend button to friends profile page
 
 https://groups.google.com/g/tagme2
 https://support.google.com/cloud/answer/13463073
 
-seperate componet for the add friend button
+seperate component for the add friend button
+and add logic to the button
+display accepted request when the other person already sent a friend request
