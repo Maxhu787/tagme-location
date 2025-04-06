@@ -17,6 +17,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { supabase } from "../../utils/supabase";
 import AnimatedButton from "../../components/AnimatedButton";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { getParsedCommandLineOfConfigFile } from "typescript";
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -157,9 +158,10 @@ export default Home = () => {
       >
         <AnimatedButton
           style={{
-            width: 72,
+            width: 75,
             backgroundColor: "#000",
             padding: 22,
+            paddingLeft: 23,
             borderRadius: 18,
             shadowColor: "#000",
             elevation: 4,
