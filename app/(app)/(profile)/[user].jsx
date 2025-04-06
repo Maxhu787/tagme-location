@@ -216,6 +216,23 @@ export default function Profile() {
                 <View style={styles.rowSpacer} />
                 <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
               </AnimatedButton>
+
+              <AnimatedButton
+                buttonScale={0.9}
+                onPress={() => router.push("/(app)/createprofile")}
+                style={styles.row}
+              >
+                <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
+                  <Image
+                    alt=""
+                    source={require("../../../assets/3.png")}
+                    style={{ height: 56, width: 56 }}
+                  />
+                </View>
+                <Text style={styles.rowLabel}>Create Profile</Text>
+                <View style={styles.rowSpacer} />
+                <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
+              </AnimatedButton>
             </View>
           )}
 

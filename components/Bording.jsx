@@ -20,22 +20,22 @@ const slides = [
     id: "1",
     title: "One",
     description: "lorem ipsum dolor sit amet",
-    // image: "https://picsum.photos/id/664/1920/1080",
-    image: "https://placehold.co/1920x1080",
+    image: "https://picsum.photos/id/664/1920/1080",
+    // image: "https://placehold.co/1920x1080",
   },
   {
     id: "2",
     title: "Two",
     description: "lorem ipsum dolor sit amet",
-    // image: "https://picsum.photos/id/664/1920/1080",
-    image: "https://placehold.co/1920x1080",
+    image: "https://picsum.photos/id/664/1920/1080",
+    // image: "https://placehold.co/1920x1080",
   },
   {
     id: "3",
     title: "Three",
     description: "lore ipsum dolor sit amet",
-    // image: "https://picsum.photos/id/664/1920/1080",
-    image: "https://placehold.co/1920x1080",
+    image: "https://picsum.photos/id/664/1920/1080",
+    // image: "https://placehold.co/1920x1080",
   },
 ];
 
