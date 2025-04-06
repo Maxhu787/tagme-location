@@ -10,6 +10,30 @@ const DisplayUsers = ({ setFollowing, fetchUsers, setFetchUsers }) => {
   const markerRefs = useRef({});
   const { user } = useContext(UserContext);
 
+  const getTimeAgo = (timestamp) => {
+    const now = new Date();
+    const then = new Date(timestamp);
+    const diff = Math.floor((now.getTime() - then.getTime()) / 1000); // in seconds
+
+    const times = [
+      { unit: "year", seconds: 31536000 },
+      { unit: "month", seconds: 2592000 },
+      { unit: "day", seconds: 86400 },
+      { unit: "hour", seconds: 3600 },
+      { unit: "minute", seconds: 60 },
+      { unit: "second", seconds: 1 },
+    ];
+
+    for (let t of times) {
+      const interval = Math.floor(diff / t.seconds);
+      if (interval >= 1) {
+        return `${interval} ${t.unit}${interval > 1 ? "s" : ""} ago`;
+      }
+    }
+
+    return "just now";
+  };
+
   useEffect(() => {
     const fetchFriends = async () => {
       // First query to get all friend_ids where user_id is the current user's ID
@@ -120,23 +144,29 @@ const DisplayUsers = ({ setFollowing, fetchUsers, setFetchUsers }) => {
               fadeDuration={0}
             />
           </View>
+          {/* <View style={styles.timestampContainer}>
+            <Text
+              onLayout={() => markerRefs.current?.[item.id]?.refresh()}
+              style={styles.timestamp}
+            >
+              {getTimeAgo(item.timestamp)}
+            </Text>
+          </View> */}
         </PointAnnotation>
       ))}
-      {friendsData.map((item) => (
+      {/* {friendsData.map((item) => (
         <PointAnnotation
           key={`${item.id}-timestamp`}
           coordinate={[
             item.coordinates[0],
-            item.coordinates[1] - 0.00045, // Slightly offset below the image
+            item.coordinates[1] - 0.00042, // Slightly offset below the image
           ]}
         >
           <View style={styles.timestampContainer}>
-            <Text style={styles.timestamp}>
-              {new Date(item.timestamp).toLocaleString()}
-            </Text>
+            <Text style={styles.timestamp}>{getTimeAgo(item.timestamp)}</Text>
           </View>
         </PointAnnotation>
-      ))}
+      ))} */}
     </>
   );
 };
@@ -160,7 +190,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   timestamp: {
-    fontSize: 15,
+    fontSize: 20,
     color: "#000",
     textAlign: "center",
   },
