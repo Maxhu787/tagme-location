@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import {
   StyleSheet,
@@ -9,6 +9,7 @@ import {
   Image,
   TouchableOpacity,
   Linking,
+  RefreshControl,
 } from "react-native";
 import AnimatedButton from "../../../components/AnimatedButton";
 import FeatherIcon from "react-native-vector-icons/Feather";
@@ -21,11 +22,13 @@ import { UserContext } from "../../../contexts/UserContext";
 export default function Profile() {
   const [fetchData, setFetchData] = useState(null);
   const [friends, setFriends] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
   const local = useLocalSearchParams();
   const { user } = useContext(UserContext);
 
-  useEffect(() => {
-    const fetchProfile = async () => {
+  const fetchDataCallback = useCallback(async () => {
+    setRefreshing(true);
+    try {
       const { data, error } = await supabase
         .from("profiles")
         .select("*")
@@ -41,50 +44,48 @@ export default function Profile() {
       } else {
         setFetchData(data);
       }
-    };
 
-    const fetchFriends = async () => {
-      try {
-        // Friends where user is the sender
-        const { data: sentData, error: sentError } = await supabase
-          .from("friends")
-          .select(
-            `
+      // Fetch friends
+      const { data: sentData, error: sentError } = await supabase
+        .from("friends")
+        .select(
+          `
         friend_id,
         profiles:friend_id(id, username, profile_picture)
       `
-          )
-          .eq("user_id", local.user)
-          .eq("status", "accepted");
+        )
+        .eq("user_id", local.user)
+        .eq("status", "accepted");
 
-        if (sentError) throw sentError;
+      if (sentError) throw sentError;
 
-        // Friends where user is the receiver
-        const { data: receivedData, error: receivedError } = await supabase
-          .from("friends")
-          .select(
-            `
+      const { data: receivedData, error: receivedError } = await supabase
+        .from("friends")
+        .select(
+          `
         user_id,
         profiles:user_id(id, username, profile_picture)
       `
-          )
-          .eq("friend_id", local.user)
-          .eq("status", "accepted");
+        )
+        .eq("friend_id", local.user)
+        .eq("status", "accepted");
 
-        if (receivedError) throw receivedError;
+      if (receivedError) throw receivedError;
 
-        const sentProfiles = sentData.map((f) => f.profiles);
-        const receivedProfiles = receivedData.map((f) => f.profiles);
+      const sentProfiles = sentData.map((f) => f.profiles);
+      const receivedProfiles = receivedData.map((f) => f.profiles);
 
-        setFriends([...sentProfiles, ...receivedProfiles]);
-      } catch (error) {
-        console.error("Error fetching friends:", error);
-      }
-    };
-
-    fetchProfile();
-    fetchFriends();
+      setFriends([...sentProfiles, ...receivedProfiles]);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setRefreshing(false);
+    }
   }, [local.user]);
+
+  useEffect(() => {
+    fetchDataCallback();
+  }, [fetchDataCallback]);
 
   const countryCodeToFlagEmoji = (code) => {
     if (!code) return "null";
@@ -156,7 +157,14 @@ export default function Profile() {
             ),
           }}
         />
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={fetchDataCallback}
+            />
+          }
+        >
           <View style={styles.profile}>
             <View style={styles.profileAvatarWrapper}>
               <Image
@@ -209,22 +217,6 @@ export default function Profile() {
                 <View style={styles.rowSpacer} />
                 <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
               </AnimatedButton>
-              {/* <AnimatedButton
-                buttonScale={0.9}
-                onPress={() => router.push("/(app)/test")}
-                style={styles.row}
-              >
-                <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
-                  <Image
-                    alt=""
-                    source={require("../../../assets/4.png")}
-                    style={{ height: 56, width: 56 }}
-                  />
-                </View>
-                <Text style={styles.rowLabel}>Test Route</Text>
-                <View style={styles.rowSpacer} />
-                <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
-              </AnimatedButton> */}
             </View>
           )}
 

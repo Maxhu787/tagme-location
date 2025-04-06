@@ -7,6 +7,7 @@ import {
   View,
   Text,
   Image,
+  RefreshControl,
 } from "react-native";
 import AnimatedButton from "../../../components/AnimatedButton";
 import FeatherIcon from "react-native-vector-icons/Feather";
@@ -18,9 +19,10 @@ import { UserContext } from "../../../contexts/UserContext";
 export default function Profile() {
   const { user } = useContext(UserContext);
   const [fetchData, setFetchData] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    const fetch = async () => {
+  const fetch = async () => {
+    try {
       const { data, error } = await supabase
         .from("profiles")
         .select("*")
@@ -36,10 +38,16 @@ export default function Profile() {
       } else {
         setFetchData(data);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching profile data:", error);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  useEffect(() => {
     fetch();
   }, []);
-  // !refetch data here again
 
   const handleEdit = (field) => {
     router.push({
@@ -91,7 +99,17 @@ export default function Profile() {
             headerShadowVisible: true,
           }}
         />
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => {
+                setRefreshing(true);
+                fetch();
+              }}
+            />
+          }
+        >
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Profile Information</Text>
 
@@ -103,8 +121,6 @@ export default function Profile() {
               <View style={[styles.rowIcon, { backgroundColor: "#fff" }]}>
                 <Image
                   alt=""
-                  // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
-                  // source={require("../../../assets/4.png")}
                   source={{ uri: fetchData.profile_picture }}
                   style={{ height: 40, width: 40, borderRadius: 100 }}
                 />
@@ -137,10 +153,8 @@ export default function Profile() {
               style={styles.row}
             >
               <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
-                {/* <FeatherIcon color="#fff" name="user" size={20} /> */}
                 <Image
                   alt=""
-                  // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
                   source={require("../../../assets/4.png")}
                   style={{ height: 50, width: 50 }}
                 />
@@ -156,10 +170,8 @@ export default function Profile() {
               style={styles.row}
             >
               <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
-                {/* <FeatherIcon color="#fff" name="user" size={20} /> */}
                 <Image
                   alt=""
-                  // source={{ uri: "https://picsum.photos/id/664/1920/1080" }}
                   source={require("../../../assets/1.png")}
                   style={{ height: 50, width: 50 }}
                 />

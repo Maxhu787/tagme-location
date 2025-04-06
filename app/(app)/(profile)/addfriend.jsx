@@ -1,5 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  StyleSheet,
+  RefreshControl,
+} from "react-native";
 import { router, Stack } from "expo-router";
 import AnimatedButton from "../../../components/AnimatedButton";
 import { supabase } from "../../../utils/supabase";
@@ -9,61 +16,59 @@ import Loading from "../../../components/Loading";
 export default function AddFriend() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false); // Add refreshing state
   const { user } = useContext(UserContext);
   const [pendingRequests, setPendingRequests] = useState([]);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        // 1. Get all accepted friend IDs (bidirectional)
-        const { data: friendsData, error: friendsError } = await supabase
-          .from("friends")
-          .select("user_id, friend_id")
-          .or(`user_id.eq.${user.id},friend_id.eq.${user.id}`)
-          .eq("status", "accepted");
+  const fetchUsers = async () => {
+    try {
+      // 1. Get all accepted friend IDs (bidirectional)
+      const { data: friendsData, error: friendsError } = await supabase
+        .from("friends")
+        .select("user_id, friend_id")
+        .or(`user_id.eq.${user.id},friend_id.eq.${user.id}`)
+        .eq("status", "accepted");
 
-        const friendIds =
-          friendsData?.map((f) =>
-            f.user_id === user.id ? f.friend_id : f.user_id
-          ) ?? [];
+      const friendIds =
+        friendsData?.map((f) =>
+          f.user_id === user.id ? f.friend_id : f.user_id
+        ) ?? [];
 
-        // 2. Get all users excluding self and friends
-        const { data: usersData, error: usersError } = await supabase
-          .from("profiles")
-          .select("id, username, profile_picture")
-          .not("id", "in", `(${[...friendIds, user.id].join(",")})`);
+      // 2. Get all users excluding self and friends
+      const { data: usersData, error: usersError } = await supabase
+        .from("profiles")
+        .select("id, username, profile_picture")
+        .not("id", "in", `(${[...friendIds, user.id].join(",")})`);
 
-        if (usersError) {
-          console.error("Error fetching users:", usersError);
-        } else {
-          setUsers(usersData);
-        }
-
-        // 3. Get pending friend requests
-        const { data: pendingData, error: pendingError } = await supabase
-          .from("friends")
-          .select("friend_id")
-          .eq("user_id", user.id)
-          .eq("status", "pending");
-
-        if (pendingError) {
-          console.error("Error fetching pending requests:", pendingError);
-        } else {
-          setPendingRequests(pendingData.map((request) => request.friend_id));
-        }
-      } catch (error) {
-        console.error("Error in fetchUsers:", error);
-      } finally {
-        setLoading(false);
+      if (usersError) {
+        console.error("Error fetching users:", usersError);
+      } else {
+        setUsers(usersData);
       }
-    };
 
+      // 3. Get pending friend requests
+      const { data: pendingData, error: pendingError } = await supabase
+        .from("friends")
+        .select("friend_id")
+        .eq("user_id", user.id)
+        .eq("status", "pending");
+
+      if (pendingError) {
+        console.error("Error fetching pending requests:", pendingError);
+      } else {
+        setPendingRequests(pendingData.map((request) => request.friend_id));
+      }
+    } catch (error) {
+      console.error("Error in fetchUsers:", error);
+    } finally {
+      setLoading(false);
+      setRefreshing(false); // Stop refreshing
+    }
+  };
+
+  useEffect(() => {
     fetchUsers();
   }, []);
-
-  // user_id uuid references auth.users on delete cascade not null,
-  // friend_id uuid references auth.users on delete cascade not null,
-  // status text check (status IN ('pending', 'accepted', 'blocked')) not null,
 
   const handleAddFriend = async (id) => {
     const { error } = await supabase
@@ -94,7 +99,18 @@ export default function AddFriend() {
   }
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: "#fff" }}>
+    <ScrollView
+      style={{ flex: 1, backgroundColor: "#fff" }}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={() => {
+            setRefreshing(true);
+            fetchUsers();
+          }}
+        />
+      }
+    >
       <Stack.Screen
         options={{
           headerShadowVisible: true,

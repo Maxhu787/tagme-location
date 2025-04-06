@@ -36,7 +36,7 @@ export default function EditField() {
       console.log("Error upserting profile:", error);
       return { error };
     } else {
-      console.log("Profile updated", data);
+      // console.log("Profile updated", data);
       return { data };
     }
   };

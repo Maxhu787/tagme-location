@@ -12,7 +12,7 @@ export default Layout = () => {
       <Stack.Screen name="addfriend" options={{ headerTitle: "Add Friend" }} />
       <Stack.Screen
         name="notifications"
-        options={{ headerTitle: "notifications" }}
+        options={{ headerTitle: "Notifications" }}
       />
       <Stack.Screen name="createprofile" options={{ headerShown: false }} />
       <Stack.Screen name="editfield" />

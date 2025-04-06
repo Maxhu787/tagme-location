@@ -1,5 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  StyleSheet,
+  RefreshControl,
+} from "react-native";
 import { Stack } from "expo-router";
 import AnimatedButton from "../../../components/AnimatedButton";
 import { supabase } from "../../../utils/supabase";
@@ -9,34 +16,36 @@ import Loading from "../../../components/Loading";
 export default function Notifications() {
   const [pendingRequests, setPendingRequests] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const { user } = useContext(UserContext);
 
-  useEffect(() => {
-    const fetchPendingRequests = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("friends")
-          .select(
-            `
-            user_id,
-            profiles:user_id(username, profile_picture)
+  const fetchPendingRequests = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("friends")
+        .select(
           `
-          )
-          .eq("friend_id", user.id)
-          .eq("status", "pending");
+          user_id,
+          profiles:user_id(username, profile_picture)
+        `
+        )
+        .eq("friend_id", user.id)
+        .eq("status", "pending");
 
-        if (error) {
-          console.error("Error fetching pending requests:", error);
-        } else {
-          setPendingRequests(data);
-        }
-      } catch (error) {
-        console.error("Error in fetchPendingRequests:", error);
-      } finally {
-        setLoading(false);
+      if (error) {
+        console.error("Error fetching pending requests:", error);
+      } else {
+        setPendingRequests(data);
       }
-    };
+    } catch (error) {
+      console.error("Error in fetchPendingRequests:", error);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
 
+  useEffect(() => {
     fetchPendingRequests();
   }, []);
 
@@ -74,7 +83,18 @@ export default function Notifications() {
   }
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: "#fff" }}>
+    <ScrollView
+      style={{ flex: 1, backgroundColor: "#fff" }}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={() => {
+            setRefreshing(true);
+            fetchPendingRequests();
+          }}
+        />
+      }
+    >
       <Stack.Screen
         options={{
           headerShadowVisible: true,
