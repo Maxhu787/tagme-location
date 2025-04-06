@@ -8,9 +8,10 @@ import { supabase } from "../../utils/supabase";
 export default function Test() {
   const { user, setUser } = useContext(UserContext);
   // useEffect(() => {
-  //   console.log(JSON.stringify(user.user_metadata, null, 2));
-  //   console.log(user.user_metadata.avatar_url);
-  //   console.log(user.user_metadata.name);
+  // console.log(JSON.stringify(user.user_metadata, null, 2));
+  // console.log(user.user_metadata.email);
+  // console.log(user.user_metadata.avatar_url);
+  // console.log(user.user_metadata.name);
   // }, []);
   const test_insert_location = async () => {
     const { data, error } = await supabase.from("user_location").upsert(
@@ -59,10 +60,12 @@ export default function Test() {
     if (profileExists === null) return; // Stop if there was an error
 
     if (!profileExists) {
+      const email = user.user_metadata.email;
+      const username = email.split("@")[0];
       const { data, error } = await supabase.from("profiles").upsert([
         {
           id: user.id,
-          username: "test_user1",
+          username: "e",
           name: user.user_metadata.full_name,
           website: "https://example.com/",
           bio: "This is a test bio.",

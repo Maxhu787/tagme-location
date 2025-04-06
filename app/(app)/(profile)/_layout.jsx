@@ -14,7 +14,8 @@ export default Layout = () => {
         name="notifications"
         options={{ headerTitle: "notifications" }}
       />
-      <Stack.Screen name="createprofile" />
+      <Stack.Screen name="createprofile" options={{ headerShown: false }} />
+      <Stack.Screen name="editfield" />
       <Stack.Screen name="trampoline" />
       <Stack.Screen name="[user]" options={{ headerShown: false }} />
     </Stack>

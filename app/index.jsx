@@ -1,10 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { Redirect } from "expo-router";
 import { supabase } from "../utils/supabase";
-import { View } from "react-native";
-import Bording from "../components/Bording";
 import { UserContext } from "../contexts/UserContext";
 import { ProfileContext } from "../contexts/ProfileContext";
+import Bording from "../components/Bording";
 import Loading from "../components/Loading";
 
 export default function App() {
@@ -12,17 +11,34 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [profileExists, setProfileExists] = useState(null);
 
-  const { user, setUser } = useContext(UserContext);
-  const { profile, setProfile } = useContext(ProfileContext);
+  const { setUser } = useContext(UserContext);
+  const { setProfile } = useContext(ProfileContext);
 
   useEffect(() => {
+    const checkProfileExists = async (userId) => {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", userId)
+        .single();
+
+      if (error) {
+        if (error.code === "PGRST116") {
+          return false; // No profile found
+        }
+        console.log("Error checking profile:", error);
+        return null; // Unexpected error
+      }
+      setProfile(data);
+      return !!data; // Return true if profile exists
+    };
+
     const fetchSession = async () => {
       const { data } = await supabase.auth.getSession();
       setSession(data.session);
 
       if (data.session && data.session.user) {
         setUser(data.session.user);
-        // console.log("fetch session");
         const exists = await checkProfileExists(data.session.user.id);
         setProfileExists(exists);
       }
@@ -37,8 +53,6 @@ export default function App() {
 
         if (session && session.user) {
           setUser(session.user);
-
-          // console.log("on auth state change");
           const exists = await checkProfileExists(session.user.id);
           setProfileExists(exists);
         }
@@ -51,32 +65,15 @@ export default function App() {
     };
   }, []);
 
-  const checkProfileExists = async (userId) => {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", userId)
-      .single();
-    setProfile(data);
-    if (error) {
-      if (error.code === "PGRST116") {
-        return false; // No profile found
-      }
-      console.log("Error checking profile:", error);
-      return null; // Unexpected error
-    }
-    return !!data; // Return true if profile exists
-  };
-
   if (loading) {
     return <Loading />;
-  }
-
-  if (!session || !session.user) {
+  } else if (!session || !session.user) {
     return <Bording />;
+  } else {
+    return (
+      <Redirect
+        href={profileExists ? "/(app)" : "/(app)/(profile)/createprofile"}
+      />
+    );
   }
-
-  return <Redirect href={profileExists ? "/(app)" : "/(app)/test"} />;
-  // return <Bording />;
-  // return <Redirect href={"/(app)/(profile)/createprofile"} />;
 }
