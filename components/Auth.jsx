@@ -14,7 +14,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 export default function Auth() {
   GoogleSignin.configure({
     webClientId:
-      "1094899319864-in6t1vgarrq32m59d34vpuk692nesg93.apps.googleusercontent.com",
+      "1094899319864-n9jeg34al5slqen27ave2mh3ttm1k824.apps.googleusercontent.com",
   });
   const { user, setUser } = useContext(UserContext);
 

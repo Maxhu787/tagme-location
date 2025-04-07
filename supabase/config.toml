@@ -213,7 +213,7 @@ max_frequency = "5s"
 # `twitter`, `slack`, `spotify`, `workos`, `zoom`.
 [auth.external.google]
 enabled = true
-client_id = "1094899319864-in6t1vgarrq32m59d34vpuk692nesg93.apps.googleusercontent.com"
+client_id = "1094899319864-n9jeg34al5slqen27ave2mh3ttm1k824.apps.googleusercontent.com" # web client id
 # DO NOT commit your OAuth provider secret to git. Use environment variable substitution instead:
 # secret = "env(SUPABASE_AUTH_EXTERNAL_APPLE_SECRET)"
 secret = "dummyqefqwef"
