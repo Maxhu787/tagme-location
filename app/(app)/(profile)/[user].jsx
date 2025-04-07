@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Linking,
   RefreshControl,
+  ActivityIndicator,
 } from "react-native";
 import AnimatedButton from "../../../components/AnimatedButton";
 import FeatherIcon from "react-native-vector-icons/Feather";
@@ -174,7 +175,17 @@ export default function Profile() {
             headerShown: false,
           }}
         />
-        <Loading />
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#fff",
+          }}
+        >
+          <ActivityIndicator size="large" color="#000" />
+        </View>
+        {/* <Loading /> */}
       </>
     );
   } else {

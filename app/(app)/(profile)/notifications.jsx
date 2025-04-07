@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   RefreshControl,
+  ActivityIndicator,
 } from "react-native";
 import { Stack } from "expo-router";
 import AnimatedButton from "../../../components/AnimatedButton";
@@ -73,11 +74,23 @@ export default function Notifications() {
     return (
       <>
         <Stack.Screen
-          options={{
-            headerShown: false,
-          }}
+          options={
+            {
+              // headerShown: false,
+            }
+          }
         />
-        <Loading />
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#fff",
+          }}
+        >
+          <ActivityIndicator size="large" color="#000" />
+        </View>
+        {/* <Loading /> */}
       </>
     );
   }
