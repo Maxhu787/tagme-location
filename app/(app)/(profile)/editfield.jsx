@@ -3,13 +3,11 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  Alert,
   TouchableWithoutFeedback,
   Keyboard,
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import * as Location from "expo-location";
 import { useContext, useState } from "react";
 import { UserContext } from "../../../contexts/UserContext";
 import { router, Stack, useLocalSearchParams } from "expo-router";
@@ -18,7 +16,7 @@ const { width } = Dimensions.get("window");
 
 export default function EditField() {
   const local = useLocalSearchParams();
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState(local.value || ""); // Ensure input has a default value
   const { user } = useContext(UserContext);
 
   const updateProfile = async () => {
@@ -52,7 +50,7 @@ export default function EditField() {
         <Stack.Screen
           options={{
             headerShown: true,
-            title: local.field,
+            title: local.field || "Edit Field", // Fallback title
           }}
         />
         <TextInput
@@ -60,17 +58,17 @@ export default function EditField() {
             position: "absolute",
             top: 20,
             height: 50,
-            borderColor: "#ffa500",
+            borderColor: "#000",
             borderWidth: 2,
             width: "90%",
             fontSize: 18,
             paddingLeft: 20,
             borderRadius: 18,
           }}
-          placeholder={`Enter your ${local.field}`}
-          maxLength={32}
-          value={input}
-          onChangeText={setInput}
+          placeholder={`Enter your ${local.field || "value"}`} // Fallback placeholder
+          // maxLength={32}
+          value={input} // Ensure this is bound to the state
+          onChangeText={setInput} // Update state on text change
         />
         <TouchableOpacity
           onPress={handleSubmit}
@@ -79,7 +77,7 @@ export default function EditField() {
             bottom: 40,
             width: width - 40,
             paddingVertical: 10,
-            backgroundColor: "#ffa500",
+            backgroundColor: "#000",
             borderRadius: 5,
             alignItems: "center",
           }}

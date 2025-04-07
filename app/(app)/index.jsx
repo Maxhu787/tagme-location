@@ -109,6 +109,7 @@ export default Home = () => {
         // mapStyle="https://tiles.openfreemap.org/styles/bright"
         mapStyle="https://tiles.openfreemap.org/styles/positron"
         // mapStyle="https://api.maptiler.com/maps/topo-v2/style.json?key=OKl8m7wrDzahTfa30DpT"
+        // mapStyle="https://api.maptiler.com/maps/winter-v2/style.json?key=OKl8m7wrDzahTfa30DpT"
         rotateEnabled={false}
         logoEnabled={false}
         attributionEnabled={false}
@@ -159,7 +160,7 @@ export default Home = () => {
         <AnimatedButton
           style={{
             width: 75,
-            backgroundColor: "#000",
+            backgroundColor: "#fff",
             padding: 22,
             paddingLeft: 23,
             borderRadius: 18,
@@ -170,7 +171,7 @@ export default Home = () => {
             setFetchUsers(true);
           }}
         >
-          <FontAwesome name="refresh" size={32} color="#ffa500" />
+          <FontAwesome name="refresh" size={32} color="#000" />
         </AnimatedButton>
       </View>
       <TopNav />

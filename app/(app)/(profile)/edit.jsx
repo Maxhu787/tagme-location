@@ -50,10 +50,10 @@ export default function Profile() {
     fetch();
   }, []);
 
-  const handleEdit = (field) => {
+  const handleEdit = (field, value) => {
     router.push({
       pathname: `/(app)/(profile)/editfield`,
-      params: { field: field },
+      params: { field: field, value: value },
     });
   };
 
@@ -128,7 +128,9 @@ export default function Profile() {
 
             <AnimatedButton
               buttonScale={0.9}
-              onPress={() => handleEdit("profile_picture")}
+              onPress={() =>
+                handleEdit("profile_picture", fetchData.profile_picture)
+              }
               style={styles.row}
             >
               <View style={[styles.rowIcon, { backgroundColor: "#fff" }]}>
@@ -149,7 +151,7 @@ export default function Profile() {
 
             <AnimatedButton
               buttonScale={0.9}
-              onPress={() => handleEdit("username")}
+              onPress={() => handleEdit("username", fetchData.username)}
               style={styles.row}
             >
               <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
@@ -162,7 +164,7 @@ export default function Profile() {
 
             <AnimatedButton
               buttonScale={0.9}
-              onPress={() => handleEdit("name")}
+              onPress={() => handleEdit("name", fetchData.name)}
               style={styles.row}
             >
               <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
@@ -179,7 +181,7 @@ export default function Profile() {
 
             <AnimatedButton
               buttonScale={0.9}
-              onPress={() => handleEdit("bio")}
+              onPress={() => handleEdit("bio", fetchData.bio)}
               style={styles.row}
             >
               <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
@@ -196,7 +198,7 @@ export default function Profile() {
 
             <AnimatedButton
               buttonScale={0.9}
-              onPress={() => handleEdit("website")}
+              onPress={() => handleEdit("website", fetchData.website)}
               style={styles.row}
             >
               <View style={[styles.rowIcon, { backgroundColor: "#fe9400" }]}>
@@ -209,7 +211,7 @@ export default function Profile() {
 
             <AnimatedButton
               buttonScale={0.9}
-              onPress={() => handleEdit("country")}
+              onPress={() => handleEdit("country", fetchData.country)}
               style={styles.row}
             >
               <View style={[styles.rowIcon, { backgroundColor: "#32c759" }]}>

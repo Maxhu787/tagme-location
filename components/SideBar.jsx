@@ -29,7 +29,7 @@ export default SideBar = ({
       }}
     >
       <AnimatedButton
-        textColor="#ffa500"
+        textColor="#000"
         style={styles.zoomButton}
         text="4x"
         onPress={() => {
@@ -37,7 +37,7 @@ export default SideBar = ({
         }}
       />
       <AnimatedButton
-        textColor="#ffa500"
+        textColor="#000"
         style={styles.zoomButton}
         text="3x"
         onPress={() => {
@@ -45,7 +45,7 @@ export default SideBar = ({
         }}
       />
       <AnimatedButton
-        textColor="#ffa500"
+        textColor="#000"
         style={styles.zoomButton}
         text="2x"
         onPress={() => {
@@ -53,7 +53,7 @@ export default SideBar = ({
         }}
       />
       <AnimatedButton
-        textColor="#ffa500"
+        textColor="#000"
         style={styles.zoomButton}
         text="1x"
         onPress={() => {
@@ -68,9 +68,8 @@ const styles = StyleSheet.create({
   zoomButton: {
     height: 45,
     width: 45,
-    color: "#ffa500",
     borderRadius: 20,
-    backgroundColor: "#000",
+    backgroundColor: "#fff",
     justifyContent: "center",
     alignItems: "center",
     shadowColor: "#000",

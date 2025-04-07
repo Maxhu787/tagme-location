@@ -7,6 +7,7 @@ import {
   View,
   Text,
   Switch,
+  Alert,
 } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import AnimatedButton from "../../../components/AnimatedButton";
@@ -21,15 +22,17 @@ export default function Settings() {
       <Stack.Screen
         options={{
           headerShown: true,
-          headerShadowVisible: false,
+          headerShadowVisible: true,
         }}
       />
       <ScrollView>
-        <View style={styles.section}>
+        <View style={[styles.section, { marginTop: 12 }]}>
           <Text style={styles.sectionTitle}>Preferences</Text>
           <AnimatedButton
             buttonScale={0.9}
-            onPress={() => {}}
+            onPress={() => {
+              Alert.alert("fuck off");
+            }}
             style={styles.row}
           >
             <View style={[styles.rowIcon, { backgroundColor: "#fe9400" }]}>
@@ -60,7 +63,9 @@ export default function Settings() {
           </AnimatedButton>
           <AnimatedButton
             buttonScale={0.9}
-            onPress={() => {}}
+            onPress={() => {
+              Alert.alert("fuck off");
+            }}
             style={styles.row}
           >
             <View style={[styles.rowIcon, { backgroundColor: "#32c759" }]}>
@@ -117,7 +122,9 @@ export default function Settings() {
           <Text style={styles.sectionTitle}>Resources</Text>
           <AnimatedButton
             buttonScale={0.9}
-            onPress={() => {}}
+            onPress={() => {
+              Alert.alert("fuck off");
+            }}
             style={styles.row}
           >
             <View style={[styles.rowIcon, { backgroundColor: "#8e8d91" }]}>
@@ -129,7 +136,9 @@ export default function Settings() {
           </AnimatedButton>
           <AnimatedButton
             buttonScale={0.9}
-            onPress={() => {}}
+            onPress={() => {
+              Alert.alert("fuck off");
+            }}
             style={styles.row}
           >
             <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
@@ -141,7 +150,9 @@ export default function Settings() {
           </AnimatedButton>
           <AnimatedButton
             buttonScale={0.9}
-            onPress={() => {}}
+            onPress={() => {
+              Alert.alert("fuck off");
+            }}
             style={styles.row}
           >
             <View style={[styles.rowIcon, { backgroundColor: "#32c759" }]}>
@@ -153,7 +164,6 @@ export default function Settings() {
           </AnimatedButton>
           <AnimatedButton
             buttonScale={0.9}
-            // onPress={() => {}}
             onPress={() => router.push("/(auth)/signout")}
             style={[
               styles.row,

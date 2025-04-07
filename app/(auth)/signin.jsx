@@ -13,25 +13,7 @@ export default Signin = () => {
       >
         Sign in
       </Text>
-      {Platform.OS === "ios" ? (
-        <Pressable
-          onPress={() => {
-            router.dismissAll();
-            router.replace("/(app)");
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 25,
-              color: "rgb(56, 162, 254)",
-            }}
-          >
-            login test
-          </Text>
-        </Pressable>
-      ) : (
-        <Auth />
-      )}
+      <Auth />
     </View>
   );
 };
@@ -41,6 +23,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    gap: 60,
+    gap: 40,
   },
 });

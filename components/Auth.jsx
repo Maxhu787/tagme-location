@@ -70,6 +70,7 @@ export default function Auth() {
           alignItems: "center",
         }}
         onPress={handlePress}
+        buttonScale={0.85}
       >
         <View
           style={{
