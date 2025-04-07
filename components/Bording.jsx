@@ -19,7 +19,7 @@ const slides = [
   {
     id: "1",
     title: "One",
-    description: "lorem ipsum dolor sit amet",
+    description: "production build test 2025/4/7 22:46",
     image: "https://picsum.photos/id/664/1920/1080",
     // image: "https://placehold.co/1920x1080",
   },

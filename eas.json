@@ -16,6 +16,17 @@
     "preview4": {
       "distribution": "internal"
     },
-    "production": {}
+    "production": {
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleRelease"
+      },
+      "env": {
+        "MYAPP_UPLOAD_STORE_FILE": "my-upload-key.keystore",
+        "MYAPP_UPLOAD_KEY_ALIAS": "my-key-alias",
+        "MYAPP_UPLOAD_STORE_PASSWORD": "aS77785/",
+        "MYAPP_UPLOAD_KEY_PASSWORD": "aS77785/"
+      }
+    }
   }
 }

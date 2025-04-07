@@ -10,6 +10,7 @@
     "web": "expo start --web",
     "prebuild": "npx expo prebuild",
     "build": "eas build -p android --profile preview --local",
+    "production": "eas build -p android --profile production --local",
     "tcp": "adb reverse tcp:54321 tcp:54321"
   },
   "dependencies": {

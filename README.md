@@ -144,3 +144,22 @@ https://support.google.com/cloud/answer/13463073
 seperate component for the add friend button
 and add logic to the button
 display accepted request when the other person already sent a friend request
+
+### google auth stuff
+
+https://www.youtube.com/watch?v=vojHmGUGUGc
+no need to run prebuild when edit eas.json
+<br/>
+strings.xml
+
+```xml
+<string name="server_client_id">android_client_id</string>
+```
+
+supabase config.toml
+
+```toml
+[auth.external.google]
+enabled = true
+client_id="web_client_id"
+```
