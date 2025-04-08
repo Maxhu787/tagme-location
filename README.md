@@ -141,6 +141,7 @@ add form validation editfield
 https://groups.google.com/g/tagme2
 https://support.google.com/cloud/answer/13463073
 
+build landing page
 seperate component for the add friend button
 and add logic to the button
 display accepted request when the other person already sent a friend request
