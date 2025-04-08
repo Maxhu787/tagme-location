@@ -215,10 +215,7 @@ export default function Profile() {
         />
         <ScrollView
           refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={handleRefresh} // Ensure all data fetching functions are called
-            />
+            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
           }
         >
           <View style={styles.profile}>
@@ -234,7 +231,9 @@ export default function Profile() {
               <Text style={styles.profileName}>
                 {fetchData.name} | {countryCodeToFlagEmoji(fetchData.country)}
               </Text>
-              <Text style={styles.profileBio}>{fetchData.bio}</Text>
+              <Text style={[styles.profileBio, { marginTop: 4 }]}>
+                {fetchData.bio}
+              </Text>
               <TouchableOpacity
                 activeOpacity={0.5}
                 onPress={() => Linking.openURL(fetchData.website)}
@@ -247,21 +246,29 @@ export default function Profile() {
           </View>
 
           {fetchData.id === user.id ? (
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Settings</Text>
-              <AnimatedButton
-                buttonScale={0.9}
-                onPress={() => router.push("/(app)/edit")}
-                style={styles.row}
+            <AnimatedButton
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: 15,
+              }}
+              buttonScale={0.85}
+              onPress={() => router.push("/(app)/edit")}
+            >
+              <View
+                style={{
+                  height: 40,
+                  width: "90%",
+                  borderRadius: 100,
+                  backgroundColor:
+                    friendshipStatus === "pending" ? "#888" : "#000",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
               >
-                <View style={[styles.rowIcon, { backgroundColor: "#000" }]}>
-                  <FeatherIcon color="#fff" name="edit" size={20} />
-                </View>
-                <Text style={styles.rowLabel}>Edit Profile</Text>
-                <View style={styles.rowSpacer} />
-                <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
-              </AnimatedButton>
-            </View>
+                <Text style={{ color: "#fff" }}>Edit Profile </Text>
+              </View>
+            </AnimatedButton>
           ) : friendshipStatus === "accepted" ? null : (
             <AnimatedButton
               style={{
@@ -291,7 +298,7 @@ export default function Profile() {
             </AnimatedButton>
           )}
 
-          <View style={styles.section}>
+          <View style={[styles.section, { marginTop: 8 }]}>
             <Text style={styles.sectionTitle}>Friends</Text>
             {fetchData.id === user.id && (
               <AnimatedButton

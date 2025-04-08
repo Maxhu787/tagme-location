@@ -19,13 +19,13 @@ export default SideBar = ({
         position: "absolute",
         zIndex: 2,
         top: "40%",
-        right: 20,
+        right: 14,
         // top: Platform.OS === "ios" ? 40 : 10,
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
         // padding: 32,
-        gap: 24,
+        gap: 20,
       }}
     >
       <AnimatedButton
@@ -66,13 +66,13 @@ export default SideBar = ({
 
 const styles = StyleSheet.create({
   zoomButton: {
-    height: 45,
-    width: 45,
+    height: 50,
+    width: 50,
     borderRadius: 20,
     backgroundColor: "#fff",
     justifyContent: "center",
     alignItems: "center",
     shadowColor: "#000",
-    elevation: 15,
+    elevation: 4,
   },
 });

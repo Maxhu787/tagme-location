@@ -217,12 +217,12 @@ export default Home = () => {
         </AnimatedButton>
       </View>
       <TopNav />
-      {/* <SideBar
+      <SideBar
         following={following}
         setFollowing={setFollowing}
         setFollowZoom={setFollowZoom}
         cameraRef={cameraRef}
-      /> */}
+      />
       <Locate setFollowing={setFollowing} cameraRef={cameraRef} />
     </View>
   );
