@@ -144,7 +144,7 @@ https://support.google.com/cloud/answer/13463073
 seperate component for the add friend button
 and add logic to the button
 display accepted request when the other person already sent a friend request
-
+backupdb
 seperate section display all friends stats etc updated time
 https://docs.expo.dev/app-signing/local-credentials/
 

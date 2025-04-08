@@ -35,7 +35,15 @@ export default function Settings() {
             }}
             style={styles.row}
           >
-            <View style={[styles.rowIcon, { backgroundColor: "#fe9400" }]}>
+            <View
+              style={[
+                styles.rowIcon,
+                {
+                  // backgroundColor: "#fe9400"
+                  backgroundColor: "#000",
+                },
+              ]}
+            >
               <FeatherIcon color="#fff" name="globe" size={20} />
             </View>
             <Text style={styles.rowLabel}>Language</Text>
@@ -49,7 +57,15 @@ export default function Settings() {
             }}
             style={styles.row}
           >
-            <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
+            <View
+              style={[
+                styles.rowIcon,
+                {
+                  backgroundColor: "#000",
+                  // backgroundColor: "#007afe"
+                },
+              ]}
+            >
               <FeatherIcon color="#fff" name="moon" size={20} />
             </View>
             <Text style={styles.rowLabel}>Dark Mode</Text>
@@ -68,7 +84,15 @@ export default function Settings() {
             }}
             style={styles.row}
           >
-            <View style={[styles.rowIcon, { backgroundColor: "#32c759" }]}>
+            <View
+              style={[
+                styles.rowIcon,
+                {
+                  // backgroundColor: "#32c759"
+                  backgroundColor: "#000",
+                },
+              ]}
+            >
               <FeatherIcon color="#fff" name="navigation" size={20} />
             </View>
             <Text style={styles.rowLabel}>Location</Text>
@@ -127,7 +151,15 @@ export default function Settings() {
             }}
             style={styles.row}
           >
-            <View style={[styles.rowIcon, { backgroundColor: "#8e8d91" }]}>
+            <View
+              style={[
+                styles.rowIcon,
+                {
+                  //  backgroundColor: "#8e8d91"
+                  backgroundColor: "#000",
+                },
+              ]}
+            >
               <FeatherIcon color="#fff" name="flag" size={20} />
             </View>
             <Text style={styles.rowLabel}>Report Bug</Text>
@@ -141,7 +173,15 @@ export default function Settings() {
             }}
             style={styles.row}
           >
-            <View style={[styles.rowIcon, { backgroundColor: "#007afe" }]}>
+            <View
+              style={[
+                styles.rowIcon,
+                {
+                  // backgroundColor: "#007afe"
+                  backgroundColor: "#000",
+                },
+              ]}
+            >
               <FeatherIcon color="#fff" name="mail" size={20} />
             </View>
             <Text style={styles.rowLabel}>Contact Us</Text>
@@ -155,7 +195,15 @@ export default function Settings() {
             }}
             style={styles.row}
           >
-            <View style={[styles.rowIcon, { backgroundColor: "#32c759" }]}>
+            <View
+              style={[
+                styles.rowIcon,
+                {
+                  backgroundColor: "#000",
+                  // backgroundColor: "#32c759",
+                },
+              ]}
+            >
               <FeatherIcon color="#fff" name="star" size={20} />
             </View>
             <Text style={styles.rowLabel}>Rate in App Store</Text>

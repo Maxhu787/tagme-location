@@ -5,20 +5,29 @@ export default Signin = () => {
   return (
     <View style={styles.container}>
       <Image source={require("../assets/tagme.png")} style={styles.logo} />
-      {/* <Image
-        source={{ uri: "https://picsum.photos/id/667/1920/1080" }}
-        style={{
-          width: "100%",
-          // height: 540,
-          height: 300,
-          // borderBottomLeftRadius: 20,
-          // borderBottomRightRadius: 20,
-          marginTop: -20,
-        }}
-      /> */}
       <View style={styles.auth}>
         <Auth />
       </View>
+      <View style={styles.imageRow}>
+        <Image source={require("../assets/1.png")} style={styles.icon} />
+        <Image source={require("../assets/2.png")} style={styles.icon} />
+        <Image source={require("../assets/3.png")} style={styles.icon} />
+        <Image source={require("../assets/4.png")} style={styles.icon} />
+        <Image source={require("../assets/5.png")} style={styles.icon} />
+      </View>
+      <Text
+        style={{
+          textAlign: "center",
+          marginTop: 20,
+          color: "#000",
+          position: "absolute",
+          bottom: 15,
+          fontSize: 18,
+          letterSpacing: 1.1,
+        }}
+      >
+        v2025-4-9 00:56
+      </Text>
     </View>
   );
 };
@@ -30,14 +39,24 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  imageRow: {
+    position: "absolute",
+    bottom: 40,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 0,
+  },
+  icon: {
+    height: 50,
+    width: 50,
+    marginHorizontal: 5,
+  },
   logo: {
     backgroundColor: "red",
     height: 150,
     width: 370,
     marginLeft: -12,
   },
-  auth: {
-    // position: "absolute",
-    // bottom: 25,
-  },
+  auth: {},
 });
