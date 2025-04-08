@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { View, Platform, Text, registerCallableModule } from "react-native";
+import { View, Platform } from "react-native";
 import {
   MapView,
   Camera,
@@ -17,7 +17,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { supabase } from "../../utils/supabase";
 import AnimatedButton from "../../components/AnimatedButton";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { getParsedCommandLineOfConfigFile } from "typescript";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -40,6 +40,7 @@ export default Home = () => {
   const [followZoom, setFollowZoom] = useState(16); // ios
   const { user } = useContext(UserContext);
   const [fetchUsers, setFetchUsers] = useState(true);
+  const [tracking, setTracking] = useState(true);
 
   useEffect(() => {
     const requestPermissions = async () => {
@@ -48,46 +49,54 @@ export default Home = () => {
         console.warn("Permission to access location was denied");
         return;
       }
-      getCurrentLocation();
     };
-
-    const getCurrentLocation = async () => {
-      try {
-        let location_data = await Location.getCurrentPositionAsync({
-          accuracy: Location.Accuracy.Highest,
-        });
-        const insertLocationData = async (userId) => {
-          const { data, error } = await supabase.from("user_location").upsert(
-            [
-              {
-                id: userId,
-                latitude: location_data.coords.latitude,
-                longitude: location_data.coords.longitude,
-                battery: 80,
-                timestamp: new Date().toISOString(),
-              },
-            ],
-            { onConflict: ["id"] }
-          );
-
-          if (error) {
-            console.log("Error inserting location data:", error);
-            // } else {
-            // console.log("Location data inserted/updated:", data);
-          }
-        };
-        insertLocationData(user.id);
-      } catch (error) {
-        console.error("Error getting location:", error);
-      }
-    };
-
     requestPermissions();
-    const interval = setInterval(getCurrentLocation, 1000 * 10);
-    // insert location data to supabase every 10 seconds
+  }, []);
+
+  const getCurrentLocation = async () => {
+    try {
+      let location_data = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Highest,
+      });
+      const insertLocationData = async (userId) => {
+        const { data, error } = await supabase.from("user_location").upsert(
+          [
+            {
+              id: userId,
+              latitude: location_data.coords.latitude,
+              longitude: location_data.coords.longitude,
+              battery: 80,
+              timestamp: new Date().toISOString(),
+            },
+          ],
+          { onConflict: ["id"] }
+        );
+
+        if (error) {
+          console.log("Error inserting location data:", error);
+          // } else {
+          //   console.log("Location data inserted/updated:", data);
+        }
+      };
+      insertLocationData(user.id);
+    } catch (error) {
+      console.error("Error getting location:", error);
+    }
+  };
+
+  useEffect(() => {
+    let interval;
+
+    if (tracking) {
+      getCurrentLocation();
+      interval = setInterval(getCurrentLocation, 1000 * 10);
+      // insert location data to supabase every 10 seconds
+    } else {
+      clearInterval(interval);
+    }
 
     return () => clearInterval(interval);
-  }, []);
+  }, [tracking]);
 
   return (
     <View
@@ -98,7 +107,6 @@ export default Home = () => {
         paddingTop: Platform.OS === "ios" ? 0 : insets.top,
       }}
     >
-      {/* <Text>{following ? "true" : "false"}</Text> */}
       <MapView
         // onRegionDidChange={(event) => {
         //   if (following && event.properties.isUserInteraction) {
@@ -174,13 +182,47 @@ export default Home = () => {
           <FontAwesome name="refresh" size={32} color="#000" />
         </AnimatedButton>
       </View>
+      <View
+        style={{
+          display: "flex",
+          position: "absolute",
+          bottom: 0,
+          left: 115,
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "row",
+          padding: Platform.OS === "ios" ? 42 : 32,
+        }}
+      >
+        <AnimatedButton
+          style={{
+            width: 75,
+            backgroundColor: "#fff",
+            padding: 22,
+            paddingLeft: 23,
+            borderRadius: 18,
+            shadowColor: "#000",
+            elevation: 4,
+          }}
+          onPress={() => {
+            setTracking(!tracking);
+          }}
+        >
+          {tracking ? (
+            <MaterialIcons name="location-on" size={32} color="#000" />
+          ) : (
+            <MaterialIcons name="location-off" size={32} color="#000" />
+          )}
+        </AnimatedButton>
+      </View>
       <TopNav />
-      <SideBar
+      {/* <SideBar
         following={following}
         setFollowing={setFollowing}
         setFollowZoom={setFollowZoom}
         cameraRef={cameraRef}
-      />
+      /> */}
       <Locate setFollowing={setFollowing} cameraRef={cameraRef} />
     </View>
   );
