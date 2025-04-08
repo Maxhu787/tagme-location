@@ -14,7 +14,6 @@ export default Layout = () => {
           }}
         >
           <Stack.Screen name="(app)" />
-          <Stack.Screen name="(auth)/signin" />
           <Stack.Screen name="(auth)/signout" />
         </Stack>
       </ProfileProvider>

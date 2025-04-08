@@ -64,7 +64,6 @@ export default function App() {
       listener?.subscription.unsubscribe();
     };
   }, []);
-
   if (loading) {
     return <Loading />;
   } else if (!session || !session.user) {

@@ -145,6 +145,7 @@ seperate component for the add friend button
 and add logic to the button
 display accepted request when the other person already sent a friend request
 
+seperate section display all friends stats etc updated time
 https://docs.expo.dev/app-signing/local-credentials/
 
 ### google auth stuff

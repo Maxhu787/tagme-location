@@ -16,7 +16,7 @@ export default function Auth() {
     webClientId:
       "1094899319864-n9jeg34al5slqen27ave2mh3ttm1k824.apps.googleusercontent.com",
   });
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const handlePress = async () => {
     try {
