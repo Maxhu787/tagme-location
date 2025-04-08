@@ -143,14 +143,14 @@ const DisplayUsers = ({ setFollowing, fetchUsers, setFetchUsers }) => {
               onLoad={() => markerRefs.current?.[item.id]?.refresh()}
               fadeDuration={0}
             />
-            {/* <View style={styles.timestampContainer}> */}
+            {/* <View style={styles.timestampContainer}>
             <Text
               onLayout={() => markerRefs.current?.[item.id]?.refresh()}
               style={styles.timestamp}
             >
               {getTimeAgo(item.timestamp)}
             </Text>
-            {/* </View> */}
+            </View> */}
           </View>
         </PointAnnotation>
       ))}
