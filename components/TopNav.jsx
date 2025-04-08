@@ -1,14 +1,64 @@
-import { StyleSheet, Platform, Image, Animated } from "react-native";
+import {
+  StyleSheet,
+  Platform,
+  Image,
+  Animated,
+  View,
+  Text,
+} from "react-native";
 import { router } from "expo-router";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProfileContext } from "../contexts/ProfileContext";
+import { supabase } from "../utils/supabase";
 import AnimatedButton from "./AnimatedButton";
+import Fontisto from "@expo/vector-icons/Fontisto";
 
 export default function TopNav() {
   const { profile } = useContext(ProfileContext);
+  const [pendingRequestsCount, setPendingRequestsCount] = useState(0);
+
+  const fetchPendingRequestsCount = async () => {
+    try {
+      const { count, error } = await supabase
+        .from("friends")
+        .select("*", { count: "exact", head: true })
+        .eq("friend_id", profile.id)
+        .eq("status", "pending");
+
+      if (error) {
+        console.error("Error fetching pending requests count:", error);
+      } else {
+        setPendingRequestsCount(count || 0);
+      }
+    } catch (error) {
+      console.error("Error in fetchPendingRequestsCount:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPendingRequestsCount();
+    const intervalId = setInterval(fetchPendingRequestsCount, 1000 * 10);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <Animated.View style={styles.container}>
+      <AnimatedButton
+        onPress={() => router.push("/(app)/(profile)/notifications")}
+        style={styles.animatedButton}
+      >
+        <View>
+          <Fontisto name="bell" size={24} color="#000" />
+          {pendingRequestsCount > 0 && (
+            <View style={styles.notificationBadge}>
+              <Text style={styles.notificationText}>
+                {pendingRequestsCount}
+              </Text>
+            </View>
+          )}
+        </View>
+      </AnimatedButton>
       <AnimatedButton
         onPress={() => {
           router.push({
@@ -16,7 +66,7 @@ export default function TopNav() {
             params: { user: profile.id },
           });
         }}
-        style={styles.animatedButton}
+        style={[styles.animatedButton, { marginLeft: 10 }]}
       >
         <Image
           source={{
@@ -57,5 +107,19 @@ const styles = StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 100,
+  },
+  notificationBadge: {
+    position: "absolute",
+    bottom: -18,
+    right: -18,
+    backgroundColor: "#d43226",
+    borderRadius: 9999,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+  },
+  notificationText: {
+    color: "#fff",
+    fontSize: 12,
+    fontWeight: "bold",
   },
 });

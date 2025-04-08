@@ -115,48 +115,58 @@ export default function Notifications() {
         }}
       />
       <View style={[styles.section, { marginTop: 8 }]}>
-        <Text style={styles.sectionTitle}>Pending Friend Requests</Text>
         {pendingRequests.length === 0 ? (
           <Text
-            style={{ textAlign: "center", marginTop: 20, color: "#9e9e9e" }}
+            style={{
+              textAlign: "center",
+              marginTop: 20,
+              color: "#9e9e9e",
+              fontSize: 18,
+              // fontWeight: "600",
+              // textTransform: "uppercase",
+              letterSpacing: 1.1,
+            }}
           >
-            No pending requests!
+            No notifications
           </Text>
         ) : (
-          pendingRequests.map((request) => (
-            <AnimatedButton
-              key={request.user_id}
-              style={styles.row}
-              buttonScale={0.9}
-            >
-              <View style={[styles.rowIcon, { backgroundColor: "#fff" }]}>
-                <Image
-                  alt="profile picture"
-                  source={{ uri: request.profiles.profile_picture }}
-                  style={{ width: 42, height: 42, borderRadius: 9999 }}
-                />
-              </View>
-              <Text style={styles.rowLabel}>{request.profiles.username}</Text>
-              <View style={styles.rowSpacer} />
+          <>
+            <Text style={styles.sectionTitle}>Pending Friend Requests</Text>
+            {pendingRequests.map((request) => (
               <AnimatedButton
-                onPress={() => handleAcceptRequest(request.user_id)}
-                buttonScale={0.85}
+                key={request.user_id}
+                style={styles.row}
+                buttonScale={0.9}
               >
-                <View
-                  style={{
-                    height: 40,
-                    width: 100,
-                    borderRadius: 100,
-                    backgroundColor: "#28603d",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text style={{ color: "#fff" }}>Accept</Text>
+                <View style={[styles.rowIcon, { backgroundColor: "#fff" }]}>
+                  <Image
+                    alt="profile picture"
+                    source={{ uri: request.profiles.profile_picture }}
+                    style={{ width: 42, height: 42, borderRadius: 9999 }}
+                  />
                 </View>
+                <Text style={styles.rowLabel}>{request.profiles.username}</Text>
+                <View style={styles.rowSpacer} />
+                <AnimatedButton
+                  onPress={() => handleAcceptRequest(request.user_id)}
+                  buttonScale={0.85}
+                >
+                  <View
+                    style={{
+                      height: 40,
+                      width: 100,
+                      borderRadius: 100,
+                      backgroundColor: "#28603d",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Text style={{ color: "#fff" }}>Accept</Text>
+                  </View>
+                </AnimatedButton>
               </AnimatedButton>
-            </AnimatedButton>
-          ))
+            ))}
+          </>
         )}
       </View>
     </ScrollView>

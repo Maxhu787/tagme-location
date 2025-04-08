@@ -15,9 +15,7 @@ import {
 import AnimatedButton from "../../../components/AnimatedButton";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import Fontisto from "@expo/vector-icons/Fontisto";
 import { supabase } from "../../../utils/supabase";
-import Loading from "../../../components/Loading";
 import { UserContext } from "../../../contexts/UserContext";
 
 export default function Profile() {
@@ -260,18 +258,6 @@ export default function Profile() {
                   <FeatherIcon color="#fff" name="edit" size={20} />
                 </View>
                 <Text style={styles.rowLabel}>Edit Profile</Text>
-                <View style={styles.rowSpacer} />
-                <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
-              </AnimatedButton>
-              <AnimatedButton
-                buttonScale={0.9}
-                onPress={() => router.push("/(app)/(profile)/notifications")}
-                style={styles.row}
-              >
-                <View style={[styles.rowIcon, { backgroundColor: "#000" }]}>
-                  <Fontisto name="bell" size={20} color="#fff" />
-                </View>
-                <Text style={styles.rowLabel}>Notifications</Text>
                 <View style={styles.rowSpacer} />
                 <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
               </AnimatedButton>

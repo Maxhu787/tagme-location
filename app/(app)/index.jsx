@@ -198,7 +198,7 @@ export default Home = () => {
         <AnimatedButton
           style={{
             width: 75,
-            backgroundColor: "#fff",
+            backgroundColor: tracking ? "#fff" : "#000",
             padding: 22,
             paddingLeft: 23,
             borderRadius: 18,
@@ -212,7 +212,7 @@ export default Home = () => {
           {tracking ? (
             <MaterialIcons name="location-on" size={32} color="#000" />
           ) : (
-            <MaterialIcons name="location-off" size={32} color="#000" />
+            <MaterialIcons name="location-off" size={32} color="#fff" />
           )}
         </AnimatedButton>
       </View>
