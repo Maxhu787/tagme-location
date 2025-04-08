@@ -394,7 +394,7 @@ const styles = StyleSheet.create({
   profileBio: {
     marginTop: 2,
     fontSize: 17,
-    color: "#989898",
+    color: "#000",
     textAlign: "left",
   },
   section: {
