@@ -65,7 +65,7 @@ export default Home = () => {
               id: userId,
               latitude: location_data.coords.latitude,
               longitude: location_data.coords.longitude,
-              battery: 80,
+              battery: 100,
               timestamp: new Date().toISOString(),
             },
           ],
