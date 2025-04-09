@@ -17,6 +17,7 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { supabase } from "../../../utils/supabase";
 import { UserContext } from "../../../contexts/UserContext";
+import AddFriendButton from "../../../components/AddFriendButton";
 
 export default function Profile() {
   const [fetchData, setFetchData] = useState(null);
@@ -25,6 +26,7 @@ export default function Profile() {
   const [friendshipStatus, setFriendshipStatus] = useState(null); // Track friendship status
   const local = useLocalSearchParams();
   const { user } = useContext(UserContext);
+  const [buttonRefresh, setButtonRefresh] = useState(true);
 
   const fetchDataCallback = useCallback(async () => {
     setRefreshing(true);
@@ -96,35 +98,17 @@ export default function Profile() {
       if (error && error.code !== "PGRST116") {
         console.error("Error fetching friendship status:", error);
       } else {
-        setFriendshipStatus(data?.status || null); // Set status or null if no row exists
+        setFriendshipStatus(data?.status || null);
       }
     } catch (error) {
       console.error("Error in fetchFriendshipStatus:", error);
     }
-  }, [user.id, local.user]);
-
-  const handleAddFriend = async (id) => {
-    try {
-      const { error } = await supabase
-        .from("friends")
-        .upsert(
-          { user_id: user.id, friend_id: id, status: "pending" },
-          { onConflict: ["user_id", "friend_id"] }
-        );
-
-      if (error) {
-        console.error("Error adding friend:", error);
-      } else {
-        setFriendshipStatus("pending"); // Update status to pending
-      }
-    } catch (error) {
-      console.error("Error in handleAddFriend:", error);
-    }
-  };
+  }, [local.user, user.id]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
     await Promise.all([fetchDataCallback(), fetchFriendshipStatus()]);
+    setButtonRefresh(true);
     setRefreshing(false);
   };
 
@@ -132,6 +116,10 @@ export default function Profile() {
     fetchDataCallback();
     fetchFriendshipStatus();
   }, [fetchDataCallback, fetchFriendshipStatus]);
+
+  useEffect(() => {
+    setButtonRefresh(true);
+  }, []);
 
   const countryCodeToFlagEmoji = (code) => {
     if (!code) return "null";
@@ -250,7 +238,7 @@ export default function Profile() {
               style={{
                 alignItems: "center",
                 justifyContent: "center",
-                marginTop: 15,
+                marginTop: 4,
               }}
               buttonScale={0.85}
               onPress={() => router.push("/(app)/edit")}
@@ -260,8 +248,7 @@ export default function Profile() {
                   height: 40,
                   width: "90%",
                   borderRadius: 100,
-                  backgroundColor:
-                    friendshipStatus === "pending" ? "#888" : "#000",
+                  backgroundColor: "#000",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
@@ -269,33 +256,12 @@ export default function Profile() {
                 <Text style={{ color: "#fff" }}>Edit Profile </Text>
               </View>
             </AnimatedButton>
-          ) : friendshipStatus === "accepted" ? null : (
-            <AnimatedButton
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                marginTop: 15,
-              }}
-              buttonScale={friendshipStatus === "pending" ? 1 : 0.85}
-              disabled={friendshipStatus === "pending"}
-              onPress={() => handleAddFriend(fetchData.id)} // Ensure this function is called
-            >
-              <View
-                style={{
-                  height: 40,
-                  width: "90%",
-                  borderRadius: 100,
-                  backgroundColor:
-                    friendshipStatus === "pending" ? "#888" : "#000",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Text style={{ color: "#fff" }}>
-                  {friendshipStatus === "pending" ? "Pending" : "Add Friend"}
-                </Text>
-              </View>
-            </AnimatedButton>
+          ) : (
+            <AddFriendButton
+              friend_id={local.user}
+              buttonRefresh={buttonRefresh}
+              setButtonRefresh={setButtonRefresh}
+            />
           )}
 
           <View style={[styles.section, { marginTop: 8 }]}>
@@ -349,7 +315,7 @@ export default function Profile() {
 
 const styles = StyleSheet.create({
   profile: {
-    paddingTop: 24,
+    paddingTop: 18,
     paddingLeft: 24,
     paddingRight: 10,
     backgroundColor: "#fff",

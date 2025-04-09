@@ -8,7 +8,7 @@ import {
   RefreshControl,
   ActivityIndicator,
 } from "react-native";
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
 import AnimatedButton from "../../../components/AnimatedButton";
 import { supabase } from "../../../utils/supabase";
 import { UserContext } from "../../../contexts/UserContext";
@@ -137,6 +137,12 @@ export default function Notifications() {
                 key={request.user_id}
                 style={styles.row}
                 buttonScale={0.9}
+                onPress={() => {
+                  router.push({
+                    pathname: `/(app)/trampoline`,
+                    params: { user: request.user_id },
+                  });
+                }}
               >
                 <View style={[styles.rowIcon, { backgroundColor: "#fff" }]}>
                   <Image
