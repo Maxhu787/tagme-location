@@ -48,7 +48,7 @@ export default function App() {
         setUser(data.session.user);
         const exists = await checkProfileExists(data.session.user.id);
         // console.log("effect:", exists);
-        registerPushToken(data.session.user.id);
+        await registerPushToken(data.session.user.id);
         // console.log(data.session.user.id);
         if (exists) {
           router.replace("/(app)");
@@ -69,7 +69,7 @@ export default function App() {
           setUser(session.user);
           const exists = await checkProfileExists(session.user.id);
           // console.log("authsttechange:", exists);
-          registerPushToken(data.session.user.id);
+          await registerPushToken(data.session.user.id);
           // console.log(data.session.user.id);
           if (exists) {
             // router.dismissAll();
