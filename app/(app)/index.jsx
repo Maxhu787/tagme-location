@@ -18,6 +18,7 @@ import { supabase } from "../../utils/supabase";
 import AnimatedButton from "../../components/AnimatedButton";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { registerPushToken } from "../../utils/registerPushToken";
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -51,6 +52,7 @@ export default Home = () => {
       }
     };
     requestPermissions();
+    registerPushToken(user.id);
   }, []);
 
   const getCurrentLocation = async () => {
