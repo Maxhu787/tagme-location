@@ -130,6 +130,7 @@ rgb(240, 150, 91)
 - editfield form validation
 - seperate section display all friends stats etc updated time
 
+https://expo.dev/notifications
 https://groups.google.com/g/tagme2
 https://console.cloud.google.com/auth/audience
 https://support.google.com/cloud/answer/13463073
