@@ -26,7 +26,8 @@ export default function Signin() {
 
   const upsertProfile = async () => {
     if (!user) {
-      router.push("/(app)"); // No user logged in
+      router.dismissAll();
+      router.replace("/(app)"); // No user logged in
       return;
     }
     const country = await getCountryCode();
@@ -53,7 +54,8 @@ export default function Signin() {
     } else {
       console.log("Profile upserted:", data);
       setProfile(profileData);
-      router.push("/(app)");
+      router.dismissAll();
+      router.replace("/(app)");
     }
   };
 

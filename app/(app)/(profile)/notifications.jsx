@@ -12,7 +12,6 @@ import { router, Stack } from "expo-router";
 import AnimatedButton from "../../../components/AnimatedButton";
 import { supabase } from "../../../utils/supabase";
 import { UserContext } from "../../../contexts/UserContext";
-import Loading from "../../../components/Loading";
 
 export default function Notifications() {
   const [pendingRequests, setPendingRequests] = useState([]);
@@ -90,7 +89,6 @@ export default function Notifications() {
         >
           <ActivityIndicator size="large" color="#000" />
         </View>
-        {/* <Loading /> */}
       </>
     );
   }

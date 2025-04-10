@@ -1,15 +1,15 @@
 import { useContext, useEffect, useState } from "react";
-import { Redirect } from "expo-router";
+import { router } from "expo-router";
 import { supabase } from "../utils/supabase";
 import { UserContext } from "../contexts/UserContext";
 import { ProfileContext } from "../contexts/ProfileContext";
 import Bording from "../components/Bording";
 import Loading from "../components/Loading";
+import Toast from "react-native-toast-message";
 
 export default function App() {
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [profileExists, setProfileExists] = useState(null);
 
   const { setUser } = useContext(UserContext);
   const { setProfile } = useContext(ProfileContext);
@@ -26,6 +26,12 @@ export default function App() {
         if (error.code === "PGRST116") {
           return false; // No profile found
         }
+        Toast.show({
+          type: "error",
+          text1: "Error checking profile:",
+          text2: error.message,
+          position: "top",
+        });
         console.log("Error checking profile:", error);
         return null; // Unexpected error
       }
@@ -40,7 +46,12 @@ export default function App() {
       if (data.session && data.session.user) {
         setUser(data.session.user);
         const exists = await checkProfileExists(data.session.user.id);
-        setProfileExists(exists);
+        // console.log("effect:", exists);
+        if (exists) {
+          router.replace("/(app)");
+        } else {
+          router.push("/(app)/(profile)/createprofile");
+        }
       }
       setLoading(false);
     };
@@ -54,7 +65,14 @@ export default function App() {
         if (session && session.user) {
           setUser(session.user);
           const exists = await checkProfileExists(session.user.id);
-          setProfileExists(exists);
+          // console.log("authsttechange:", exists);
+          if (exists) {
+            // router.dismissAll();
+            router.replace("/(app)");
+          } else {
+            // router.dismissAll();
+            router.push("/(app)/(profile)/createprofile");
+          }
         }
         setLoading(false);
       }
@@ -65,14 +83,13 @@ export default function App() {
     };
   }, []);
   if (loading) {
-    return <Loading />;
+    return (
+      <>
+        <Loading />
+        <Toast />
+      </>
+    );
   } else if (!session || !session.user) {
     return <Bording />;
-  } else {
-    return (
-      <Redirect
-        href={profileExists ? "/(app)" : "/(app)/(profile)/createprofile"}
-      />
-    );
   }
 }
