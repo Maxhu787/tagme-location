@@ -6,6 +6,7 @@ import { ProfileContext } from "../contexts/ProfileContext";
 import Bording from "../components/Bording";
 import Loading from "../components/Loading";
 import Toast from "react-native-toast-message";
+import { registerPushToken } from "../utils/registerPushToken";
 
 export default function App() {
   const [session, setSession] = useState(null);
@@ -47,6 +48,8 @@ export default function App() {
         setUser(data.session.user);
         const exists = await checkProfileExists(data.session.user.id);
         // console.log("effect:", exists);
+        registerPushToken(data.session.user.id);
+        // console.log(data.session.user.id);
         if (exists) {
           router.replace("/(app)");
         } else {
@@ -66,6 +69,8 @@ export default function App() {
           setUser(session.user);
           const exists = await checkProfileExists(session.user.id);
           // console.log("authsttechange:", exists);
+          registerPushToken(data.session.user.id);
+          // console.log(data.session.user.id);
           if (exists) {
             // router.dismissAll();
             router.replace("/(app)");

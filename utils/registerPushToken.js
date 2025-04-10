@@ -1,7 +1,7 @@
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { supabase } from "../supabaseClient";
+import { supabase } from "./supabase";
 
 export const registerPushToken = async (userId) => {
   if (!Device.isDevice) return;
