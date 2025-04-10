@@ -14,6 +14,8 @@ create policy "Allow service role only" on news
 create or replace function notify_new_news()
 returns trigger as $$
 begin
+  set search_path to public;
+  
   perform net.http_post(
     url := 'https://xjbhxzyobmycwtoephwa.functions.supabase.co/send-push-notifications',
     headers := jsonb_build_object('Content-Type', 'application/json'),

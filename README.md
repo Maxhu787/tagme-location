@@ -121,33 +121,25 @@ https://www.youtube.com/watch?v=U5qSNhUXASE
 https://muffingroup.com/blog/orange-color-palette/
 #fd572e
 rgb(240, 150, 91)
-add bording profile info fill page
-https://console.cloud.google.com/auth/audience
 
-bording -> login -> check if profile exists
--> fetch profile data
--> enter set username page
-
-setup expo battery
-add theme
-
-cache map
-
-better error handling add toast message
-fix prevent multiple pressing result in redirect multiple times
-
-add form validation editfield
+- expo battery
+- add theme
+- cache map
+- better error handling add toast message
+- prevent multiple pressing -> redirect multiple times
+- editfield form validation
+- seperate section display all friends stats etc updated time
 
 https://groups.google.com/g/tagme2
+https://console.cloud.google.com/auth/audience
 https://support.google.com/cloud/answer/13463073
 
-build landing page
-seperate component for the add friend button
-and add logic to the button
-display accepted request when the other person already sent a friend request
-backupdb
-seperate section display all friends stats etc updated time
 https://docs.expo.dev/app-signing/local-credentials/
+
+https://docs.expo.dev/versions/latest/sdk/background-task/
+https://docs.expo.dev/versions/latest/sdk/notifications/
+
+https://github.com/calintamas/react-native-toast-message/blob/main/docs/api.md
 
 ### google auth stuff
 
