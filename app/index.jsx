@@ -6,6 +6,25 @@ import { ProfileContext } from "../contexts/ProfileContext";
 import Bording from "../components/Bording";
 import Loading from "../components/Loading";
 import Toast from "react-native-toast-message";
+import * as Notifications from "expo-notifications";
+import { Platform } from "react-native";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: true,
+  }),
+});
+
+if (Platform.OS === "android") {
+  Notifications.setNotificationChannelAsync("default", {
+    name: "default",
+    importance: Notifications.AndroidImportance.MAX,
+    vibrationPattern: [0, 250, 250, 250],
+    lightColor: "#FF231F7C",
+  });
+}
 
 export default function App() {
   const [session, setSession] = useState(null);
