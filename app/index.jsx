@@ -1,3 +1,4 @@
+import { View, Text } from "react-native";
 import { useContext, useEffect, useState } from "react";
 import { router } from "expo-router";
 import { supabase } from "../utils/supabase";
@@ -39,6 +40,7 @@ export default function App() {
       return !!data; // Return true if profile exists
     };
     const fetchSession = async () => {
+      console.log("fetchSession");
       const { data } = await supabase.auth.getSession();
       setSession(data.session);
 
@@ -46,10 +48,14 @@ export default function App() {
         setUser(data.session.user);
         const exists = await checkProfileExists(data.session.user.id);
         if (exists) {
+          console.log("navigate to app");
           router.replace("/(app)");
         } else {
+          console.log("navigate to create profile");
           router.push("/(app)/(profile)/createprofile");
         }
+      } else {
+        console.log("No session found");
       }
       setLoading(false);
     };
@@ -78,7 +84,10 @@ export default function App() {
   if (loading) {
     return (
       <>
-        <Loading />
+        {/* <Loading /> */}
+        <View>
+          <Text>loading</Text>
+        </View>
         <Toast />
       </>
     );
