@@ -19,6 +19,7 @@ import AnimatedButton from "../../components/AnimatedButton";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { registerPushToken } from "../../utils/registerPushToken";
+import * as Notifications from "expo-notifications";
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -32,6 +33,14 @@ Logger.setLogCallback((log) => {
     return true;
   }
   return false;
+});
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: true,
+  }),
 });
 
 export default Home = () => {
