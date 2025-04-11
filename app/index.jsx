@@ -3,9 +3,9 @@ import { router } from "expo-router";
 import { supabase } from "../utils/supabase";
 import { UserContext } from "../contexts/UserContext";
 import { ProfileContext } from "../contexts/ProfileContext";
+import Toast from "react-native-toast-message";
 import Bording from "../components/Bording";
 import Loading from "../components/Loading";
-import Toast from "react-native-toast-message";
 
 export default function App() {
   const [session, setSession] = useState(null);
@@ -38,7 +38,6 @@ export default function App() {
       setProfile(data);
       return !!data; // Return true if profile exists
     };
-
     const fetchSession = async () => {
       const { data } = await supabase.auth.getSession();
       setSession(data.session);
@@ -54,9 +53,6 @@ export default function App() {
       }
       setLoading(false);
     };
-
-    fetchSession();
-
     const { data: listener } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
         setSession(session);
@@ -73,11 +69,12 @@ export default function App() {
         setLoading(false);
       }
     );
-
+    fetchSession();
     return () => {
       listener?.subscription.unsubscribe();
     };
   }, []);
+
   if (loading) {
     return (
       <>

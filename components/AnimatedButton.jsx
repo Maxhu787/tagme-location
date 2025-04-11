@@ -14,7 +14,6 @@ export default function AnimatedButton({
   textColor = "#fff",
 }) {
   const scaleButton = useSharedValue(1);
-
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scaleButton.value }],
   }));

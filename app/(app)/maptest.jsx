@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import {
   Camera,
@@ -24,17 +24,14 @@ export default function MapTest() {
 
   useEffect(() => {
     let angle = 0;
-
     const intervalId = setInterval(() => {
       const rad = (angle * Math.PI) / 180;
       const lng = center[0] + radius * Math.cos(rad);
       const lat = center[1] + radius * Math.sin(rad);
-
       setShape({
         type: "Point",
         coordinates: [lng, lat],
       });
-
       angle = (angle + 10) % 360;
     }, interval);
 

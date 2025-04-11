@@ -1,39 +1,24 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { View, Platform } from "react-native";
+import { View, Platform, StyleSheet } from "react-native";
 import {
   MapView,
   Camera,
-  Logger,
   UserLocation,
   UserLocationRenderMode,
 } from "@maplibre/maplibre-react-native";
+import * as Notifications from "expo-notifications";
+import * as Location from "expo-location";
+import { UserContext } from "../../contexts/UserContext";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { registerPushToken } from "../../utils/registerPushToken";
 import TopNav from "../../components/TopNav";
 import Locate from "../../components/Locate";
 import DisplayUsers from "../../components/DisplayUsers";
 import SideBar from "../../components/SideBar";
-import * as Location from "expo-location";
-import { UserContext } from "../../contexts/UserContext";
-import { supabase } from "../../utils/supabase";
 import AnimatedButton from "../../components/AnimatedButton";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { registerPushToken } from "../../utils/registerPushToken";
-import * as Notifications from "expo-notifications";
-
-Logger.setLogCallback((log) => {
-  const { message } = log;
-  if (
-    message.match("Request failed due to a permanent error: Canceled") ||
-    message.match("Request failed due to a permanent error: Socket Closed") ||
-    message.match(
-      "Request failed due to a permanent error: stream was reset: CANCEL"
-    )
-  ) {
-    return true;
-  }
-  return false;
-});
+import { supabase } from "../../utils/supabase";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -66,10 +51,10 @@ export default Home = () => {
 
   const getCurrentLocation = async () => {
     try {
-      let location_data = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Highest,
-      });
       const insertLocationData = async (userId) => {
+        let location_data = await Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.Highest,
+        });
         const { data, error } = await supabase.from("user_location").upsert(
           [
             {
@@ -100,8 +85,7 @@ export default Home = () => {
 
     if (tracking) {
       getCurrentLocation();
-      interval = setInterval(getCurrentLocation, 1000 * 10);
-      // insert location data to supabase every 10 seconds
+      interval = setInterval(getCurrentLocation, 1000 * 10); // insert every 10 seconds
     } else {
       clearInterval(interval);
     }
@@ -127,8 +111,6 @@ export default Home = () => {
         style={{ flex: 1 }}
         // mapStyle="https://tiles.openfreemap.org/styles/bright"
         mapStyle="https://tiles.openfreemap.org/styles/positron"
-        // mapStyle="https://api.maptiler.com/maps/topo-v2/style.json?key=OKl8m7wrDzahTfa30DpT"
-        // mapStyle="https://api.maptiler.com/maps/winter-v2/style.json?key=OKl8m7wrDzahTfa30DpT"
         rotateEnabled={false}
         logoEnabled={false}
         attributionEnabled={false}
@@ -159,63 +141,29 @@ export default Home = () => {
         />
         <DisplayUsers
           setFollowing={setFollowing}
-          fetchUsers={fetchUsers}
           setFetchUsers={setFetchUsers}
+          fetchUsers={fetchUsers}
         />
       </MapView>
-      <View
-        style={{
-          display: "flex",
-          position: "absolute",
-          bottom: 0,
-          right: 115,
-          width: "100%",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "row",
-          padding: Platform.OS === "ios" ? 42 : 32,
-        }}
-      >
+
+      <TopNav />
+      <View style={[{ right: 115 }, styles.bottomButtonContainer]}>
         <AnimatedButton
-          style={{
-            width: 75,
-            backgroundColor: "#fff",
-            padding: 22,
-            paddingLeft: 23,
-            borderRadius: 18,
-            shadowColor: "#000",
-            elevation: 4,
-          }}
-          onPress={() => {
-            setFetchUsers(true);
-          }}
+          style={[styles.bottomButtonStyle, { backgroundColor: "#fff" }]}
+          onPress={() => setFetchUsers(true)}
         >
           <FontAwesome name="refresh" size={32} color="#000" />
         </AnimatedButton>
       </View>
-      <View
-        style={{
-          display: "flex",
-          position: "absolute",
-          bottom: 0,
-          left: 115,
-          width: "100%",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "row",
-          padding: Platform.OS === "ios" ? 42 : 32,
-        }}
-      >
+
+      <Locate setFollowing={setFollowing} cameraRef={cameraRef} />
+
+      <View style={[{ left: 115 }, styles.bottomButtonContainer]}>
         <AnimatedButton
-          style={{
-            width: 75,
-            backgroundColor: tracking ? "#fff" : "#000",
-            padding: 22,
-            paddingLeft: 23,
-            borderRadius: 18,
-            shadowColor: "#000",
-            elevation: 4,
-          }}
+          style={[
+            { backgroundColor: tracking ? "#fff" : "#000" },
+            styles.bottomButtonStyle,
+          ]}
           onPress={() => {
             setTracking(!tracking);
           }}
@@ -227,14 +175,34 @@ export default Home = () => {
           )}
         </AnimatedButton>
       </View>
-      <TopNav />
+
       {/* <SideBar
         following={following}
         setFollowing={setFollowing}
         setFollowZoom={setFollowZoom}
         cameraRef={cameraRef}
       /> */}
-      <Locate setFollowing={setFollowing} cameraRef={cameraRef} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  bottomButtonContainer: {
+    display: "flex",
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    padding: Platform.OS === "ios" ? 42 : 32,
+  },
+  bottomButtonStyle: {
+    width: 75,
+    padding: 22,
+    paddingLeft: 23,
+    borderRadius: 18,
+    shadowColor: "#000",
+    elevation: 4,
+  },
+});

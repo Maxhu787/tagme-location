@@ -8,15 +8,14 @@ import {
 } from "react-native";
 import { router } from "expo-router";
 import { useContext, useEffect, useState } from "react";
-import { ProfileContext } from "../contexts/ProfileContext";
-import { supabase } from "../utils/supabase";
 import AnimatedButton from "./AnimatedButton";
 import Fontisto from "@expo/vector-icons/Fontisto";
+import { ProfileContext } from "../contexts/ProfileContext";
+import { supabase } from "../utils/supabase";
 
 export default function TopNav() {
   const { profile } = useContext(ProfileContext);
   const [pendingRequestsCount, setPendingRequestsCount] = useState(0);
-
   const fetchPendingRequestsCount = async () => {
     try {
       const { count, error } = await supabase
@@ -34,7 +33,6 @@ export default function TopNav() {
       console.error("Error in fetchPendingRequestsCount:", error);
     }
   };
-
   useEffect(() => {
     fetchPendingRequestsCount();
     const intervalId = setInterval(fetchPendingRequestsCount, 1000 * 10);

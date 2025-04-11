@@ -14,8 +14,6 @@ import AnimatedButton from "../../../components/AnimatedButton";
 
 export default function Settings() {
   const [darkMode, setDarkMode] = useState(false);
-  const [emailNotifications, setEmailNotifications] = useState(false);
-  const [pushNotifications, setPushNotifications] = useState(true);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -50,6 +48,7 @@ export default function Settings() {
             <View style={styles.rowSpacer} />
             <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
           </AnimatedButton>
+
           <AnimatedButton
             buttonScale={0.9}
             onPress={() => {
@@ -70,13 +69,8 @@ export default function Settings() {
             </View>
             <Text style={styles.rowLabel}>Dark Mode</Text>
             <View style={styles.rowSpacer} />
-            {/* <Switch
-              trackColor={{ false: "#ccc", true: "#999" }}
-              thumbColor={darkMode ? "#fff" : "#fff"}
-              onValueChange={(darkMode) => setDarkMode(darkMode)}
-              value={darkMode}
-            /> */}
           </AnimatedButton>
+
           <AnimatedButton
             buttonScale={0.9}
             onPress={() => {
@@ -99,48 +93,34 @@ export default function Settings() {
             <View style={styles.rowSpacer} />
             <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
           </AnimatedButton>
+
           {/* <AnimatedButton
             buttonScale={0.9}
             onPress={() => {
-              setEmailNotifications(!emailNotifications);
+              Alert.alert("fuck off");
             }}
             style={styles.row}
           >
-            <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
+            <View style={[styles.rowIcon, { backgroundColor: "#000" }]}>
               <FeatherIcon color="#fff" name="at-sign" size={20} />
             </View>
             <Text style={styles.rowLabel}>Email Notifications</Text>
             <View style={styles.rowSpacer} />
-            <Switch
-              trackColor={{ false: "#ccc", true: "#999" }}
-              thumbColor={darkMode ? "#fff" : "#fff"}
-              onValueChange={(emailNotifications) =>
-                setEmailNotifications(emailNotifications)
-              }
-              value={emailNotifications}
-            />
           </AnimatedButton> */}
-          {/* <AnimatedButton
+
+          <AnimatedButton
             buttonScale={0.9}
             onPress={() => {
-              setPushNotifications(!pushNotifications);
+              Alert.alert("fuck off");
             }}
             style={styles.row}
           >
-            <View style={[styles.rowIcon, { backgroundColor: "#38C959" }]}>
+            <View style={[styles.rowIcon, { backgroundColor: "#000" }]}>
               <FeatherIcon color="#fff" name="bell" size={20} />
             </View>
             <Text style={styles.rowLabel}>Push Notifications</Text>
             <View style={styles.rowSpacer} />
-            <Switch
-              trackColor={{ false: "#ccc", true: "#999" }}
-              thumbColor={darkMode ? "#fff" : "#fff"}
-              onValueChange={(pushNotifications) =>
-                setPushNotifications(pushNotifications)
-              }
-              value={pushNotifications}
-            />
-          </AnimatedButton>*/}
+          </AnimatedButton>
         </View>
         <View style={[styles.section, { paddingBottom: 40 }]}>
           <Text style={styles.sectionTitle}>Resources</Text>
@@ -166,6 +146,7 @@ export default function Settings() {
             <View style={styles.rowSpacer} />
             <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
           </AnimatedButton>
+
           <AnimatedButton
             buttonScale={0.9}
             onPress={() => {
@@ -188,6 +169,7 @@ export default function Settings() {
             <View style={styles.rowSpacer} />
             <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
           </AnimatedButton>
+
           <AnimatedButton
             buttonScale={0.9}
             onPress={() => {
@@ -210,12 +192,17 @@ export default function Settings() {
             <View style={styles.rowSpacer} />
             <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} />
           </AnimatedButton>
+
           <AnimatedButton
             buttonScale={0.9}
             onPress={() => router.push("/(auth)/signout")}
             style={[
               styles.row,
-              { backgroundColor: "#fcd5d2", marginHorizontal: 8 },
+              {
+                backgroundColor: "#fcd5d2",
+                marginHorizontal: 8,
+                marginTop: 6,
+              },
             ]}
           >
             <Text
@@ -224,7 +211,6 @@ export default function Settings() {
               Signout
             </Text>
             <View style={styles.rowSpacer} />
-            {/* <FeatherIcon color="#C6C6C6" name="chevron-right" size={20} /> */}
           </AnimatedButton>
         </View>
       </ScrollView>
@@ -235,7 +221,6 @@ export default function Settings() {
 const styles = StyleSheet.create({
   section: {
     paddingHorizontal: 12,
-    // 24
   },
   sectionTitle: {
     padding: 12,
@@ -249,10 +234,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 50,
-    // backgroundColor: "#f2f2f2",
     backgroundColor: "#fff",
-    // borderWidth: 1,
-    // borderColor: "#f2f2f2",
     borderRadius: 8,
     marginBottom: 5,
     paddingHorizontal: 12,

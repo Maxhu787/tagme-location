@@ -8,7 +8,7 @@ export const registerPushToken = async (user_id) => {
   // console.log(user_id);
   if (!user_id) return;
   if (!Device.isDevice) {
-    console.log("Must use physical device for Push Notifications");
+    // console.log("Must use physical device for Push Notifications");
     return;
   }
 

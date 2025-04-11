@@ -2,9 +2,9 @@ import * as Location from "expo-location";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../../../contexts/UserContext";
 import { router } from "expo-router";
-import { supabase } from "../../../utils/supabase";
 import Loading from "../../../components/Loading";
 import { ProfileContext } from "../../../contexts/ProfileContext";
+import { supabase } from "../../../utils/supabase";
 
 export default function Signin() {
   const { user } = useContext(UserContext);
@@ -27,7 +27,7 @@ export default function Signin() {
   const upsertProfile = async () => {
     if (!user) {
       router.dismissAll();
-      router.replace("/(app)"); // No user logged in
+      router.replace("/(app)");
       return;
     }
     const country = await getCountryCode();
@@ -58,10 +58,9 @@ export default function Signin() {
       router.replace("/(app)");
     }
   };
-
   useEffect(() => {
     upsertProfile();
   }, []);
 
-  return <Loading />;
+  return null;
 }

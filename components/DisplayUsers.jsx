@@ -154,19 +154,6 @@ const DisplayUsers = ({ setFollowing, fetchUsers, setFetchUsers }) => {
           </View>
         </PointAnnotation>
       ))}
-      {/* {friendsData.map((item) => (
-        <PointAnnotation
-          key={`${item.id}-timestamp`}
-          coordinate={[
-            item.coordinates[0],
-            item.coordinates[1] - 0.00042, // Slightly offset below the image
-          ]}
-        >
-          <View style={styles.timestampContainer}>
-            <Text style={styles.timestamp}>{getTimeAgo(item.timestamp)}</Text>
-          </View>
-        </PointAnnotation>
-      ))} */}
     </>
   );
 };

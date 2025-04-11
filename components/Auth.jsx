@@ -5,7 +5,7 @@ import {
 } from "@react-native-google-signin/google-signin";
 import { supabase } from "../utils/supabase";
 import { router } from "expo-router";
-import { Alert, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import AnimatedButton from "./AnimatedButton";
@@ -27,7 +27,6 @@ export default function Auth() {
           provider: "google",
           token: userInfo.data.idToken,
         });
-        // console.log(error, JSON.stringify(data.user.identities[0]["identity_data"]["name"], null, 2));
         if (data.user) {
           setUser(data.user);
         }

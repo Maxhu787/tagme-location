@@ -12,16 +12,14 @@ import {
 } from "react-native";
 import AnimatedButton from "../../../components/AnimatedButton";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import { supabase } from "../../../utils/supabase";
-import Loading from "../../../components/Loading";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { UserContext } from "../../../contexts/UserContext";
+import { supabase } from "../../../utils/supabase";
 
 export default function Profile() {
   const { user } = useContext(UserContext);
   const [fetchData, setFetchData] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
-
   const fetch = async () => {
     try {
       const { data, error } = await supabase
@@ -45,11 +43,9 @@ export default function Profile() {
       setRefreshing(false);
     }
   };
-
   useEffect(() => {
     fetch();
   }, []);
-
   const handleEdit = (field, value) => {
     router.push({
       pathname: `/(app)/(profile)/editfield`,
@@ -83,13 +79,6 @@ export default function Profile() {
   } else if (fetchData === null) {
     return (
       <>
-        <Stack.Screen
-          options={
-            {
-              // headerShown: false,
-            }
-          }
-        />
         <View
           style={{
             flex: 1,
@@ -100,18 +89,11 @@ export default function Profile() {
         >
           <ActivityIndicator size="large" color="#000" />
         </View>
-        {/* <Loading /> */}
       </>
     );
   } else {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-        <Stack.Screen
-          options={{
-            headerShown: true,
-            headerShadowVisible: true,
-          }}
-        />
         <ScrollView
           refreshControl={
             <RefreshControl
@@ -125,7 +107,6 @@ export default function Profile() {
         >
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Profile Information</Text>
-
             <AnimatedButton
               buttonScale={0.9}
               onPress={() =>
@@ -230,7 +211,7 @@ export default function Profile() {
 
 const styles = StyleSheet.create({
   section: {
-    marginTop: 12,
+    marginTop: 10,
     paddingHorizontal: 12,
   },
   sectionTitle: {

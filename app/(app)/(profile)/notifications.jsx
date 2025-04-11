@@ -8,17 +8,16 @@ import {
   RefreshControl,
   ActivityIndicator,
 } from "react-native";
-import { router, Stack } from "expo-router";
+import { router } from "expo-router";
 import AnimatedButton from "../../../components/AnimatedButton";
-import { supabase } from "../../../utils/supabase";
 import { UserContext } from "../../../contexts/UserContext";
+import { supabase } from "../../../utils/supabase";
 
 export default function Notifications() {
   const [pendingRequests, setPendingRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const { user } = useContext(UserContext);
-
   const fetchPendingRequests = async () => {
     try {
       const { data, error } = await supabase
@@ -44,7 +43,6 @@ export default function Notifications() {
       setRefreshing(false);
     }
   };
-
   useEffect(() => {
     fetchPendingRequests();
   }, []);
@@ -71,25 +69,16 @@ export default function Notifications() {
 
   if (loading) {
     return (
-      <>
-        <Stack.Screen
-          options={
-            {
-              // headerShown: false,
-            }
-          }
-        />
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#fff",
-          }}
-        >
-          <ActivityIndicator size="large" color="#000" />
-        </View>
-      </>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+        <ActivityIndicator size="large" color="#000" />
+      </View>
     );
   }
 
@@ -106,12 +95,6 @@ export default function Notifications() {
         />
       }
     >
-      <Stack.Screen
-        options={{
-          headerShadowVisible: true,
-          headerShown: true,
-        }}
-      />
       <View style={[styles.section, { marginTop: 8 }]}>
         {pendingRequests.length === 0 ? (
           <Text
@@ -120,8 +103,6 @@ export default function Notifications() {
               marginTop: 20,
               color: "#9e9e9e",
               fontSize: 18,
-              // fontWeight: "600",
-              // textTransform: "uppercase",
               letterSpacing: 1.1,
             }}
           >

@@ -5,7 +5,7 @@ export default Signin = () => {
   return (
     <View style={styles.container}>
       <Image source={require("../../assets/tagme.png")} style={styles.logo} />
-      <View style={styles.auth}>
+      <View>
         <Auth />
       </View>
       <View style={styles.imageRow}>
@@ -15,19 +15,7 @@ export default Signin = () => {
         <Image source={require("../../assets/4.png")} style={styles.icon} />
         <Image source={require("../../assets/5.png")} style={styles.icon} />
       </View>
-      <Text
-        style={{
-          textAlign: "center",
-          marginTop: 20,
-          color: "#000",
-          position: "absolute",
-          bottom: 15,
-          fontSize: 18,
-          letterSpacing: 1.1,
-        }}
-      >
-        v2025-4-9 00:56
-      </Text>
+      <Text style={styles.footerText}>v2025-4-9 00:56</Text>
     </View>
   );
 };
@@ -58,5 +46,13 @@ const styles = StyleSheet.create({
     width: 370,
     marginLeft: -12,
   },
-  auth: {},
+  footerText: {
+    textAlign: "center",
+    marginTop: 20,
+    color: "#000",
+    position: "absolute",
+    bottom: 15,
+    fontSize: 18,
+    letterSpacing: 1.1,
+  },
 });

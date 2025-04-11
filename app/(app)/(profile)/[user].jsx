@@ -12,12 +12,12 @@ import {
   RefreshControl,
   ActivityIndicator,
 } from "react-native";
-import AnimatedButton from "../../../components/AnimatedButton";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import { supabase } from "../../../utils/supabase";
-import { UserContext } from "../../../contexts/UserContext";
+import AnimatedButton from "../../../components/AnimatedButton";
 import AddFriendButton from "../../../components/AddFriendButton";
+import { UserContext } from "../../../contexts/UserContext";
+import { supabase } from "../../../utils/supabase";
 
 export default function Profile() {
   const [fetchData, setFetchData] = useState(null);
@@ -84,7 +84,6 @@ export default function Profile() {
       setRefreshing(false);
     }
   }, [local.user]);
-
   const fetchFriendshipStatus = useCallback(async () => {
     try {
       const { data, error } = await supabase
@@ -171,7 +170,6 @@ export default function Profile() {
         >
           <ActivityIndicator size="large" color="#000" />
         </View>
-        {/* <Loading /> */}
       </>
     );
   } else {
@@ -209,7 +207,7 @@ export default function Profile() {
           <View style={styles.profile}>
             <View style={styles.profileAvatarWrapper}>
               <Image
-                alt=""
+                alt="profile picture"
                 source={{ uri: fetchData.profile_picture }}
                 style={styles.profileAvatar}
               />

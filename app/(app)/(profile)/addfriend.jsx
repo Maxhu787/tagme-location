@@ -8,15 +8,15 @@ import {
   RefreshControl,
   ActivityIndicator,
 } from "react-native";
-import { router, Stack } from "expo-router";
+import { router } from "expo-router";
 import AnimatedButton from "../../../components/AnimatedButton";
-import { supabase } from "../../../utils/supabase";
 import { UserContext } from "../../../contexts/UserContext";
+import { supabase } from "../../../utils/supabase";
 
 export default function AddFriend() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false); // Add refreshing state
+  const [refreshing, setRefreshing] = useState(false);
   const { user } = useContext(UserContext);
   const [pendingRequests, setPendingRequests] = useState([]);
 
@@ -65,7 +65,6 @@ export default function AddFriend() {
       setRefreshing(false); // Stop refreshing
     }
   };
-
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -87,26 +86,16 @@ export default function AddFriend() {
 
   if (loading) {
     return (
-      <>
-        <Stack.Screen
-          options={
-            {
-              // headerShown: false,
-            }
-          }
-        />
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#fff",
-          }}
-        >
-          <ActivityIndicator size="large" color="#000" />
-        </View>
-        {/* <Loading /> */}
-      </>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+        <ActivityIndicator size="large" color="#000" />
+      </View>
     );
   }
 
@@ -123,12 +112,6 @@ export default function AddFriend() {
         />
       }
     >
-      <Stack.Screen
-        options={{
-          headerShadowVisible: true,
-          headerShown: true,
-        }}
-      />
       <View style={[styles.section, { marginTop: 8 }]}>
         <Text style={styles.sectionTitle}>Add Friends</Text>
         {users.map((user) => (

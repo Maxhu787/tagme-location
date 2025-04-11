@@ -13,13 +13,11 @@ import { useForm, Controller } from "react-hook-form";
 import { UserContext } from "../../../contexts/UserContext";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { supabase } from "../../../utils/supabase";
-
 const { width } = Dimensions.get("window");
 
 export default function EditField() {
   const local = useLocalSearchParams();
   const { user } = useContext(UserContext);
-
   const {
     control,
     handleSubmit,
@@ -30,7 +28,6 @@ export default function EditField() {
       input: local.value || "",
     },
   });
-
   const getValidationRules = (field) => {
     const requiredMessage = `${field} can't be empty.`;
 
@@ -76,7 +73,6 @@ export default function EditField() {
         return {};
     }
   };
-
   const updateProfile = async (input) => {
     if (!user) {
       console.log("No user logged in");
@@ -95,7 +91,6 @@ export default function EditField() {
       return { data };
     }
   };
-
   const checkUsernameExists = async (username) => {
     const { data, error } = await supabase
       .from("profiles")
@@ -110,7 +105,6 @@ export default function EditField() {
     }
     return !!data; // Return true if username exists
   };
-
   const onSubmit = async (formData) => {
     if (local.field === "username") {
       const usernameExists = await checkUsernameExists(formData.input);
@@ -125,7 +119,6 @@ export default function EditField() {
     const { data, error } = await updateProfile(formData.input);
     if (!error) router.back();
   };
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
@@ -135,7 +128,6 @@ export default function EditField() {
             title: local.field || "Edit Field",
           }}
         />
-
         <Controller
           control={control}
           rules={getValidationRules(local.field)}

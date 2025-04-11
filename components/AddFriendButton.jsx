@@ -1,28 +1,17 @@
-import { Text, StyleSheet, View } from "react-native";
+import { Text, View } from "react-native";
+import { useContext, useEffect, useState } from "react";
 import AnimatedButton from "./AnimatedButton";
-import { supabase } from "../utils/supabase";
-import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
+import { supabase } from "../utils/supabase";
 
 export default function AddFriendButton({
   friend_id,
   buttonRefresh,
   setButtonRefresh,
-  style,
 }) {
   const { user } = useContext(UserContext);
   const [friendshipStatus, setFriendshipStatus] = useState(null);
   const [requested, setRequested] = useState(false);
-
-  useEffect(() => {
-    if (buttonRefresh) {
-      (async () => {
-        await fetchFriendshipStatus();
-        await fetchRequested();
-      })();
-      setButtonRefresh(false);
-    }
-  }, [buttonRefresh, friendshipStatus, requested]);
 
   const fetchFriendshipStatus = async () => {
     try {
@@ -43,7 +32,6 @@ export default function AddFriendButton({
       console.error("Error in fetchFriendshipStatus:", error);
     }
   };
-
   const fetchRequested = async () => {
     try {
       const { data, error } = await supabase
@@ -63,6 +51,16 @@ export default function AddFriendButton({
       console.error("Error in fetchRequested:", error);
     }
   };
+
+  useEffect(() => {
+    if (buttonRefresh) {
+      (async () => {
+        await fetchFriendshipStatus();
+        await fetchRequested();
+      })();
+      setButtonRefresh(false);
+    }
+  }, [buttonRefresh, friendshipStatus, requested]);
 
   useEffect(() => {
     fetchFriendshipStatus();
@@ -87,7 +85,6 @@ export default function AddFriendButton({
       console.error("Error in handleAddFriend:", error);
     }
   };
-
   const handleAcceptFriendRequest = async () => {
     try {
       const { error } = await supabase
@@ -107,7 +104,6 @@ export default function AddFriendButton({
       console.error("Error in handleAcceptFriendRequest:", error);
     }
   };
-
   const handleRemoveFriend = async () => {
     try {
       const { error } = await supabase
@@ -177,5 +173,3 @@ export default function AddFriendButton({
     </AnimatedButton>
   );
 }
-
-const styles = StyleSheet.create({});

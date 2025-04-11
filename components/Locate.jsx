@@ -1,7 +1,7 @@
 import { View, Platform } from "react-native";
+import * as Location from "expo-location";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import AnimatedButton from "./AnimatedButton";
-import * as Location from "expo-location";
 
 export default TopNav = ({ setFollowing, cameraRef }) => {
   const moveToCurrentLocation = async () => {

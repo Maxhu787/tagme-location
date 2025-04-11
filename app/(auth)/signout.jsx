@@ -1,9 +1,9 @@
 import { useContext, useEffect } from "react";
 import { useRouter } from "expo-router";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
-import { supabase } from "../../utils/supabase";
 import { UserContext } from "../../contexts/UserContext";
 import { ProfileContext } from "../../contexts/ProfileContext";
+import { supabase } from "../../utils/supabase";
 
 export default function Signout() {
   GoogleSignin.configure({
