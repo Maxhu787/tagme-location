@@ -24,6 +24,7 @@ export default function EditField() {
     control,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm({
     defaultValues: {
       input: local.value || "",
@@ -31,20 +32,20 @@ export default function EditField() {
   });
 
   const getValidationRules = (field) => {
-    const requiredMessage = `${field} can't be empty`;
+    const requiredMessage = `${field} can't be empty.`;
 
     switch (field) {
       case "username":
         return {
           required: { value: true, message: requiredMessage },
-          minLength: { value: 4, message: "Minimum 4 characters" },
-          maxLength: { value: 32, message: "Maximum 32 characters" },
+          minLength: { value: 4, message: "Minimum 4 characters." },
+          maxLength: { value: 32, message: "Maximum 32 characters." },
         };
       case "name":
         return {
           required: { value: true, message: requiredMessage },
-          minLength: { value: 1, message: "Minimum 1 character" },
-          maxLength: { value: 50, message: "Maximum 50 characters" },
+          minLength: { value: 1, message: "Minimum 1 character." },
+          maxLength: { value: 50, message: "Maximum 50 characters." },
         };
       case "bio":
       case "profile_picture":
@@ -52,7 +53,7 @@ export default function EditField() {
         return {
           maxLength: {
             value: 150,
-            message: "Maximum 150 characters",
+            message: "Maximum 150 characters.",
           },
         };
       case "country":
@@ -60,15 +61,15 @@ export default function EditField() {
           required: { value: true, message: requiredMessage },
           minLength: {
             value: 2,
-            message: "Must be exactly 2 letters",
+            message: "Must be exactly 2 letters.",
           },
           maxLength: {
             value: 2,
-            message: "Must be exactly 2 letters",
+            message: "Must be exactly 2 letters.",
           },
           pattern: {
             value: /^[A-Za-z]{2}$/,
-            message: "Must be 2 alphabetic characters",
+            message: "Must be 2 alphabetic characters.",
           },
         };
       default:
@@ -95,7 +96,32 @@ export default function EditField() {
     }
   };
 
+  const checkUsernameExists = async (username) => {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("id")
+      .eq("username", username)
+      .neq("id", user.id)
+      .single();
+
+    if (error && error.code !== "PGRST116") {
+      console.error("Error checking username:", error);
+      return null; // Unexpected error
+    }
+    return !!data; // Return true if username exists
+  };
+
   const onSubmit = async (formData) => {
+    if (local.field === "username") {
+      const usernameExists = await checkUsernameExists(formData.input);
+      if (usernameExists) {
+        setError("input", {
+          type: "manual",
+          message: "Username already exists.",
+        });
+        return;
+      }
+    }
     const { data, error } = await updateProfile(formData.input);
     if (!error) router.back();
   };
