@@ -23,7 +23,7 @@ export default function Profile() {
   const [fetchData, setFetchData] = useState(null);
   const [friends, setFriends] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-  const [friendshipStatus, setFriendshipStatus] = useState(null); // Track friendship status
+  const [friendshipStatus, setFriendshipStatus] = useState(null);
   const local = useLocalSearchParams();
   const { user } = useContext(UserContext);
   const [buttonRefresh, setButtonRefresh] = useState(true);
