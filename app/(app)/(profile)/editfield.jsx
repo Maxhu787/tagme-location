@@ -8,18 +8,75 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import { useContext, useState } from "react";
+import { useContext } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { UserContext } from "../../../contexts/UserContext";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { supabase } from "../../../utils/supabase";
+
 const { width } = Dimensions.get("window");
 
 export default function EditField() {
   const local = useLocalSearchParams();
-  const [input, setInput] = useState(local.value || ""); // Ensure input has a default value
   const { user } = useContext(UserContext);
 
-  const updateProfile = async () => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      input: local.value || "",
+    },
+  });
+
+  const getValidationRules = (field) => {
+    const requiredMessage = `${field} can't be empty`;
+
+    switch (field) {
+      case "username":
+        return {
+          required: { value: true, message: requiredMessage },
+          minLength: { value: 4, message: "Minimum 4 characters" },
+          maxLength: { value: 32, message: "Maximum 32 characters" },
+        };
+      case "name":
+        return {
+          required: { value: true, message: requiredMessage },
+          minLength: { value: 1, message: "Minimum 1 character" },
+          maxLength: { value: 50, message: "Maximum 50 characters" },
+        };
+      case "bio":
+      case "profile_picture":
+      case "website":
+        return {
+          maxLength: {
+            value: 150,
+            message: "Maximum 150 characters",
+          },
+        };
+      case "country":
+        return {
+          required: { value: true, message: requiredMessage },
+          minLength: {
+            value: 2,
+            message: "Must be exactly 2 letters",
+          },
+          maxLength: {
+            value: 2,
+            message: "Must be exactly 2 letters",
+          },
+          pattern: {
+            value: /^[A-Za-z]{2}$/,
+            message: "Must be 2 alphabetic characters",
+          },
+        };
+      default:
+        return {};
+    }
+  };
+
+  const updateProfile = async (input) => {
     if (!user) {
       console.log("No user logged in");
       return { error: "No user logged in" };
@@ -31,17 +88,16 @@ export default function EditField() {
       .eq("id", user.id);
 
     if (error) {
-      console.log("Error upserting profile:", error);
+      console.log("Error updating profile:", error);
       return { error };
     } else {
-      // console.log("Profile updated", data);
       return { data };
     }
   };
 
-  const handleSubmit = async () => {
-    const { data, error } = await updateProfile();
-    router.back();
+  const onSubmit = async (formData) => {
+    const { data, error } = await updateProfile(formData.input);
+    if (!error) router.back();
   };
 
   return (
@@ -50,28 +106,51 @@ export default function EditField() {
         <Stack.Screen
           options={{
             headerShown: true,
-            title: local.field || "Edit Field", // Fallback title
+            title: local.field || "Edit Field",
           }}
         />
-        <TextInput
-          style={{
-            position: "absolute",
-            top: 20,
-            height: 50,
-            borderColor: "#000",
-            borderWidth: 2,
-            width: "90%",
-            fontSize: 18,
-            paddingLeft: 20,
-            borderRadius: 18,
-          }}
-          placeholder={`Enter your ${local.field || "value"}`} // Fallback placeholder
-          // maxLength={32}
-          value={input} // Ensure this is bound to the state
-          onChangeText={setInput} // Update state on text change
+
+        <Controller
+          control={control}
+          rules={getValidationRules(local.field)}
+          name="input"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <>
+              <TextInput
+                style={{
+                  position: "absolute",
+                  top: 20,
+                  height: 50,
+                  borderColor: "gray",
+                  borderWidth: 2,
+                  borderRadius: 8,
+                  width: "90%",
+                  fontSize: 18,
+                  paddingLeft: 20,
+                }}
+                placeholder={`Enter your ${local.field || "value"}`}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+              {errors.input && (
+                <Text
+                  style={{
+                    color: "#e00404",
+                    position: "absolute",
+                    fontSize: 16,
+                    top: 75,
+                    left: 25,
+                  }}
+                >
+                  {errors.input.message || "Invalid input"}
+                </Text>
+              )}
+            </>
+          )}
         />
         <TouchableOpacity
-          onPress={handleSubmit}
+          onPress={handleSubmit(onSubmit)}
           style={{
             position: "absolute",
             bottom: 40,
