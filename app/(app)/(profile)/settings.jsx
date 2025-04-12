@@ -201,7 +201,6 @@ export default function Settings() {
               {
                 backgroundColor: "#fcd5d2",
                 marginHorizontal: 8,
-                marginTop: 6,
               },
             ]}
           >

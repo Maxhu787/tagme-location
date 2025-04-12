@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   imageRow: {
     position: "absolute",
-    bottom: 40,
+    bottom: 45,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     backgroundColor: "red",
-    height: 150,
+    height: 125,
     width: 370,
     marginLeft: -12,
   },

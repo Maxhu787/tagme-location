@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { View, Platform, StyleSheet } from "react-native";
+import { View, Text, Platform, StyleSheet } from "react-native";
 import {
   MapView,
   Camera,
@@ -10,7 +10,6 @@ import * as Notifications from "expo-notifications";
 import * as Location from "expo-location";
 import { UserContext } from "../../contexts/UserContext";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { registerPushToken } from "../../utils/registerPushToken";
 import TopNav from "../../components/TopNav";
 import Locate from "../../components/Locate";
 import DisplayUsers from "../../components/DisplayUsers";
@@ -19,6 +18,7 @@ import AnimatedButton from "../../components/AnimatedButton";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { supabase } from "../../utils/supabase";
+import { registerPushToken } from "../../utils/registerPushToken";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -36,6 +36,7 @@ export default Home = () => {
   const { user } = useContext(UserContext);
   const [fetchUsers, setFetchUsers] = useState(true);
   const [tracking, setTracking] = useState(true);
+  const [expoPushToken, setExpoPushToken] = useState("");
 
   useEffect(() => {
     const requestPermissions = async () => {
@@ -46,7 +47,10 @@ export default Home = () => {
       }
     };
     requestPermissions();
-    registerPushToken(user.id);
+
+    registerPushToken(user.id)
+      .then((token) => setExpoPushToken(token ?? ""))
+      .catch((error) => setExpoPushToken(`${error}`));
   }, []);
 
   const getCurrentLocation = async () => {
@@ -102,6 +106,7 @@ export default Home = () => {
         paddingTop: Platform.OS === "ios" ? 0 : insets.top,
       }}
     >
+      <Text>{expoPushToken}</Text>
       <MapView
         // onRegionDidChange={(event) => {
         //   if (following && event.properties.isUserInteraction) {

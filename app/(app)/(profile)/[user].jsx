@@ -182,19 +182,24 @@ export default function Profile() {
             headerShadowVisible: true,
             headerRight: () => (
               <AnimatedButton
-                style={{
-                  height: 55,
-                  width: 40,
-                  borderRadius: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
+                style={{}}
                 text="Settings"
                 onPress={() => {
                   router.push("/(app)/(profile)/settings");
                 }}
               >
-                <FontAwesome6 name="gear" size={24} color="black" />
+                <View
+                  style={{
+                    height: 55,
+                    width: 55,
+                    right: -8,
+                    borderRadius: 10,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <FontAwesome6 name="gear" size={24} color="black" />
+                </View>
               </AnimatedButton>
             ),
           }}

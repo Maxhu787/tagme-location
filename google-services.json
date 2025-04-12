@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "724497958337",
+    "project_id": "tagme-2fb27",
+    "storage_bucket": "tagme-2fb27.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724497958337:android:6e221daf23150900395b40",
+        "android_client_info": {
+          "package_name": "com.g4o2.tagme"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4Exg4Re2zvL2OWKf4AyHc8I1tIjf6Vug"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
