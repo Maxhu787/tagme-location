@@ -125,7 +125,7 @@ export default function EditField() {
         <Stack.Screen
           options={{
             headerShown: true,
-            title: local.field || "Edit Field",
+            title: `Edit ${local.field}` || "Edit Field",
           }}
         />
         <Controller

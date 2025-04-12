@@ -184,15 +184,14 @@ export default function Profile() {
               <AnimatedButton
                 style={{}}
                 text="Settings"
-                onPress={() => {
+                onPressIn={() => {
                   router.push("/(app)/(profile)/settings");
                 }}
               >
                 <View
                   style={{
                     height: 55,
-                    width: 55,
-                    right: -8,
+                    width: 40,
                     borderRadius: 10,
                     justifyContent: "center",
                     alignItems: "center",

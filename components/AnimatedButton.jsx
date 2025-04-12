@@ -9,6 +9,7 @@ export default function AnimatedButton({
   text,
   style,
   onPress,
+  onPressIn,
   buttonScale = 0.75,
   children,
   textColor = "#fff",
@@ -23,19 +24,22 @@ export default function AnimatedButton({
       <TouchableOpacity
         style={style}
         activeOpacity={1}
-        onPressIn={() =>
-          (scaleButton.value = withSpring(buttonScale, {
+        onPressIn={() => {
+          scaleButton.value = withSpring(buttonScale, {
             stiffness: 300,
             damping: 15,
-          }))
-        }
+          });
+          if (onPressIn) onPressIn();
+        }}
         onPressOut={() =>
           (scaleButton.value = withSpring(1, {
             stiffness: 150,
             damping: 10,
           }))
         }
-        onPress={onPress || (() => Alert.alert("test"))}
+        onPress={() => {
+          if (onPress) onPress();
+        }}
       >
         {children ? (
           children
