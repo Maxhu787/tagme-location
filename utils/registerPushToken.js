@@ -6,9 +6,7 @@ import { Alert, Platform } from "react-native";
 import Constants from "expo-constants";
 
 export const registerPushToken = async (user_id) => {
-  // if (!user_id) return;
-  Alert.alert("registerpushtoken run");
-  Alert.alert(user_id);
+  if (!user_id) return;
   if (Platform.OS === "android") {
     Notifications.setNotificationChannelAsync("default", {
       name: "default",
@@ -27,7 +25,7 @@ export const registerPushToken = async (user_id) => {
       finalStatus = status;
     }
     if (finalStatus !== "granted") {
-      Alert.alert(
+      console.log(
         "Permission not granted to get push token for push notification!"
       );
       return;
@@ -38,7 +36,7 @@ export const registerPushToken = async (user_id) => {
       Constants?.easConfig?.projectId;
 
     if (!projectId) {
-      Alert.alert("Project ID not found");
+      console.log("Project ID not found");
       return;
     }
     try {
@@ -47,22 +45,21 @@ export const registerPushToken = async (user_id) => {
           projectId,
         })
       ).data;
-      // Alert.alert("token: ", token);
-      Alert.alert(pushTokenString);
+      // console.log(pushTokenString);
       // const savedToken = await AsyncStorage.getItem("expoPushToken");
-      // Alert.alert(token);
+      // console.log(token);
       // if (token !== savedToken) {
 
-      await supabase
-        .from("expo_tokens")
-        .upsert({ user_id, pushTokenString }, { onConflict: ["user_id"] });
-
+      // await supabase
+      //   .from("expo_tokens")
+      //   .upsert({ user_id, pushTokenString }, { onConflict: ["user_id"] });
+      // console.log("supabase");
       // await AsyncStorage.setItem("expoPushToken", token);
       return pushTokenString;
     } catch (e) {
-      Alert.alert(`${e}`);
+      console.log(`${e}`);
     }
   } else {
-    Alert.alert("Must use physical device for push notifications");
+    console.log("Must use physical device for push notifications");
   }
 };

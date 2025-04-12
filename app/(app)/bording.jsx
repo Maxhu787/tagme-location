@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   logo: {
-    backgroundColor: "red",
+    // backgroundColor: "red",
     height: 150,
     width: 370,
     marginLeft: -12,

@@ -1,4 +1,3 @@
-import { View, Text } from "react-native";
 import { useContext, useEffect, useState } from "react";
 import { router } from "expo-router";
 import { supabase } from "../utils/supabase";
@@ -84,10 +83,7 @@ export default function App() {
   if (loading) {
     return (
       <>
-        {/* <Loading /> */}
-        <View>
-          <Text>loading</Text>
-        </View>
+        <Loading />
         <Toast />
       </>
     );

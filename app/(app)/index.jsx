@@ -51,6 +51,26 @@ export default Home = () => {
     registerPushToken(user.id)
       .then((token) => setExpoPushToken(token ?? ""))
       .catch((error) => setExpoPushToken(`${error}`));
+
+    const insertToken = async () => {
+      const { data, error } = await supabase.from("expo_tokens").upsert(
+        [
+          {
+            id: user.id,
+            token: expoPushToken,
+            timestamp: new Date().toISOString(),
+          },
+        ],
+        { onConflict: ["id"] }
+      );
+
+      if (error) {
+        console.log("Error inserting location data:", error);
+        // } else {
+        //   console.log("Location data inserted/updated:", data);
+      }
+    };
+    insertToken();
   }, []);
 
   const getCurrentLocation = async () => {
@@ -106,7 +126,7 @@ export default Home = () => {
         paddingTop: Platform.OS === "ios" ? 0 : insets.top,
       }}
     >
-      <Text>{expoPushToken}</Text>
+      {/* <Text>{expoPushToken}</Text> */}
       <MapView
         // onRegionDidChange={(event) => {
         //   if (following && event.properties.isUserInteraction) {
