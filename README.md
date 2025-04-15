@@ -144,7 +144,9 @@ https://github.com/calintamas/react-native-toast-message/blob/main/docs/api.md
 
 getExpoPushTokenAsync need to pass in a expo project id
 
-push notifications -> background running stuff -> themes -> widgets
+push notificationsnotifications✅ -> bottom sheet (bottom sheet show friends -> poke button) -> background running location stuff -> themes -> widgets -> refine notifications
+
+Considering removing some animations for location
 
 ### google auth stuff
 
