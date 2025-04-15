@@ -144,10 +144,14 @@ https://github.com/calintamas/react-native-toast-message/blob/main/docs/api.md
 
 getExpoPushTokenAsync need to pass in a expo project id
 
-push notificationsnotifications ✅ -> bottom sheet ✅ (bottom sheet show friends -> poke button) -> background running location stuff -> themes -> widgets -> refine notifications
+push notificationsnotifications ✅ -> bottom sheet ✅ (bottom sheet show friends -> poke button) -> background running location stuff -> zoom scroll bar -> themes -> widgets -> refine notifications
 
 https://gorhom.dev/react-native-bottom-sheet/
 Considering removing some animations for location
+add confirmation to remove friend
+add zoom in on friend when click on bottom sheet
+
+add a refresh button in bottom sheet, to fetch updates to friends, and also update the location acting as the refresh button too
 
 ### google auth stuff
 
