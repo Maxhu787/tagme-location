@@ -1,5 +1,12 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import { View, Text, Platform, StyleSheet } from "react-native";
+import {
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+  useCallback,
+} from "react";
+import { View, Text, Platform, StyleSheet, Button } from "react-native";
 import {
   MapView,
   Camera,
@@ -13,12 +20,17 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import TopNav from "../../components/TopNav";
 import Locate from "../../components/Locate";
 import DisplayUsers from "../../components/DisplayUsers";
-import SideBar from "../../components/SideBar";
+// import SideBar from "../../components/SideBar";
 import AnimatedButton from "../../components/AnimatedButton";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { supabase } from "../../utils/supabase";
 import { registerPushToken } from "../../utils/registerPushToken";
+import BottomSheet, {
+  BottomSheetFlatList,
+  BottomSheetTextInput,
+} from "@gorhom/bottom-sheet";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -117,100 +129,166 @@ export default Home = () => {
     return () => clearInterval(interval);
   }, [tracking]);
 
+  const sheetRef = useRef(null);
+  const data = useMemo(
+    () =>
+      Array(20)
+        .fill(0)
+        .map((_, index) => `index-${index}`),
+    []
+  );
+  const snapPoints = useMemo(() => ["40%"], []);
+  // const handleSheetChange = useCallback((index) => {
+  //   console.log("handleSheetChange", index);
+  // }, []);
+  const handleSnapPress = useCallback((index) => {
+    sheetRef.current?.snapToIndex(index);
+  }, []);
+  const handleClosePress = useCallback(() => {
+    sheetRef.current?.close();
+  }, []);
+
+  const renderItem = useCallback(
+    ({ item }) => (
+      <View style={styles.itemContainer}>
+        <Text>{item}</Text>
+      </View>
+    ),
+    []
+  );
+
   return (
-    <View
+    <GestureHandlerRootView
       style={{
-        display: "flex",
-        flexDirection: "column",
         flex: 1,
-        paddingTop: Platform.OS === "ios" ? 0 : insets.top,
       }}
     >
-      {/* <Text>{expoPushToken}</Text> */}
-      <MapView
-        // onRegionDidChange={(event) => {
-        //   if (following && event.properties.isUserInteraction) {
-        //     setFollowing(false);
-        //   }
-        // }}
-        style={{ flex: 1 }}
-        // mapStyle="https://tiles.openfreemap.org/styles/bright"
-        mapStyle="https://tiles.openfreemap.org/styles/positron"
-        rotateEnabled={false}
-        logoEnabled={false}
-        attributionEnabled={false}
-        onTouchStart={() => {
-          if (Platform.OS !== "ios") {
-            setFollowing(false);
-          }
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          flex: 1,
+          paddingTop: Platform.OS === "ios" ? 0 : insets.top,
         }}
       >
-        <Camera
-          ref={cameraRef}
-          followUserLocation={true}
-          followZoomLevel={followZoom}
-          // onUserTrackingModeChange={(event) => {
-          //   if (!event.nativeEvent.payload.followUserLocation) {
+        {/* <Text>{expoPushToken}</Text> */}
+        <MapView
+          // onRegionDidChange={(event) => {
+          //   if (following && event.properties.isUserInteraction) {
           //     setFollowing(false);
           //   }
           // }}
-        />
-        <UserLocation
-          androidRenderMode={"compass"}
-          renderMode={UserLocationRenderMode.Native}
-          showsUserHeadingIndicator={true}
-          visible={true}
-          requestsAlwaysUse={true}
-          minDisplacement={1}
-          animated={true}
-        />
-        <DisplayUsers
-          setFollowing={setFollowing}
-          setFetchUsers={setFetchUsers}
-          fetchUsers={fetchUsers}
-        />
-      </MapView>
-
-      <TopNav />
-      <View style={[{ right: 115 }, styles.bottomButtonContainer]}>
-        <AnimatedButton
-          style={[
-            styles.bottomButtonStyle,
-            { backgroundColor: "#fff", paddingVertical: 26 },
-          ]}
-          // onPress={() => setFetchUsers(true)}
-        >
-          <FontAwesome5 name="users" size={24} color="#000" />
-        </AnimatedButton>
-      </View>
-
-      <Locate setFollowing={setFollowing} cameraRef={cameraRef} />
-
-      <View style={[{ left: 115 }, styles.bottomButtonContainer]}>
-        <AnimatedButton
-          style={[
-            { backgroundColor: tracking ? "#fff" : "#000" },
-            styles.bottomButtonStyle,
-          ]}
-          onPress={() => {
-            setTracking(!tracking);
+          style={{ flex: 1 }}
+          // mapStyle="https://tiles.openfreemap.org/styles/bright"
+          mapStyle="https://tiles.openfreemap.org/styles/positron"
+          rotateEnabled={false}
+          logoEnabled={false}
+          attributionEnabled={false}
+          onTouchStart={() => {
+            if (Platform.OS !== "ios") {
+              setFollowing(false);
+            }
           }}
         >
-          {tracking ? (
-            <MaterialIcons name="location-on" size={32} color="#000" />
-          ) : (
-            <MaterialIcons name="location-off" size={32} color="#fff" />
-          )}
-        </AnimatedButton>
-      </View>
+          <Camera
+            ref={cameraRef}
+            followUserLocation={true}
+            followZoomLevel={followZoom}
+            // onUserTrackingModeChange={(event) => {
+            //   if (!event.nativeEvent.payload.followUserLocation) {
+            //     setFollowing(false);
+            //   }
+            // }}
+          />
+          <UserLocation
+            androidRenderMode={"compass"}
+            renderMode={UserLocationRenderMode.Native}
+            showsUserHeadingIndicator={true}
+            visible={true}
+            requestsAlwaysUse={true}
+            minDisplacement={1}
+            animated={true}
+          />
+          <DisplayUsers
+            setFollowing={setFollowing}
+            setFetchUsers={setFetchUsers}
+            fetchUsers={fetchUsers}
+          />
+        </MapView>
+        <TopNav />
+        <View style={[{ right: 115 }, styles.bottomButtonContainer]}>
+          <AnimatedButton
+            style={[
+              styles.bottomButtonStyle,
+              { backgroundColor: "#fff", paddingVertical: 26 },
+            ]}
+            // onPress={() => setFetchUsers(true)}
+            onPress={() => handleSnapPress(0)}
+          >
+            <FontAwesome5 name="users" size={24} color="#000" />
+          </AnimatedButton>
+        </View>
+        <Locate setFollowing={setFollowing} cameraRef={cameraRef} />
+        <View style={[{ left: 115 }, styles.bottomButtonContainer]}>
+          <AnimatedButton
+            style={[
+              { backgroundColor: tracking ? "#fff" : "#000" },
+              styles.bottomButtonStyle,
+            ]}
+            onPress={() => {
+              setTracking(!tracking);
+            }}
+          >
+            {tracking ? (
+              <MaterialIcons name="location-on" size={32} color="#000" />
+            ) : (
+              <MaterialIcons name="location-off" size={32} color="#fff" />
+            )}
+          </AnimatedButton>
+        </View>
 
-      {/* <SideBar
+        {/* <SideBar
         following={following}
         setFollowing={setFollowing}
         setFollowZoom={setFollowZoom}
         cameraRef={cameraRef}
       /> */}
-    </View>
+
+        <BottomSheet
+          ref={sheetRef}
+          snapPoints={snapPoints}
+          handleIndicatorStyle={{
+            backgroundColor: "#ccc",
+            width: 60,
+            height: 6,
+            borderRadius: 3,
+            marginTop: 8,
+          }}
+          backgroundStyle={{ backgroundColor: "white" }}
+          enableDynamicSizing={false}
+          enablePanDownToClose={true}
+          // onChange={handleSheetChange}
+        >
+          <BottomSheetFlatList
+            data={data}
+            keyExtractor={(i) => i}
+            renderItem={renderItem}
+            contentContainerStyle={styles.contentContainer}
+          />
+          {/* <BottomSheetTextInput
+            backgroundColor={"#aaa"}
+            style={{
+              marginTop: 8,
+              borderRadius: 10,
+              fontSize: 16,
+              lineHeight: 20,
+              padding: 8,
+              width: "96%",
+            }}
+          /> */}
+        </BottomSheet>
+      </View>
+    </GestureHandlerRootView>
   );
 };
 
