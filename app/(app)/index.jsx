@@ -15,8 +15,8 @@ import Locate from "../../components/Locate";
 import DisplayUsers from "../../components/DisplayUsers";
 import SideBar from "../../components/SideBar";
 import AnimatedButton from "../../components/AnimatedButton";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { supabase } from "../../utils/supabase";
 import { registerPushToken } from "../../utils/registerPushToken";
 
@@ -174,10 +174,13 @@ export default Home = () => {
       <TopNav />
       <View style={[{ right: 115 }, styles.bottomButtonContainer]}>
         <AnimatedButton
-          style={[styles.bottomButtonStyle, { backgroundColor: "#fff" }]}
-          onPress={() => setFetchUsers(true)}
+          style={[
+            styles.bottomButtonStyle,
+            { backgroundColor: "#fff", paddingVertical: 26 },
+          ]}
+          // onPress={() => setFetchUsers(true)}
         >
-          <FontAwesome name="refresh" size={32} color="#000" />
+          <FontAwesome5 name="users" size={24} color="#000" />
         </AnimatedButton>
       </View>
 

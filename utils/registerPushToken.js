@@ -60,6 +60,6 @@ export const registerPushToken = async (user_id) => {
       console.log(`${e}`);
     }
   } else {
-    console.log("Must use physical device for push notifications");
+    // console.log("Must use physical device for push notifications");
   }
 };
