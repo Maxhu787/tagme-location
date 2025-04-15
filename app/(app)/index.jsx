@@ -1,12 +1,5 @@
-import {
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-  useMemo,
-  useCallback,
-} from "react";
-import { View, Text, Platform, StyleSheet, Button } from "react-native";
+import { useContext, useEffect, useRef, useState } from "react";
+import { View, Platform, StyleSheet } from "react-native";
 import {
   MapView,
   Camera,
@@ -24,13 +17,11 @@ import DisplayUsers from "../../components/DisplayUsers";
 import AnimatedButton from "../../components/AnimatedButton";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { supabase } from "../../utils/supabase";
 import { registerPushToken } from "../../utils/registerPushToken";
-import BottomSheet, {
-  BottomSheetFlatList,
-  BottomSheetTextInput,
-} from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import FriendsBottomSheet from "../../components/FriendsBottomSheet";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -47,6 +38,7 @@ export default Home = () => {
   const [followZoom, setFollowZoom] = useState(16); // ios
   const { user } = useContext(UserContext);
   const [fetchUsers, setFetchUsers] = useState(true);
+  const [openBottomSheet, setOpenBottomSheet] = useState(false);
   const [tracking, setTracking] = useState(true);
   const [expoPushToken, setExpoPushToken] = useState("");
 
@@ -84,7 +76,6 @@ export default Home = () => {
     };
     insertToken();
   }, []);
-
   const getCurrentLocation = async () => {
     try {
       const insertLocationData = async (userId) => {
@@ -115,7 +106,6 @@ export default Home = () => {
       console.error("Error getting location:", error);
     }
   };
-
   useEffect(() => {
     let interval;
 
@@ -128,34 +118,6 @@ export default Home = () => {
 
     return () => clearInterval(interval);
   }, [tracking]);
-
-  const sheetRef = useRef(null);
-  const data = useMemo(
-    () =>
-      Array(20)
-        .fill(0)
-        .map((_, index) => `index-${index}`),
-    []
-  );
-  const snapPoints = useMemo(() => ["40%"], []);
-  // const handleSheetChange = useCallback((index) => {
-  //   console.log("handleSheetChange", index);
-  // }, []);
-  const handleSnapPress = useCallback((index) => {
-    sheetRef.current?.snapToIndex(index);
-  }, []);
-  const handleClosePress = useCallback(() => {
-    sheetRef.current?.close();
-  }, []);
-
-  const renderItem = useCallback(
-    ({ item }) => (
-      <View style={styles.itemContainer}>
-        <Text>{item}</Text>
-      </View>
-    ),
-    []
-  );
 
   return (
     <GestureHandlerRootView
@@ -171,7 +133,6 @@ export default Home = () => {
           paddingTop: Platform.OS === "ios" ? 0 : insets.top,
         }}
       >
-        {/* <Text>{expoPushToken}</Text> */}
         <MapView
           // onRegionDidChange={(event) => {
           //   if (following && event.properties.isUserInteraction) {
@@ -222,11 +183,16 @@ export default Home = () => {
               styles.bottomButtonStyle,
               { backgroundColor: "#fff", paddingVertical: 26 },
             ]}
-            // onPress={() => setFetchUsers(true)}
-            onPress={() => handleSnapPress(0)}
+            onPress={() => setOpenBottomSheet(true)}
           >
             <FontAwesome5 name="users" size={24} color="#000" />
           </AnimatedButton>
+          {/* <AnimatedButton
+            style={[styles.bottomButtonStyle, { backgroundColor: "#fff" }]}
+            onPress={() => setFetchUsers(true)}
+          >
+            <FontAwesome name="refresh" size={32} color="#000" />
+          </AnimatedButton> */}
         </View>
         <Locate setFollowing={setFollowing} cameraRef={cameraRef} />
         <View style={[{ left: 115 }, styles.bottomButtonContainer]}>
@@ -247,46 +213,16 @@ export default Home = () => {
           </AnimatedButton>
         </View>
 
+        <FriendsBottomSheet
+          openBottomSheet={openBottomSheet}
+          setOpenBottomSheet={setOpenBottomSheet}
+        />
         {/* <SideBar
         following={following}
         setFollowing={setFollowing}
         setFollowZoom={setFollowZoom}
         cameraRef={cameraRef}
       /> */}
-
-        <BottomSheet
-          ref={sheetRef}
-          snapPoints={snapPoints}
-          handleIndicatorStyle={{
-            backgroundColor: "#ccc",
-            width: 60,
-            height: 6,
-            borderRadius: 3,
-            marginTop: 8,
-          }}
-          backgroundStyle={{ backgroundColor: "white" }}
-          enableDynamicSizing={false}
-          enablePanDownToClose={true}
-          // onChange={handleSheetChange}
-        >
-          <BottomSheetFlatList
-            data={data}
-            keyExtractor={(i) => i}
-            renderItem={renderItem}
-            contentContainerStyle={styles.contentContainer}
-          />
-          {/* <BottomSheetTextInput
-            backgroundColor={"#aaa"}
-            style={{
-              marginTop: 8,
-              borderRadius: 10,
-              fontSize: 16,
-              lineHeight: 20,
-              padding: 8,
-              width: "96%",
-            }}
-          /> */}
-        </BottomSheet>
       </View>
     </GestureHandlerRootView>
   );
