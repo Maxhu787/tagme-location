@@ -91,15 +91,16 @@ export default function App() {
     );
   } else if (!session || !session.user) {
     return <Bording />;
-  } else {
-    return (
-      <View>
-        <Text>test</Text>
-        <Text>test</Text>
-        <Text>test</Text>
-        <Text>test</Text>
-      </View>
-      // <Redirect href="/(app)/" />
-    );
   }
+  //  else {
+  //   return (
+  //     <View>
+  //       <Text>test</Text>
+  //       <Text>test</Text>
+  //       <Text>test</Text>
+  //       <Text>test</Text>
+  //     </View>
+  //     // <Redirect href="/(app)/" />
+  //   );
+  // }
 }

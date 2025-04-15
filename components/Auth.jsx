@@ -30,8 +30,8 @@ export default function Auth() {
         if (data.user) {
           setUser(data.user);
         }
-        router.dismissAll();
-        router.replace("/(app)/");
+        // router.dismissAll();
+        router.replace("/(app)");
         if (error) console.log(error.message);
       } else {
         throw new Error("No ID token found");
@@ -69,7 +69,8 @@ export default function Auth() {
           alignItems: "center",
         }}
         onPress={handlePress}
-        buttonScale={0.85}
+        // buttonScale={0.85}
+        buttonScale={0.9}
       >
         <View
           style={{
