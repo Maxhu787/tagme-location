@@ -118,6 +118,7 @@ export default function FriendsBottomSheet({
       // backgroundStyle={{ backgroundColor: "#ddd" }}
       enableDynamicSizing={false}
       enablePanDownToClose={true}
+      index={-1} // initially closed
     >
       <BottomSheetFlashList
         data={friends}
