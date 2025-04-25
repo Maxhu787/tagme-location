@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { View, Platform, StyleSheet } from "react-native";
+import { View, Platform, StyleSheet, AsyncStorage } from "react-native";
 import {
   MapView,
   Camera,
@@ -22,6 +22,8 @@ import { supabase } from "../../utils/supabase";
 import { registerPushToken } from "../../utils/registerPushToken";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import FriendsBottomSheet from "../../components/FriendsBottomSheet";
+import * as TaskManager from "expo-task-manager";
+import * as BackgroundFetch from "expo-background-fetch";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -106,6 +108,7 @@ export default Home = () => {
       console.error("Error getting location:", error);
     }
   };
+
   useEffect(() => {
     let interval;
 
@@ -118,6 +121,54 @@ export default Home = () => {
 
     return () => clearInterval(interval);
   }, [tracking]);
+
+  const LOCATION_TASK_NAME = "background-location-task";
+
+  TaskManager.defineTask(LOCATION_TASK_NAME, async () => {
+    try {
+      await getCurrentLocation();
+      return BackgroundFetch.BackgroundFetchResult.NewData;
+    } catch (error) {
+      console.error("Error in background task:", error);
+      return BackgroundFetch.BackgroundFetchResult.Failed;
+    }
+  });
+
+  const registerBackgroundTask = async () => {
+    try {
+      await BackgroundFetch.registerTaskAsync(LOCATION_TASK_NAME, {
+        minimumInterval: 10, // Run every 10 seconds
+        stopOnTerminate: false,
+        startOnBoot: true,
+      });
+      console.log("Background task registered");
+    } catch (error) {
+      console.error("Error registering background task:", error);
+    }
+  };
+
+  useEffect(() => {
+    registerBackgroundTask();
+  }, []);
+
+  useEffect(() => {
+    const loadTrackingState = async () => {
+      const savedTrackingState = await AsyncStorage.getItem("trackingState");
+      if (savedTrackingState !== null) {
+        setTracking(JSON.parse(savedTrackingState));
+      }
+    };
+    loadTrackingState();
+  }, []);
+
+  const toggleTracking = async () => {
+    const newTrackingState = !tracking;
+    setTracking(newTrackingState);
+    await AsyncStorage.setItem(
+      "trackingState",
+      JSON.stringify(newTrackingState)
+    );
+  };
 
   return (
     <GestureHandlerRootView
@@ -201,9 +252,7 @@ export default Home = () => {
               { backgroundColor: tracking ? "#fff" : "#000" },
               styles.bottomButtonStyle,
             ]}
-            onPress={() => {
-              setTracking(!tracking);
-            }}
+            onPress={toggleTracking}
           >
             {tracking ? (
               <MaterialIcons name="location-on" size={32} color="#000" />

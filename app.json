@@ -62,7 +62,8 @@
           },
           "ios": {}
         }
-      ]
+      ],
+      "expo-background-task"
     ],
     "extra": {
       "router": {

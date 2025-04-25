@@ -24,7 +24,8 @@ export default Layout = () => {
     <UserProvider>
       <ProfileProvider>
         <ThemeProvider>
-          <StatusBar style="light" backgroundColor="#ffa500" />
+          {/* <StatusBar style="light" backgroundColor="#ffa500" /> */}
+          <StatusBar style="auto" />
           <Stack screenOptions={{ headerShown: false }}>
             <Stack.Screen name="(app)" />
             <Stack.Screen name="(auth)/signout" />
