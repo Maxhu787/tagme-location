@@ -18,6 +18,31 @@ export default function FriendsBottomSheet({
 }) {
   const { user } = useContext(UserContext);
   const [friends, setFriends] = useState([]);
+  const [locationData, setLocationData] = useState({});
+
+  const getTimeAgo = (timestamp) => {
+    const now = new Date();
+    const then = new Date(timestamp);
+    const diff = Math.floor((now.getTime() - then.getTime()) / 1000); // in seconds
+
+    const times = [
+      { unit: "year", seconds: 31536000 },
+      { unit: "month", seconds: 2592000 },
+      { unit: "day", seconds: 86400 },
+      { unit: "hour", seconds: 3600 },
+      { unit: "minute", seconds: 60 },
+      { unit: "second", seconds: 1 },
+    ];
+
+    for (let t of times) {
+      const interval = Math.floor(diff / t.seconds);
+      if (interval >= 1) {
+        return `${interval} ${t.unit}${interval > 1 ? "s" : ""} ago`;
+      }
+    }
+
+    return "just now";
+  };
 
   useEffect(() => {
     if (openBottomSheet) {
@@ -60,9 +85,27 @@ export default function FriendsBottomSheet({
         const sentProfiles = sentData.map((f) => f.profiles);
         const receivedProfiles = receivedData.map((f) => f.profiles);
 
+        const allFriendIds = [...sentProfiles, ...receivedProfiles].map(
+          (profile) => profile.id
+        );
+
+        // Fetch location data for all friends
+        const { data: locationData, error: locationError } = await supabase
+          .from("user_location")
+          .select("id, timestamp")
+          .in("id", allFriendIds);
+
+        if (locationError) throw locationError;
+
+        const locationMap = locationData.reduce((acc, loc) => {
+          acc[loc.id] = loc.timestamp;
+          return acc;
+        }, {});
+
+        setLocationData(locationMap);
         setFriends([...sentProfiles, ...receivedProfiles]);
       } catch (error) {
-        console.error("Error fetching friends:", error);
+        console.error("Error fetching friends or location data:", error);
       }
     };
 
@@ -75,7 +118,6 @@ export default function FriendsBottomSheet({
   const renderItem = useCallback(
     ({ item }) => (
       <AnimatedButton
-        // <View
         style={styles.row}
         key={item.id}
         buttonScale={0.9}
@@ -95,10 +137,12 @@ export default function FriendsBottomSheet({
         </View>
         <Text style={styles.rowLabel}>{item.username}</Text>
         <View style={styles.rowSpacer} />
-        {/* </View> */}
+        <Text style={styles.timestamp}>
+          {getTimeAgo(locationData[item.id])}
+        </Text>
       </AnimatedButton>
     ),
-    []
+    [locationData]
   );
 
   return (
@@ -172,5 +216,10 @@ const styles = StyleSheet.create({
   },
   rowSpacer: {
     flexGrow: 1,
+  },
+  timestamp: {
+    fontSize: 14,
+    color: "#888",
+    marginLeft: 8,
   },
 });
