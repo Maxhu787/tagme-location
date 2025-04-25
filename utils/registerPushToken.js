@@ -1,9 +1,9 @@
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
 import { supabase } from "./supabase";
 import { Alert, Platform } from "react-native";
 import Constants from "expo-constants";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const registerPushToken = async (user_id) => {
   if (!user_id) return;

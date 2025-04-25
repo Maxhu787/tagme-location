@@ -153,6 +153,8 @@ add zoom in on friend when click on bottom sheet
 
 add a refresh button in bottom sheet, to fetch updates to friends, and also update the location acting as the refresh button too
 
+https://react-native-async-storage.github.io/async-storage/
+
 ### google auth stuff
 
 https://www.youtube.com/watch?v=vojHmGUGUGc

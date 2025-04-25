@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { View, Platform, StyleSheet, AsyncStorage } from "react-native";
+import { View, Platform, StyleSheet } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   MapView,
   Camera,
