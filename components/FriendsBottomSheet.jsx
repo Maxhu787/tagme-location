@@ -74,8 +74,8 @@ export default function FriendsBottomSheet({
 
   const renderItem = useCallback(
     ({ item }) => (
-      // <AnimatedButton
-      <View
+      <AnimatedButton
+        // <View
         style={styles.row}
         key={item.id}
         buttonScale={0.9}
@@ -95,8 +95,8 @@ export default function FriendsBottomSheet({
         </View>
         <Text style={styles.rowLabel}>{item.username}</Text>
         <View style={styles.rowSpacer} />
-      </View>
-      // </AnimatedButton>
+        {/* </View> */}
+      </AnimatedButton>
     ),
     []
   );
@@ -128,7 +128,7 @@ export default function FriendsBottomSheet({
         backgroundColor={"#fff"}
         // paddingTop={12}
       />
-      <BottomSheetTextInput
+      {/* <BottomSheetTextInput
         backgroundColor={"#aaa"}
         style={{
           borderRadius: 10,
@@ -141,7 +141,7 @@ export default function FriendsBottomSheet({
         }}
         placeholderTextColor={"#eee"}
         placeholder="Enter username"
-      />
+      /> */}
     </BottomSheet>
   );
 }

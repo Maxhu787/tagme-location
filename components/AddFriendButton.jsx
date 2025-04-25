@@ -129,7 +129,7 @@ export default function AddFriendButton({
       style={{
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 4,
+        marginTop: 8,
       }}
       onPress={
         friendshipStatus === "accepted"
