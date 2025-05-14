@@ -93,7 +93,8 @@ const DisplayUsers = ({ setFollowing, fetchUsers, setFetchUsers }) => {
       }
 
       // Map and combine the profile and location data
-      const offset = 0.005; // Change this value to adjust the random offset range
+      // const offset = 0.005; // Change this value to adjust the random offset range
+      const offset = 0.002; // Change this value to adjust the random offset range
       const formattedData = profilesAndLocationData.map((profile) => {
         const location = locationData.find((loc) => loc.id === profile.id);
         const randomOffsetLat = (Math.random() - 0.5) * offset;
