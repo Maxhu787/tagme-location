@@ -26,17 +26,15 @@ supabase start
 - 個人檔案 (頭貼、自介、國家等)
 - 加好友、好友申請通知
 
-## 使用語言與框架
+## 語言與框架
 
 ### 前端
 
-- react native
-- expo
+- react native, expo, maplibre
 
 ### 後端
 
-- supabase
-- supabase edge functions
+- supabase, supabase edge functions
 
 ## Screenshots
 
