@@ -4,15 +4,11 @@
 
 ## Setup
 
-### app
-
 ```
 npm install
 npm run prebuild
 npm run android
 ```
-
-### database
 (需要 Docker)
 
 ```
