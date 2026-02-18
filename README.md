@@ -1,175 +1,66 @@
-# map-test
+<div align=center>
 
-## add
+<picture>
+  <img alt="Tagme Logo" src="assets/readme-logo.png" width="280" style=margin-bottom:1rem />
+</picture>
 
-- fix displayusers consider time interval location update (ex 5min)
-- zoom scrollbar
-- cache map for offline viewing
-- add themes context
-- Categorizing Locations
-- public location mode (strangers see where you are (optional))
-- add widgets
-- add emoji like circles with eyes svg, and pay features
-- set safe areas where you wont be tracked (place marker set radius)
-- add smooth animation
-- get better app performence
-- setup login with apple
-- ~~fixed cant get friend location because of broken rls~~
-- ~~add friend ✅ -> confirm friend ✅ -> get friends ✅ -> get friends location ✅~~
-- ~~store location to supabase~~
-- ~~fix friend route not stacking properly~~
-- ~~setup db schema design tables~~
-- ~~top navbar with profile~~
-- ~~fix detect when user panning~~
-- ~~set get location interval and location marker~~
-- ~~handle access in-phone location settings~~
-- ~~in-app usable auth~~
-- ~~profile route~~
-- ~~expo router~~
-- ~~login auth~~
-- ~~map~~
+Tagme - 好友即時定位手機軟體
 
-- free accounts can place specific amount of markers with a specified radius and when user is in that area they wont be tracked upgrade to get more
-- location updated every 30~60s upgrade to get more accurate data
-- poke or send some sort of signal system limited amount every time frame upgrade gets more etc
+</div>
 
-### map
+---
 
-https://www.youtube.com/watch?v=UAQogFwyna0
-https://maplibre.org/maplibre-react-native/docs/setup/expo/
-https://openfreemap.org/
-https://www.maptiler.com/
-https://protomaps.com/
+- 前端：React Native, Expo
+- 後端：Supabase (資料庫 & auth), Supabase edge functions
+- 其它：Maplibre (地圖套件)
 
-### auth
+一個用 React Native 打造的手機 app，加好友並開啟定位，即可看見好友即時定位，支援 Android 和 IOS。
 
-https://www.youtube.com/watch?v=vojHmGUGUGc
-https://www.youtube.com/watch?v=AE7dKIKMJy4
-https://github.com/thorwebdev/google-signin/tree/docs/update-readme-and-guides
-https://developers.google.com/identity/sign-in/android/legacy-start-integrating
-https://console.cloud.google.com/apis/credentials
+## 功能
 
-https://docs.expo.dev/guides/using-supabase/
-https://supabase.com/docs/guides/auth/social-login/auth-google
+- 使用者註冊／登入 (Google 登入)
+- 好友即時定位、隱形模式
+- 個人檔案 (頭貼、自介、國家等)
+- 加好友、好友申請通知
 
-### animation
+## 快速開始
 
-https://docs.expo.dev/versions/latest/sdk/gesture-handler/
-https://docs.swmansion.com/react-native-reanimated/
-https://www.youtube.com/watch?v=tsleLxbvxe0
+### 1) git clone 並安裝依賴
 
-### payment
+```
+npm install
+```
 
-https://www.youtube.com/watch?v=noTeDJypcqY
-https://www.revenuecat.com/
-https://docs.expo.dev/versions/latest/sdk/stripe/
+### 2) 啟動 supabase
 
-### media
+需先安裝 docker
 
-https://www.flexclip.com/editor/my-favorite
-https://appscreens.com/user/projects
-https://docs.expo.dev/guides/store-assets/
-https://online-video-cutter.com/remove-logo
-
-### commands
-
+```
 supabase start
-supabase stop
-npm run tcp
-
-pod install
-
-### random code snippets
-
-router.dimissall
-shift + i change phone ios simulator
-
-### useful && bugs
-
-https://www.reddit.com/r/reactnative/comments/1b3ze9x/expo_router_push_to_same_screen/
-https://github.com/maplibre/maplibre-react-native/tree/main/examples/shared/src/examples
-https://stackoverflow.com/questions/76720049/how-to-utilize-usecontext-in-expo-router
-https://stackoverflow.com/questions/1196415/what-datatype-to-use-when-storing-latitude-and-longitude-data-in-sql-databases
-https://github.com/nitaliano/react-native-mapbox-gl/issues/222
-https://github.com/Shopify/flash-list/issues/1352
-https://github.com/expo/router/discussions/495
-https://github.com/rnmapbox/maps/issues/2893
-https://github.com/rnmapbox/maps/issues/943
-
-https://supabase.com/docs/reference/javascript/explain
-https://docs.expo.dev/versions/latest/sdk/location/#locationoptions
-https://icons.expo.fyi/Index
-https://jwt.io/
-
-### research
-
-https://www.tenorshare.tw/change-location/why-zenly-was-shut-down.html
-https://medium.com/@julienmartin_/designing-zenly-part-i-ec7dc0a1e3ad
-
-https://www.reddit.com/r/Supabase/comments/u8dzc5/how_scalable_is_supabase/
-https://www.reddit.com/r/reactnative/comments/1d80of4/backend_option_for_my_expo_app/
-
-https://play.google.com/store/apps/details?id=com.mixerbox.tomodoko&hl=zh_TW
-https://play.google.com/store/apps/details?id=com.locket.Locket&hl=en_US
-
-https://www.youtube.com/watch?v=BVcoxor_t88
-https://www.youtube.com/watch?v=NhDt7LsgfLk
-https://www.youtube.com/watch?v=U5qSNhUXASE
-
-## tomorrow
-
-https://muffingroup.com/blog/orange-color-palette/
-#fd572e
-rgb(240, 150, 91)
-
-- expo battery
-- add theme
-- cache map
-- better error handling add toast message
-- prevent multiple pressing -> redirect multiple times
-- editfield form validation
-- seperate section display all friends stats etc updated time
-
-https://expo.dev/notifications
-https://groups.google.com/g/tagme2
-https://console.cloud.google.com/auth/audience
-https://support.google.com/cloud/answer/13463073
-
-https://docs.expo.dev/app-signing/local-credentials/
-
-https://docs.expo.dev/versions/latest/sdk/background-task/
-https://docs.expo.dev/versions/latest/sdk/notifications/
-
-https://github.com/calintamas/react-native-toast-message/blob/main/docs/api.md
-
-getExpoPushTokenAsync need to pass in a expo project id
-
-push notificationsnotifications ✅ -> bottom sheet ✅ (bottom sheet show friends -> poke button) -> background running location stuff -> zoom scroll bar -> themes -> widgets -> refine notifications
-
-https://gorhom.dev/react-native-bottom-sheet/
-Considering removing some animations for location
-add confirmation to remove friend
-add zoom in on friend when click on bottom sheet
-
-add a refresh button in bottom sheet, to fetch updates to friends, and also update the location acting as the refresh button too
-
-https://react-native-async-storage.github.io/async-storage/
-
-### google auth stuff
-
-https://www.youtube.com/watch?v=vojHmGUGUGc
-no need to run prebuild when edit eas.json
-<br/>
-strings.xml
-
-```xml
-<string name="server_client_id">android_client_id</string>
 ```
 
-supabase config.toml
+### 3) 啟動開發環境
 
-```toml
-[auth.external.google]
-enabled = true
-client_id="web_client_id"
+需先安裝 Android Studio
+
 ```
+npm run prebuild
+npm run android
+```
+
+## Screenshots
+
+> 開發畫面、supabase資料庫 <br/>
+> <img src="https://github.com/Maxhu787/tagme-location/blob/main/screenshots/dev.png?raw=true" style="width: 300px;" /><img src="https://github.com/Maxhu787/tagme-location/blob/main/screenshots/supabase.png?raw=true" style="width: 300px; margin-left: 20px;"/>
+
+> 個人檔案、編輯個人檔案畫面 <br/>
+> <img src="./screenshots/boarding.png" style="height: 300px; border-radius: 17px;" /><img src="https://github.com/Maxhu787/tagme-location/blob/main/screenshots/profile.png?raw=true" style="height: 300px; border-radius: 17px;"/><img src="https://github.com/Maxhu787/tagme-location/blob/main/screenshots/edit.png?raw=true" style="height: 300px; margin-left: 12px; border-radius: 17px;"/><img src="https://github.com/Maxhu787/tagme-location/blob/main/screenshots/field.png?raw=true" style="height: 300px; margin-left: 12px; border-radius: 17px;"/>
+
+> 地圖、設定 <br/>
+> <img src="https://github.com/Maxhu787/tagme-location/blob/main/screenshots/map.png?raw=true" style="height: 300px; border-radius: 17px;"/><img src="https://github.com/Maxhu787/tagme-location/blob/main/screenshots/zoomedout.png?raw=true" style="height: 300px; margin-left: 12px; border-radius: 200px;"/><img src="https://github.com/Maxhu787/tagme-location/blob/main/screenshots/settings.png?raw=true" style="height: 300px; margin-left: 12px; border-radius: 17px;"/>
+
+> 加好友、好友申請通知、好友欄 <br/>
+> <img src="https://github.com/Maxhu787/tagme-location/blob/main/screenshots/addfriend.png?raw=true" style="height: 300px; border-radius: 17px;"/><img src="https://github.com/Maxhu787/tagme-location/blob/main/screenshots/notif.png?raw=true" style="height: 300px; margin-left: 12px; border-radius: 17px;"/><img src="https://github.com/Maxhu787/tagme-location/blob/main/screenshots/bottomsheet.png?raw=true" style="height: 300px; margin-left: 12px; border-radius: 17px;"/>
+
+For questions or feedback, you can contact me via social links on my website [g4o2.com](https://g4o2.com).<br/>
+如有任何疑問或回饋，可以透過我的網站上的社群連結與我聯繫 [g4o2.com](https://g4o2.com)。<br/>
