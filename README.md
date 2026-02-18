@@ -14,7 +14,7 @@ Tagme - 好友即時定位手機軟體
 - 後端：Supabase (資料庫 & auth), Supabase edge functions
 - 其它：Maplibre (地圖套件)
 
-一個用 React Native 打造的手機 app，加好友並開啟定位，即可看見好友即時定位，支援 Android 和 IOS。
+一個用 React Native 打造的手機 app，加好友並開啟定位，即可看見好友即時定位，支援 Android 和 iOS。
 
 ## 功能
 
