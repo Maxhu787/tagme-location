@@ -43,7 +43,7 @@ npm run prebuild
 npm run android
 ```
 
-## Screenshots
+## 截圖區
 
 > 開發畫面、supabase資料庫 <br/>
 <img src="https://github.com/Maxhu787/tagme-location/blob/main/screenshots/dev.png?raw=true" style="width: 300px;" /><img src="https://github.com/Maxhu787/tagme-location/blob/main/screenshots/supabase.png?raw=true" style="width: 300px; margin-left: 20px;"/>
