@@ -38,3 +38,4 @@ yarn-error.*
 *.apk
 
 /credentials.json
+/google-services.json
