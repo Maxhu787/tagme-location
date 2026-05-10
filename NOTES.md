@@ -15,7 +15,7 @@
 - get better app performence
 - setup login with apple
 - ~~fixed cant get friend location because of broken rls~~
-- ~~add friend ✅ -> confirm friend ✅ -> get friends ✅ -> get friends location ✅~~
+- ~~add friend -> confirm friend -> get friends -> get friends location~~
 - ~~store location to supabase~~
 - ~~fix friend route not stacking properly~~
 - ~~setup db schema design tables~~
