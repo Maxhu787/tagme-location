@@ -63,4 +63,5 @@ npm run android
 > <img src="https://github.com/Maxhu787/tagme-location/blob/main/screenshots/addfriend.png?raw=true" style="height: 300px; border-radius: 17px;"/><img src="https://github.com/Maxhu787/tagme-location/blob/main/screenshots/notif.png?raw=true" style="height: 300px; margin-left: 12px; border-radius: 17px;"/><img src="https://github.com/Maxhu787/tagme-location/blob/main/screenshots/bottomsheet.png?raw=true" style="height: 300px; margin-left: 12px; border-radius: 17px;"/>
 
 For questions or feedback, you can contact me via social links on my website [g4o2.com](https://g4o2.com).<br/>
-如有任何疑問或回饋，可以透過我的網站上的社群連結與我聯繫 [g4o2.com](https://g4o2.com)。<br/>
+
+<!-- 如有任何疑問或回饋，可以透過我的網站上的社群連結與我聯繫 [g4o2.com](https://g4o2.com)。<br/> -->
